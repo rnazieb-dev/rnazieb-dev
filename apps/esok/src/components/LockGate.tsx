@@ -1,7 +1,7 @@
 import * as SecureStore from 'expo-secure-store';
 import { type ReactNode, useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { type PinRecord, backoffSeconds, verifyPin } from '@/features/security/lock';
+import { type PinRecord, backoffSeconds, lockUsable, verifyPin } from '@/features/security/lock';
 import { authenticate, authAvailability } from '@/features/security/vault';
 import { useApp } from '@/state/app';
 import { Button, Field, Text } from './ui';
@@ -26,16 +26,27 @@ async function readFails(): Promise<FailState> {
 
 /** Kunci aplikasi: biometrik/kode sandi perangkat, atau PIN 6 digit dengan jeda bertahap. */
 export function LockGate({ children }: { children: ReactNode }) {
-  const { appLocked, setAppLocked, settings } = useApp();
+  const { appLocked, setAppLocked, settings, updateSettings } = useApp();
   const t = useTheme();
   const [pin, setPin] = useState('');
   const [msg, setMsg] = useState('');
-  const [hasPin, setHasPin] = useState(false);
+  const [hasPin, setHasPin] = useState<boolean | null>(null);
+  const [secured, setSecured] = useState<boolean | null>(null);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
     void SecureStore.getItemAsync(PIN_KEY).then((v) => setHasPin(!!v));
+    void authAvailability().then((a) => setSecured(a.secured));
   }, [appLocked]);
+
+  // Fail-safe: bila tak ada cara membuka (tanpa kunci layar & tanpa PIN), jangan kunci pengguna permanen.
+  useEffect(() => {
+    if (!appLocked || !settings.appLock || hasPin === null || secured === null) return;
+    if (!lockUsable({ secured, hasPin })) {
+      setAppLocked(false);
+      void updateSettings({ appLock: false });
+    }
+  }, [appLocked, settings.appLock, hasPin, secured, setAppLocked, updateSettings]);
 
   const tryBiometric = useCallback(async () => {
     const { secured } = await authAvailability();

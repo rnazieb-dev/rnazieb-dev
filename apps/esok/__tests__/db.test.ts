@@ -163,3 +163,28 @@ describe('batas poin harian lokal', () => {
     expect(await pointTotals(db)).toEqual({ publicPoints: 110, secretPoints: 100, secretCount: 6 });
   });
 });
+
+describe('hitungan misi bersama', () => {
+  it('misi "bisa bersama" yang dikerjakan solo tidak dihitung; deed ber-shared_id yang diberi poin dihitung', async () => {
+    const db = await createMigratedTestDb();
+    const shareable = MISSIONS.filter((m) => m.canBeShared).slice(0, 3);
+    for (const m of shareable) await completeMission(db, { mission: m, day: DAY, visibility: 'public', dek: null });
+    let p = await loadProgress(db, DAY);
+    expect(p.stats.missionsCompleted).toBe(3);
+    expect(p.stats.sharedMissionsCompleted).toBe(0);
+    expect(p.badges.some((b) => b.id === 'together-3')).toBe(false);
+
+    for (let i = 0; i < 3; i++) {
+      const id = await addDeed(db, null, { day: DAY, title: `b${i}`, category: 'sosial', visibility: 'circle', circleId: 'c1', sharedId: `s${i}`, points: 5 });
+      await db.run('INSERT INTO awarded(deed_id, points) VALUES(?, 5)', [id]);
+    }
+    p = await loadProgress(db, DAY);
+    expect(p.stats.sharedMissionsCompleted).toBe(3);
+    expect(p.badges.some((b) => b.id === 'together-3')).toBe(true);
+  });
+  it('deed ber-shared_id tanpa poin (belum dikonfirmasi) tidak dihitung', async () => {
+    const db = await createMigratedTestDb();
+    await addDeed(db, null, { day: DAY, title: 'x', category: 'sosial', visibility: 'circle', circleId: 'c1', sharedId: 's1', points: 5 });
+    expect((await loadProgress(db, DAY)).stats.sharedMissionsCompleted).toBe(0);
+  });
+});

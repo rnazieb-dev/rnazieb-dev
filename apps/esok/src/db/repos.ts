@@ -328,9 +328,17 @@ export async function markMission(db: Db, mission_id: string, day: DayKey, statu
   ]);
 }
 
-export async function completedMissionCounts(db: Db, sharedIds: ReadonlySet<string>): Promise<{ total: number; shared: number }> {
-  const rows = await db.all<{ mission_id: string }>(`SELECT mission_id FROM user_missions WHERE status = 'done'`);
-  return { total: rows.length, shared: rows.filter((r) => sharedIds.has(r.mission_id)).length };
+/**
+ * total = misi berstatus selesai; shared = amal yang benar-benar terikat misi bersama DAN poinnya sudah
+ * diberikan server (artinya dikonfirmasi sejawat). Misi "bisa bersama" yang dikerjakan solo tidak dihitung.
+ */
+export async function completedMissionCounts(db: Db): Promise<{ total: number; shared: number }> {
+  const done = await db.get<{ c: number }>(`SELECT COUNT(*) AS c FROM user_missions WHERE status = 'done'`);
+  const shared = await db.get<{ c: number }>(
+    `SELECT COUNT(*) AS c FROM deeds d JOIN awarded a ON a.deed_id = d.id
+     WHERE d.shared_id IS NOT NULL AND d.deleted_at IS NULL AND a.points > 0`,
+  );
+  return { total: done?.c ?? 0, shared: shared?.c ?? 0 };
 }
 
 // ---------------- kutipan yang sudah dilihat ----------------

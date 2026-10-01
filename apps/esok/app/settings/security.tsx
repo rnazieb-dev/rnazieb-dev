@@ -7,7 +7,7 @@ import { PIN_KEY } from '@/components/LockGate';
 import { wipeLocal } from '@/db/repos';
 import { deleteMyAccount } from '@/features/circles/api';
 import { shareExport } from '@/features/export/exportData';
-import { createPinRecord } from '@/features/security/lock';
+import { canEnableAppLock, createPinRecord } from '@/features/security/lock';
 import { rewrapPassphrase, unlockWithPassphrase } from '@/features/security/e2ee';
 import { authAvailability, authenticate, wipeDek } from '@/features/security/vault';
 import { fetchEnvelope, putEnvelope } from '@/features/sync/supabaseRemote';
@@ -50,7 +50,13 @@ export default function SecuritySettings() {
         label="Kunci aplikasi"
         hint="Minta biometrik/kode sandi perangkat (atau PIN) saat aplikasi dibuka kembali."
         value={settings.appLock}
-        onValueChange={(v) => run(async () => { if (v && !(await authenticate('Aktifkan kunci aplikasi'))) return; await updateSettings({ appLock: v }); })}
+        onValueChange={(v) => run(async () => {
+          if (v && !canEnableAppLock({ secured, hasPin })) {
+            return Alert.alert('Atur PIN dulu', 'Perangkat ini belum punya kunci layar. Atur PIN cadangan agar Anda tidak terkunci dari aplikasi.');
+          }
+          if (v && secured && !(await authenticate('Aktifkan kunci aplikasi'))) return;
+          await updateSettings({ appLock: v });
+        })}
       />
       <Card>
         <Text variant="label">PIN cadangan 6 digit {hasPin ? '(aktif)' : ''}</Text>
@@ -67,7 +73,18 @@ export default function SecuritySettings() {
             Alert.alert('PIN tersimpan');
           })}
         />
-        {hasPin ? <Button title="Hapus PIN" variant="ghost" onPress={() => run(async () => { await SecureStore.deleteItemAsync(PIN_KEY); setHasPin(false); })} /> : null}
+        {hasPin ? (
+          <Button
+            title="Hapus PIN"
+            variant="ghost"
+            onPress={() => run(async () => {
+              await SecureStore.deleteItemAsync(PIN_KEY);
+              setHasPin(false);
+              // Tanpa kunci layar & tanpa PIN, kunci aplikasi tak bisa dibuka → matikan.
+              if (!canEnableAppLock({ secured, hasPin: false }) && settings.appLock) await updateSettings({ appLock: false });
+            })}
+          />
+        ) : null}
         <Text variant="small" muted>PIN tidak dapat dipulihkan. Setelah beberapa kali salah, ada jeda bertahap.</Text>
       </Card>
 
@@ -111,7 +128,7 @@ export default function SecuritySettings() {
         variant="danger"
         onPress={() => Alert.alert('Hapus data lokal?', 'Seluruh catatan, refleksi, dan pengaturan di perangkat ini akan dihapus. Data di cloud (jika ada) tidak terhapus.', [
           { text: 'Batal', style: 'cancel' },
-          { text: 'Hapus', style: 'destructive', onPress: () => run(async () => { await wipeLocal(db); await wipeDek(); lockVault(); await SecureStore.deleteItemAsync(PIN_KEY); bump(); router.replace('/onboarding'); }) },
+          { text: 'Hapus', style: 'destructive', onPress: () => run(async () => { await wipeLocal(db); await wipeDek(); lockVault(); await SecureStore.deleteItemAsync(PIN_KEY); await updateSettings({ onboarded: false, appLock: false, cloudEnabled: false, boundUserId: null }); bump(); router.replace('/onboarding'); }) },
         ])}
       />
       {session ? (

@@ -32,3 +32,13 @@ export async function verifyPin(pin: string, rec: PinRecord): Promise<boolean> {
   for (let i = 0; i < h.length; i++) diff |= (h[i] as number) ^ (expected[i] ?? 0);
   return diff === 0;
 }
+
+/** Kunci aplikasi hanya boleh aktif bila ada cara membukanya (kunci layar perangkat atau PIN). */
+export function canEnableAppLock(a: { secured: boolean; hasPin: boolean }): boolean {
+  return a.secured || a.hasPin;
+}
+
+/** Apakah gerbang kunci masih bisa dibuka pengguna? Jika tidak, harus dibuka otomatis (hindari terkunci permanen). */
+export function lockUsable(a: { secured: boolean; hasPin: boolean }): boolean {
+  return a.secured || a.hasPin;
+}

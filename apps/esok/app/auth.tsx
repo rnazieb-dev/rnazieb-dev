@@ -1,15 +1,17 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Share } from 'react-native';
+import { wipeLocal } from '@/db/repos';
+import { bindingState } from '@/features/sync/binding';
 import { Button, Card, Field, Screen, Text, Toggle } from '@/components/ui';
-import { connectCloudVault, ensureLocalDek } from '@/features/security/vault';
+import { connectCloudVault, ensureLocalDek, wipeDek } from '@/features/security/vault';
 import { getSupabase } from '@/lib/supabase';
 import { useApp } from '@/state/app';
 
 /** Akun & cloud: opsional. Tanpa akun, semua fitur pribadi tetap berfungsi (offline). */
 export default function Auth() {
   const router = useRouter();
-  const { session, settings, updateSettings, db, cloudConfigured, syncNow, sync, bump } = useApp();
+  const { session, settings, updateSettings, db, cloudConfigured, syncNow, sync, bump, lockVault } = useApp();
   const sb = getSupabase();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -67,14 +69,43 @@ export default function Auth() {
         setShownKey(res.recoveryKey);
         return;
       }
-      await updateSettings({ cloudEnabled: true });
+      await updateSettings({ cloudEnabled: true, boundUserId: session.user.id });
       await syncNow();
       router.back();
     });
 
+  const switchAccount = () =>
+    run(async () => {
+      // Hapus data & kunci milik akun sebelumnya sebelum akun ini dipakai di perangkat ini.
+      await wipeLocal(db);
+      await wipeDek();
+      lockVault();
+      await updateSettings({ cloudEnabled: false, boundUserId: null });
+      bump();
+    });
+
+  const signOut = () =>
+    Alert.alert('Keluar', 'Hapus juga data lokal di perangkat ini? Disarankan bila perangkat dipakai bergantian.', [
+      { text: 'Batal', style: 'cancel' },
+      { text: 'Keluar saja', onPress: () => void sb.auth.signOut() },
+      {
+        text: 'Keluar & hapus data lokal',
+        style: 'destructive',
+        onPress: () => run(async () => {
+          await sb.auth.signOut();
+          await wipeLocal(db);
+          await wipeDek();
+          lockVault();
+          await updateSettings({ cloudEnabled: false, boundUserId: null, onboarded: false });
+          bump();
+          router.replace('/onboarding');
+        }),
+      },
+    ]);
+
   const finishAfterKey = () =>
     run(async () => {
-      await updateSettings({ cloudEnabled: true });
+      await updateSettings({ cloudEnabled: true, boundUserId: session?.user.id ?? null });
       setShownKey(null);
       await syncNow();
       router.back();
@@ -107,6 +138,19 @@ export default function Auth() {
     );
   }
 
+  if (bindingState(settings.boundUserId, session.user.id) === 'other') {
+    return (
+      <Screen>
+        <Text variant="title">Akun berbeda</Text>
+        <Card tone="accent">
+          <Text>Data lokal di perangkat ini milik akun lain. Agar data tidak tercampur atau terbaca akun ini, hapus data lokal terlebih dahulu (data di cloud akun lama tetap aman).</Text>
+        </Card>
+        <Button title="Hapus data lokal & lanjut" variant="danger" onPress={switchAccount} loading={busy} />
+        <Button title="Batal & keluar" variant="ghost" onPress={() => sb.auth.signOut()} />
+      </Screen>
+    );
+  }
+
   if (!settings.cloudEnabled) {
     return (
       <Screen>
@@ -125,7 +169,7 @@ export default function Auth() {
         )}
         <Button title="Aktifkan" onPress={connect} loading={busy} disabled={!consent || (useRecovery ? recovery.length < 10 : passphrase.length < 8)} />
         <Button title={useRecovery ? 'Pakai passphrase' : 'Lupa passphrase? Pakai kunci pemulihan'} variant="ghost" onPress={() => setUseRecovery(!useRecovery)} />
-        <Button title="Keluar" variant="ghost" onPress={() => sb.auth.signOut()} />
+        <Button title="Keluar" variant="ghost" onPress={signOut} />
       </Screen>
     );
   }
@@ -139,7 +183,7 @@ export default function Auth() {
         <Button title="Sinkronkan sekarang" variant="secondary" onPress={syncNow} />
       </Card>
       <Button title="Matikan cloud (data lokal tetap)" variant="secondary" onPress={async () => { await updateSettings({ cloudEnabled: false }); bump(); }} />
-      <Button title="Keluar" variant="ghost" onPress={() => sb.auth.signOut()} />
+      <Button title="Keluar" variant="ghost" onPress={signOut} />
     </Screen>
   );
 }

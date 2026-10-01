@@ -1,6 +1,6 @@
 import { addDeed, getReflection, listDeedsForDay, saveReflection } from '@/db/repos';
 import { generateDek } from '@/features/security/e2ee';
-import { backoffSeconds, createPinRecord, verifyPin } from '@/features/security/lock';
+import { backoffSeconds, canEnableAppLock, createPinRecord, lockUsable, verifyPin } from '@/features/security/lock';
 import { rekeyPrivateItems } from '@/features/security/rekey';
 import { createMigratedTestDb } from './helpers/testDb';
 
@@ -41,5 +41,18 @@ describe('rekey item privat (memakai kunci cloud di perangkat baru)', () => {
     // ditandai kotor & rev naik agar tersinkron ulang
     const rows = await db.all<{ rev: number; dirty: number }>('SELECT rev, dirty FROM private_items');
     expect(rows.every((r) => r.rev === 2 && r.dirty === 1)).toBe(true);
+  });
+});
+
+
+describe('kunci aplikasi tidak boleh mengunci permanen', () => {
+  it('hanya bisa diaktifkan bila ada kunci layar atau PIN', () => {
+    expect(canEnableAppLock({ secured: false, hasPin: false })).toBe(false);
+    expect(canEnableAppLock({ secured: true, hasPin: false })).toBe(true);
+    expect(canEnableAppLock({ secured: false, hasPin: true })).toBe(true);
+  });
+  it('gerbang dianggap tak dapat dibuka tanpa keduanya (fail-safe membuka otomatis)', () => {
+    expect(lockUsable({ secured: false, hasPin: false })).toBe(false);
+    expect(lockUsable({ secured: false, hasPin: true })).toBe(true);
   });
 });

@@ -9,6 +9,7 @@ import type { Db } from '@/db/types';
 import { DEFAULT_REMINDERS, type ReminderSettings } from '@/features/reminders/schedule';
 import { configureNotifications, rescheduleReminders } from '@/features/reminders/notifications';
 import { authenticate, ensureLocalDek, readDek } from '@/features/security/vault';
+import { canSyncAs } from '@/features/sync/binding';
 import { runFullSync } from '@/features/sync/service';
 import { type DayKey, toDayKey } from '@/lib/dates';
 import { getSupabase, isCloudConfigured } from '@/lib/supabase';
@@ -30,6 +31,8 @@ export interface AppSettings {
   /** Pengguna belum 13 tahun: fitur lingkaran/cloud dinonaktifkan. */
   isMinor: boolean;
   pushNudges: boolean;
+  /** Akun pemilik penyimpanan lokal ini (lihat features/sync/binding). */
+  boundUserId: string | null;
 }
 
 const DEFAULTS = (): AppSettings => ({
@@ -46,6 +49,7 @@ const DEFAULTS = (): AppSettings => ({
   cloudEnabled: false,
   isMinor: false,
   pushNudges: false,
+  boundUserId: null,
 });
 
 type SyncStatus = { state: 'idle' | 'syncing' | 'ok' | 'error'; at?: string; message?: string };
@@ -158,6 +162,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const syncNow = useCallback(async () => {
     const sb = getSupabase();
     if (!db || !sb || !session || !settings.cloudEnabled || flags.syncing) return;
+    if (!canSyncAs(settings.boundUserId, session.user.id)) {
+      // Jangan pernah mendorong/menarik data lintas akun.
+      setSync({ state: 'error', message: 'Data lokal di perangkat ini milik akun lain.' });
+      return;
+    }
     flags.syncing = true;
     setSync({ state: 'syncing' });
     try {
@@ -169,7 +178,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     } finally {
       flags.syncing = false;
     }
-  }, [db, session, settings.cloudEnabled, dek, bump]);
+  }, [db, session, settings.cloudEnabled, settings.boundUserId, dek, bump]);
 
   // ---- siklus app: hari baru, kunci otomatis, sync, jadwal ulang ----
   useEffect(() => {

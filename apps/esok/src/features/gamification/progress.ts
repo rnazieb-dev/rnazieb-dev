@@ -1,4 +1,3 @@
-import { MISSIONS } from '@/content';
 import {
   activityDays,
   categoryCounts,
@@ -32,7 +31,7 @@ export async function loadProgress(
     activityDays(db, { includeSecret: true }),
     activityDays(db, { includeSecret: false }),
     categoryCounts(db, { includeSecret: true }),
-    completedMissionCounts(db, new Set(MISSIONS.filter((m) => m.canBeShared).map((m) => m.id))),
+    completedMissionCounts(db),
   ]);
   const streakAll = computeStreak(allDays, uzur, today);
   const streakPub = computeStreak(pubDays, uzur, today);
