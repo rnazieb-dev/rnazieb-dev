@@ -2,6 +2,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert } from 'react-native';
 import { Button, Chip, Field, Row, Screen, Text, Toggle } from '@/components/ui';
+import { ScreenGuard } from '@/components/ScreenGuard';
 import { VisibilityPicker, type VisibilityValue } from '@/components/VisibilityPicker';
 import type { MissionCategory } from '@/content/types';
 import { addDeed } from '@/db/repos';
@@ -65,6 +66,7 @@ export default function NewDeed() {
 
   return (
     <Screen>
+      <ScreenGuard active={vis.visibility === 'secret'} id="deed-new" />
       <Field label="Apa kebaikan yang Anda lakukan?" value={title} onChangeText={setTitle} placeholder="mis. Menelepon ibu" maxLength={120} />
       <Field label="Catatan (opsional)" value={note} onChangeText={setNote} multiline maxLength={500} hint={vis.visibility === 'secret' ? undefined : 'Jangan menyebut identitas orang yang dibantu; jaga martabat mereka.'} />
       <Text variant="label">Kategori</Text>

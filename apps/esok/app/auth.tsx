@@ -11,7 +11,7 @@ import { useApp } from '@/state/app';
 /** Akun & cloud: opsional. Tanpa akun, semua fitur pribadi tetap berfungsi (offline). */
 export default function Auth() {
   const router = useRouter();
-  const { session, settings, updateSettings, db, cloudConfigured, syncNow, sync, bump, lockVault } = useApp();
+  const { session, settings, updateSettings, db, cloudConfigured, syncNow, sync, bump, lockVault, resetLocalData } = useApp();
   const sb = getSupabase();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -74,15 +74,7 @@ export default function Auth() {
       router.back();
     });
 
-  const switchAccount = () =>
-    run(async () => {
-      // Hapus data & kunci milik akun sebelumnya sebelum akun ini dipakai di perangkat ini.
-      await wipeLocal(db);
-      await wipeDek();
-      lockVault();
-      await updateSettings({ cloudEnabled: false, boundUserId: null });
-      bump();
-    });
+  const switchAccount = () => run(resetLocalData);
 
   const signOut = () =>
     Alert.alert('Keluar', 'Hapus juga data lokal di perangkat ini? Disarankan bila perangkat dipakai bergantian.', [

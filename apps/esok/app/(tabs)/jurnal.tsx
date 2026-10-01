@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert } from 'react-native';
 import { Button, Card, Empty, Row, Screen, SectionTitle, Text, Toggle } from '@/components/ui';
+import { ScreenGuard } from '@/components/ScreenGuard';
 import { DeedItem } from '@/components/DeedItem';
 import { activityDays, deleteDeed, getReflection, hasReflectionContent, listDeedsForDay, setUzur, uzurDays } from '@/db/repos';
 import { addDays, formatDayLong } from '@/lib/dates';
@@ -36,6 +37,7 @@ export default function Jurnal() {
 
   return (
     <Screen>
+      <ScreenGuard active={!!dek} id="jurnal" />
       <Text variant="title">Jurnal amal</Text>
       <Row style={{ gap: 6 }}>
         {strip.map((k) => (

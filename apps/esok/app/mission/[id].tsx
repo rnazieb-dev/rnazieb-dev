@@ -2,10 +2,12 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Share } from 'react-native';
 import { Button, Card, Empty, Field, Pill, Row, Screen, SectionTitle, Text } from '@/components/ui';
+import { ScreenGuard } from '@/components/ScreenGuard';
 import { VisibilityPicker, type VisibilityValue } from '@/components/VisibilityPicker';
 import { missionById } from '@/content';
 import { missionRows } from '@/db/repos';
-import { markSharedDone, startSharedMission } from '@/features/circles/api';
+import { startSharedMission } from '@/features/circles/api';
+import { queuePendingShared, retryPendingShared } from '@/features/missions/pending';
 import { inviteMessage } from '@/features/circles/moderation';
 import { useCircles } from '@/features/circles/useCircles';
 import { assignmentDay, completeMission, skipMission } from '@/features/missions/service';
@@ -50,9 +52,18 @@ export default function MissionScreen() {
       bump();
       const sb = getSupabase();
       if (shared && sb) {
+        await queuePendingShared(db, shared);
         await syncNow();
-        await markSharedDone(sb, shared).catch(() => undefined);
-        Alert.alert('Alhamdulillah', 'Tandai selesai terkirim. Poin diberikan setelah teman sesama peserta mengonfirmasi.');
+        const r = await retryPendingShared(db, async (sid) => {
+          const { error } = await sb.rpc('mark_shared_done', { p_shared: sid });
+          if (error) throw new Error(error.message);
+        });
+        Alert.alert(
+          r.kept > 0 ? 'Tersimpan' : 'Alhamdulillah',
+          r.kept > 0
+            ? 'Misi tercatat di perangkat, tetapi tanda selesai belum terkirim. Akan dicoba lagi otomatis saat online.'
+            : 'Tandai selesai terkirim. Poin diberikan setelah teman sesama peserta mengonfirmasi.',
+        );
       } else if (vis.visibility !== 'secret') {
         void syncNow();
       }
@@ -80,6 +91,7 @@ export default function MissionScreen() {
 
   return (
     <Screen>
+      <ScreenGuard active={vis.visibility === 'secret'} id="mission" />
       <Text variant="title">{mission.title}</Text>
       <Row>
         <Pill label={CATEGORY_LABEL[mission.category]} tone="muted" />

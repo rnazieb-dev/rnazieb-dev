@@ -1,4 +1,4 @@
-import { bindingState, canSyncAs } from '@/features/sync/binding';
+import { bindingState, canSyncAs, canUseLocalData } from '@/features/sync/binding';
 
 describe('pengikatan penyimpanan lokal ke akun', () => {
   it('status ikatan', () => {
@@ -11,5 +11,15 @@ describe('pengikatan penyimpanan lokal ke akun', () => {
     expect(canSyncAs(null, 'a')).toBe(true);
     expect(canSyncAs('a', 'a')).toBe(true);
     expect(canSyncAs('a', 'b')).toBe(false);
+  });
+});
+
+
+describe('akses data lokal', () => {
+  it('ditolak hanya saat sesi akun lain aktif', () => {
+    expect(canUseLocalData('a', null)).toBe(true);
+    expect(canUseLocalData(null, 'b')).toBe(true);
+    expect(canUseLocalData('a', 'a')).toBe(true);
+    expect(canUseLocalData('a', 'b')).toBe(false);
   });
 });

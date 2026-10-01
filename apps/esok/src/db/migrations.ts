@@ -64,6 +64,10 @@ export const MIGRATIONS: string[] = [
   -- Amal bersama yang poin servernya sudah diminta (idempotensi sisi klien).
   CREATE TABLE awarded (deed_id TEXT PRIMARY KEY, points INTEGER NOT NULL DEFAULT 0);
   `,
+  `
+  -- Antrean "tandai selesai" misi bersama yang belum berhasil dikirim (dicoba ulang saat sync).
+  CREATE TABLE pending_shared (shared_id TEXT PRIMARY KEY);
+  `,
 ];
 
 export async function migrate(db: Db): Promise<void> {

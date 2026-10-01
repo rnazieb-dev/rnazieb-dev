@@ -353,7 +353,7 @@ export async function recentQuoteIds(db: Db, limit = 40): Promise<string[]> {
 // ---------------- hapus semua data lokal ----------------
 export async function wipeLocal(db: Db): Promise<void> {
   await db.transaction(async () => {
-    for (const t of ['deeds', 'private_items', 'user_missions', 'uzur_days', 'quotes_seen', 'badges_earned', 'sync_state', 'settings']) {
+    for (const t of ['deeds', 'private_items', 'user_missions', 'uzur_days', 'quotes_seen', 'badges_earned', 'sync_state', 'awarded', 'pending_shared', 'settings']) {
       await db.run(`DELETE FROM ${t}`);
     }
   });

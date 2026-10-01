@@ -2,6 +2,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { hydratePrivate } from '@/db/repos';
 import type { Db } from '@/db/types';
 import { addDays, toDayKey } from '@/lib/dates';
+import { retryPendingShared } from '@/features/missions/pending';
 import { reconcileCompletedMissions } from '@/features/missions/service';
 import { type SyncResult, syncAll } from './engine';
 import { createSupabaseRemote } from './supabaseRemote';
@@ -34,6 +35,11 @@ export async function runFullSync(db: Db, sb: SupabaseClient, userId: string, de
   const result = await syncAll(db, createSupabaseRemote(sb, userId));
   if (dek) await hydratePrivate(db, dek);
   const reconciled = await reconcileCompletedMissions(db);
+  // Kirim ulang "tandai selesai" misi bersama yang tertunda (agar peserta lain dapat mengonfirmasi).
+  await retryPendingShared(db, async (id) => {
+    const { error } = await sb.rpc('mark_shared_done', { p_shared: id });
+    if (error) throw new Error(error.message);
+  });
   const awarded = await awardSharedDeeds(db, sb);
   return { ...result, awarded, reconciled };
 }

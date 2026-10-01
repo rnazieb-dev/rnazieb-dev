@@ -4,12 +4,12 @@ import { type ReactNode, createContext, useCallback, useContext, useEffect, useM
 import { AppState } from 'react-native';
 import { openExpoDb } from '@/db/expoAdapter';
 import { migrate } from '@/db/migrations';
-import { getSetting, setSetting } from '@/db/repos';
+import { getSetting, setSetting, wipeLocal } from '@/db/repos';
 import type { Db } from '@/db/types';
 import { DEFAULT_REMINDERS, type ReminderSettings } from '@/features/reminders/schedule';
 import { configureNotifications, rescheduleReminders } from '@/features/reminders/notifications';
-import { authenticate, ensureLocalDek, readDek } from '@/features/security/vault';
-import { canSyncAs } from '@/features/sync/binding';
+import { authenticate, ensureLocalDek, readDek, wipeDek } from '@/features/security/vault';
+import { canSyncAs, canUseLocalData } from '@/features/sync/binding';
 import { runFullSync } from '@/features/sync/service';
 import { type DayKey, toDayKey } from '@/lib/dates';
 import { getSupabase, isCloudConfigured } from '@/lib/supabase';
@@ -66,6 +66,10 @@ interface AppContextValue {
   dek: Uint8Array | null;
   /** Buka vault (biometrik/kode sandi perangkat). Mengembalikan DEK atau null jika ditolak. */
   unlockVault: () => Promise<Uint8Array | null>;
+  /** Sesi akun aktif bukan pemilik data lokal: seluruh data lokal harus disembunyikan. */
+  accountMismatch: boolean;
+  /** Hapus data lokal + kunci vault (dipakai saat berganti akun). */
+  resetLocalData: () => Promise<void>;
   lockVault: () => void;
   appLocked: boolean;
   setAppLocked: (v: boolean) => void;
@@ -148,14 +152,26 @@ export function AppProvider({ children }: { children: ReactNode }) {
     if (db && settings.onboarded) void reschedule();
   }, [db, settings.onboarded, reschedule]);
 
+  const accountMismatch = !canUseLocalData(settings.boundUserId, session?.user.id);
+
+  const resetLocalData = useCallback(async () => {
+    if (!db) return;
+    await wipeLocal(db);
+    await wipeDek();
+    setDek(null);
+    // wipeLocal ikut menghapus pengaturan tersimpan: tulis ulang dengan ikatan yang dilepas.
+    await updateSettings({ cloudEnabled: false, boundUserId: null, onboarded: false, appLock: false });
+  }, [db, updateSettings]);
+
   const unlockVault = useCallback(async (): Promise<Uint8Array | null> => {
+    if (accountMismatch) return null;
     if (dek) return dek;
     const ok = await authenticate('Buka amalan rahasia Anda');
     if (!ok) return null;
     const key = (await readDek()) ?? (await ensureLocalDek());
     setDek(key);
     return key;
-  }, [dek]);
+  }, [dek, accountMismatch]);
 
   const lockVault = useCallback(() => setDek(null), []);
 
@@ -221,6 +237,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
             bump,
             dek,
             unlockVault,
+            accountMismatch,
+            resetLocalData,
             lockVault,
             appLocked,
             setAppLocked,
@@ -231,7 +249,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
             reschedule,
           }
         : null,
-    [db, settings, updateSettings, today, version, bump, dek, unlockVault, lockVault, appLocked, session, sync, syncNow, reschedule],
+    [db, settings, updateSettings, today, version, bump, dek, unlockVault, accountMismatch, resetLocalData, lockVault, appLocked, session, sync, syncNow, reschedule],
   );
 
   if (!value) return null;

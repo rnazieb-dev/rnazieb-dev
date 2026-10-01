@@ -7,6 +7,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { AccountGate } from '@/components/AccountGate';
 import { LockGate } from '@/components/LockGate';
 import { AppProvider } from '@/state/app';
 import { useTheme } from '@/lib/theme';
@@ -28,6 +29,7 @@ function Shell() {
   }, [router]);
   return (
     <LockGate>
+      <AccountGate>
       <Stack
         screenOptions={{
           headerStyle: { backgroundColor: t.bg },
@@ -55,6 +57,7 @@ function Shell() {
         <Stack.Screen name="settings/about" options={{ title: 'Tentang & sumber' }} />
       </Stack>
       <StatusBar style="auto" />
+      </AccountGate>
     </LockGate>
   );
 }
