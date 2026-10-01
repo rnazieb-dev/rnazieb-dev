@@ -166,7 +166,9 @@ export async function addComment(sb: SupabaseClient, postId: string, body: strin
 
 export const deletePost = async (sb: SupabaseClient, id: string) => ok(await sb.from('feed_posts').delete().eq('id', id), 'Menghapus');
 export const hidePost = async (sb: SupabaseClient, id: string, hidden: boolean) =>
-  ok(await sb.from('feed_posts').update({ hidden }).eq('id', id), 'Menyembunyikan');
+  ok(await sb.rpc('set_post_hidden', { p_post: id, p_hidden: hidden }), 'Menyembunyikan');
+export const hideComment = async (sb: SupabaseClient, id: string, hidden: boolean) =>
+  ok(await sb.rpc('set_comment_hidden', { p_comment: id, p_hidden: hidden }), 'Menyembunyikan komentar');
 export const deleteComment = async (sb: SupabaseClient, id: string) => ok(await sb.from('comments').delete().eq('id', id), 'Menghapus');
 
 export async function report(sb: SupabaseClient, targetType: 'post' | 'comment' | 'user' | 'circle', targetId: string, reason: string) {

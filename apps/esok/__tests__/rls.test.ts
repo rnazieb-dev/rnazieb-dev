@@ -205,6 +205,13 @@ describe('poin publik', () => {
     expect((await asUser(db, a, (q) => q<{ p: number }>('select public.award_points_for_deed($1) as p', [good.id])))[0]!.p).toBeGreaterThan(0);
   });
 
+  it('pemberian poin diserialisasi per pengguna/hari (advisory lock)', async () => {
+    const src = (await db.query<{ prosrc: string }>(`select prosrc from pg_proc where proname = 'award_points_for_deed'`)).rows[0]!.prosrc;
+    expect(src).toContain('pg_advisory_xact_lock');
+    // kunci diambil SEBELUM membaca pemakaian harian
+    expect(src.indexOf('pg_advisory_xact_lock')).toBeLessThan(src.indexOf('select coalesce(sum(amount), 0) into v_used'));
+  });
+
   it('klien tidak dapat menulis ledger langsung', async () => {
     const a = await newUser(db);
     await expectDenied(asUser(db, a, (q) => q(`insert into public.points_ledger(user_id,source,ref,amount,day) values ($1,'deed','z',30,current_date)`, [a])));
@@ -328,9 +335,9 @@ describe('feed, komentar, moderasi', () => {
     const post = (await asUser(db, b, (q) => q<{ id: string }>('insert into public.feed_posts(circle_id, body) values ($1,$2) returning id', [cid, 'halo'])))[0]!.id;
     await asUser(db, a, (q) => q('update public.circles set comments_enabled = false where id=$1', [cid]));
     await expectDenied(asUser(db, a, (q) => q(`insert into public.comments(post_id, body) values ($1,'x')`, [post])));
-    await asUser(db, a, (q) => q('update public.feed_posts set hidden = true where id=$1', [post]));
+    await asUser(db, a, (q) => q('select public.set_post_hidden($1, true)', [post]));
     expect(await asUser(db, b, (q) => q('select * from public.feed_posts where id=$1', [post]))).toHaveLength(1); // penulis tetap melihat
-    await asUser(db, a, (q) => q('update public.feed_posts set hidden = false where id=$1', [post]));
+    await asUser(db, a, (q) => q('select public.set_post_hidden($1, false)', [post]));
     const postA = (await asUser(db, a, (q) => q<{ id: string }>('insert into public.feed_posts(circle_id, body) values ($1,$2) returning id', [cid, 'dari a'])))[0]!.id;
     await asUser(db, a, (q) => q('insert into public.blocks(blocked) values ($1)', [b]));
     // a tidak lagi melihat konten b, dan b tidak lagi melihat konten a (dua arah)
@@ -344,6 +351,51 @@ describe('feed, komentar, moderasi', () => {
     const a = await newUser(db);
     await asUser(db, a, (q) => q(`insert into public.reports(target_type, target_id, reason) values ('post', gen_random_uuid(), 'spam')`));
     await expectDenied(asUser(db, a, (q) => q('select * from public.reports')));
+  });
+});
+
+describe('moderasi admin terbatas & hak kolom', () => {
+  it('admin tidak dapat mengubah isi/penulis kiriman, hanya menyembunyikan lewat RPC', async () => {
+    const a = await newUser(db);
+    const b = await newUser(db);
+    const cid = await circleWith(a, [b]);
+    const post = (await asUser(db, b, (q) => q<{ id: string }>('insert into public.feed_posts(circle_id, body) values ($1,$2) returning id', [cid, 'asli'])))[0]!.id;
+    await expectDenied(asUser(db, a, (q) => q(`update public.feed_posts set body = 'diubah' where id = $1`, [post])));
+    await expectDenied(asUser(db, a, (q) => q(`update public.feed_posts set user_id = $2 where id = $1`, [post, a])));
+    await expectDenied(asUser(db, a, (q) => q(`update public.feed_posts set hidden = true where id = $1`, [post])));
+    await expectDenied(asUser(db, b, (q) => q('select public.set_post_hidden($1, true)', [post]))); // bukan admin
+    await asUser(db, a, (q) => q('select public.set_post_hidden($1, true)', [post]));
+    const row = (await db.query<{ body: string; user_id: string; hidden: boolean }>('select body, user_id, hidden from public.feed_posts where id=$1', [post])).rows[0]!;
+    expect(row).toEqual({ body: 'asli', user_id: b, hidden: true });
+  });
+
+  it('komentar: admin menyembunyikan lewat RPC, tak dapat mengubah isi', async () => {
+    const a = await newUser(db);
+    const b = await newUser(db);
+    const cid = await circleWith(a, [b]);
+    const post = (await asUser(db, a, (q) => q<{ id: string }>('insert into public.feed_posts(circle_id, body) values ($1,$2) returning id', [cid, 'p'])))[0]!.id;
+    const cm = (await asUser(db, b, (q) => q<{ id: string }>(`insert into public.comments(post_id, body) values ($1,'halo') returning id`, [post])))[0]!.id;
+    await expectDenied(asUser(db, a, (q) => q(`update public.comments set body = 'x' where id = $1`, [cm])));
+    await expectDenied(asUser(db, b, (q) => q('select public.set_comment_hidden($1, true)', [cm])));
+    await asUser(db, a, (q) => q('select public.set_comment_hidden($1, true)', [cm]));
+    expect((await db.query<{ hidden: boolean; body: string }>('select hidden, body from public.comments where id=$1', [cm])).rows[0]).toEqual({ hidden: true, body: 'halo' });
+  });
+
+  it('kolom identitas/kepemilikan tidak dapat diubah klien (circles, circle_members, profiles, challenges)', async () => {
+    const a = await newUser(db);
+    const b = await newUser(db);
+    const cid = await circleWith(a, [b]);
+    await expectDenied(asUser(db, a, (q) => q(`update public.circles set invite_code = 'CURIAN0000' where id = $1`, [cid])));
+    await expectDenied(asUser(db, a, (q) => q(`update public.circles set created_by = $2 where id = $1`, [cid, b])));
+    await expectDenied(asUser(db, a, (q) => q(`update public.circle_members set role = 'admin' where circle_id = $1 and user_id = $2`, [cid, b])));
+    await expectDenied(asUser(db, a, (q) => q(`update public.circle_members set user_id = $3 where circle_id = $1 and user_id = $2`, [cid, b, a])));
+    await expectDenied(asUser(db, b, (q) => q(`update public.profiles set id = gen_random_uuid() where id = $1`, [b])));
+    const ch = (await asUser(db, a, (q) => q<{ id: string }>(`insert into public.circle_challenges(circle_id,title,target,starts_on,ends_on) values ($1,'t',10,current_date,current_date + 1) returning id`, [cid])))[0]!.id;
+    await expectDenied(asUser(db, a, (q) => q(`update public.circle_challenges set circle_id = gen_random_uuid() where id = $1`, [ch])));
+    // kolom yang diizinkan tetap bisa
+    await asUser(db, a, (q) => q(`update public.circles set name = 'Baru', comments_enabled = false where id = $1`, [cid]));
+    await asUser(db, b, (q) => q(`update public.profiles set display_name = 'Nama', honor_mode = true where id = $1`, [b]));
+    await asUser(db, a, (q) => q(`update public.circle_challenges set title = 'Judul baru' where id = $1`, [ch]));
   });
 });
 

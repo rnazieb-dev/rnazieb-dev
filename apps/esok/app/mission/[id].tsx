@@ -118,7 +118,14 @@ export default function MissionScreen() {
         <>
           <SectionTitle>Selesaikan</SectionTitle>
           <Field label="Catatan (opsional)" value={note} onChangeText={setNote} multiline maxLength={500} />
-          <VisibilityPicker value={vis} onChange={setVis} allowSecret={mission.canBeSecret && !shared} />
+          {shared && circle ? (
+            <Card>
+              <Text variant="label">Dibagikan ke lingkaran</Text>
+              <Text muted>Misi bersama otomatis dibagikan ke lingkaran tempat misi ini dimulai (agar teman dapat mengonfirmasi).</Text>
+            </Card>
+          ) : (
+            <VisibilityPicker value={vis} onChange={setVis} allowSecret={mission.canBeSecret} />
+          )}
           <Button title="Tandai selesai" onPress={complete} loading={busy} disabled={vis.visibility === 'circle' && !vis.circleId} />
           <Button title="Lewati hari ini" variant="ghost" onPress={async () => { await skipMission(db, mission, today); bump(); router.back(); }} />
         </>

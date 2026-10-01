@@ -386,8 +386,7 @@ create policy posts_insert on public.feed_posts for insert to authenticated with
                                   and d.visibility = 'circle' and d.circle_id = feed_posts.circle_id and d.deleted_at is null))
   and hidden = false
 );
-create policy posts_update_admin on public.feed_posts for update to authenticated
-  using (is_circle_admin(circle_id)) with check (is_circle_admin(circle_id));
+-- Tidak ada kebijakan UPDATE pada feed_posts/comments: moderasi hanya lewat RPC set_*_hidden (kolom `hidden` saja).
 create policy posts_delete on public.feed_posts for delete to authenticated
   using (user_id = auth.uid() or is_circle_admin(circle_id));
 
@@ -407,9 +406,6 @@ create policy comments_delete on public.comments for delete to authenticated usi
   user_id = auth.uid()
   or exists (select 1 from feed_posts p where p.id = post_id and is_circle_admin(p.circle_id))
 );
-create policy comments_hide_admin on public.comments for update to authenticated
-  using (exists (select 1 from feed_posts p where p.id = post_id and is_circle_admin(p.circle_id)))
-  with check (exists (select 1 from feed_posts p where p.id = post_id and is_circle_admin(p.circle_id)));
 
 -- tantangan
 create policy challenges_select on public.circle_challenges for select to authenticated using (is_circle_member(circle_id));
@@ -486,6 +482,8 @@ begin
   if v_uid is null then raise exception 'unauthenticated'; end if;
   select * into v_deed from deeds where id = p_deed_id and user_id = v_uid and deleted_at is null;
   if not found then raise exception 'deed not found'; end if;
+  -- Serialisasi per pengguna/hari: RPC paralel (mis. dua perangkat) tak boleh melampaui batas harian.
+  perform pg_advisory_xact_lock(hashtextextended(v_uid::text || ':' || v_deed.day::text, 0));
   if exists (select 1 from points_ledger where user_id = v_uid and source = 'deed' and ref = p_deed_id::text) then
     return 0;
   end if;
@@ -664,6 +662,25 @@ begin
   if not found then raise exception 'peserta belum menandai selesai'; end if;
 end $$;
 
+-- Moderasi: admin hanya dapat menyembunyikan/menampilkan (bukan mengubah isi atau penulis).
+create function public.set_post_hidden(p_post uuid, p_hidden boolean) returns void
+language plpgsql security definer set search_path = public as $$
+declare v_circle uuid;
+begin
+  select circle_id into v_circle from feed_posts where id = p_post;
+  if v_circle is null or not is_circle_admin(v_circle) then raise exception 'bukan admin'; end if;
+  update feed_posts set hidden = p_hidden where id = p_post;
+end $$;
+
+create function public.set_comment_hidden(p_comment uuid, p_hidden boolean) returns void
+language plpgsql security definer set search_path = public as $$
+declare v_circle uuid;
+begin
+  select p.circle_id into v_circle from comments c join feed_posts p on p.id = c.post_id where c.id = p_comment;
+  if v_circle is null or not is_circle_admin(v_circle) then raise exception 'bukan admin'; end if;
+  update comments set hidden = p_hidden where id = p_comment;
+end $$;
+
 -- Hapus akun: seluruh data terhapus lewat ON DELETE CASCADE.
 create function public.delete_my_account() returns void
 language plpgsql security definer set search_path = public as $$
@@ -679,9 +696,13 @@ revoke all on all tables in schema public from anon, authenticated;
 revoke all on all functions in schema public from public, anon;
 grant usage on schema public to authenticated;
 
-grant select, update on public.profiles to authenticated;
-grant select, update, delete on public.circles to authenticated;
-grant select, update, delete on public.circle_members to authenticated;
+-- Hak UPDATE diberikan per KOLOM agar kolom identitas/kepemilikan tak dapat diubah klien.
+grant select on public.profiles, public.circles, public.circle_members to authenticated;
+grant update (display_name, show_in_rankings, honor_mode) on public.profiles to authenticated;
+grant update (name, rankings_enabled, comments_enabled) on public.circles to authenticated;
+grant delete on public.circles to authenticated;
+grant update (status) on public.circle_members to authenticated;
+grant delete on public.circle_members to authenticated;
 grant select, insert, delete on public.blocks to authenticated;
 grant select, insert, update on public.deeds to authenticated;
 grant select, insert, update, delete on public.private_items to authenticated;
@@ -689,10 +710,11 @@ grant select, insert, update, delete on public.key_envelopes to authenticated;
 grant select on public.mission_points to authenticated;
 grant select on public.shared_missions, public.shared_participants to authenticated;
 grant select on public.points_ledger to authenticated;
-grant select, insert, update, delete on public.feed_posts to authenticated;
+grant select, insert, delete on public.feed_posts to authenticated;
 grant select, insert, delete on public.reactions to authenticated;
-grant select, insert, update, delete on public.comments to authenticated;
-grant select, insert, update, delete on public.circle_challenges to authenticated;
+grant select, insert, delete on public.comments to authenticated;
+grant select, insert, delete on public.circle_challenges to authenticated;
+grant update (title, description, target, unit, starts_on, ends_on) on public.circle_challenges to authenticated;
 grant select on public.challenge_contributions to authenticated;
 grant select on public.nudges to authenticated;
 grant insert on public.reports to authenticated;
@@ -706,5 +728,6 @@ grant execute on function
   public.circle_leaderboard(uuid, date), public.contribute_challenge(uuid, int),
   public.challenge_progress(uuid), public.send_nudge(uuid, uuid, text),
   public.start_shared_mission(uuid, text, date), public.join_shared_mission(uuid),
-  public.mark_shared_done(uuid), public.confirm_shared_done(uuid, uuid), public.delete_my_account()
+  public.mark_shared_done(uuid), public.confirm_shared_done(uuid, uuid), public.delete_my_account(),
+  public.set_post_hidden(uuid, boolean), public.set_comment_hidden(uuid, boolean)
 to authenticated;

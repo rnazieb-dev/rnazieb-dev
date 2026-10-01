@@ -44,6 +44,10 @@ export interface CompleteInput {
 export async function completeMission(db: Db, input: CompleteInput): Promise<string> {
   const { mission, day, visibility } = input;
   if (visibility === 'secret' && !mission.canBeSecret) throw new Error('Misi ini tidak dapat dijadikan rahasia.');
+  // Misi bersama harus dibagikan ke lingkaran asalnya; kalau tidak, server menolak poin selamanya.
+  if (input.sharedId && (visibility !== 'circle' || !input.circleId)) {
+    throw new Error('Misi bersama harus dibagikan ke lingkaran tempat misi ini dimulai.');
+  }
   const aday = assignmentDay(mission, day);
   const existing = (await missionRows(db, [aday])).find((r) => r.mission_id === mission.id);
   if (existing?.status === 'done') throw new Error('Misi ini sudah diselesaikan.');

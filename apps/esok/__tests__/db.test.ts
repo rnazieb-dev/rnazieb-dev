@@ -153,6 +153,20 @@ describe('misi', () => {
   });
 });
 
+describe('misi bersama harus terikat ke lingkaran', () => {
+  it('ditolak tanpa lingkaran / dengan visibilitas lain; misi tetap aktif; dengan lingkaran → selesai', async () => {
+    const db = await createMigratedTestDb();
+    const m = MISSIONS.find((x) => x.canBeShared)!;
+    await ensureAssignments(db, DAY, 'u', 3);
+    await expect(completeMission(db, { mission: m, day: DAY, visibility: 'public', sharedId: 's1', dek: null })).rejects.toThrow(/lingkaran/);
+    await expect(completeMission(db, { mission: m, day: DAY, visibility: 'circle', circleId: null, sharedId: 's1', dek: null })).rejects.toThrow(/lingkaran/);
+    expect(await db.all(`SELECT * FROM user_missions WHERE mission_id = ? AND status = 'done'`, [m.id])).toHaveLength(0);
+    expect(await db.all('SELECT * FROM deeds')).toHaveLength(0);
+    await completeMission(db, { mission: m, day: DAY, visibility: 'circle', circleId: 'c1', sharedId: 's1', dek: null });
+    expect(await db.all(`SELECT * FROM user_missions WHERE mission_id = ? AND status = 'done'`, [m.id])).toHaveLength(1);
+  });
+});
+
 describe('batas poin harian lokal', () => {
   it('poin per hari dibatasi 100 (publik & rahasia), seperti server', async () => {
     const db = await createMigratedTestDb();
