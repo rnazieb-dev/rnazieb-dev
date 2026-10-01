@@ -54,11 +54,11 @@
     "ios": "expo start --ios",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings=0",
-    "test": "jest",
-    "test:rls": "jest --selectProjects rls",
+    "test": "jest --testPathIgnorePatterns=/node_modules/ --testPathIgnorePatterns=/helpers/ --testPathIgnorePatterns=rls.test && npm run test:rls",
     "build:content": "tsx scripts/build-content.ts",
     "validate:content": "tsx scripts/validate-content.ts",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "test:rls": "NODE_OPTIONS=--experimental-vm-modules jest rls.test --testPathIgnorePatterns=/node_modules/ --testPathIgnorePatterns=/helpers/"
   },
   "private": true,
   "jest": {

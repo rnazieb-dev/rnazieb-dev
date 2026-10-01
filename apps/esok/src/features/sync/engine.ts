@@ -89,14 +89,15 @@ async function pullTable(db: Db, remote: Remote, table: SyncTable): Promise<numb
   for (let guard = 0; guard < 1000; guard++) {
     const page = await remote.pull(table, cursor);
     for (const row of page.rows) if (await mergeRow(db, table, row)) merged++;
-    if (page.cursor && page.cursor !== cursor) {
+    const advanced = !!page.cursor && page.cursor !== cursor;
+    if (advanced) {
       cursor = page.cursor;
       await db.run(
         'INSERT INTO sync_state(table_name, cursor) VALUES(?, ?) ON CONFLICT(table_name) DO UPDATE SET cursor = excluded.cursor',
         [table, cursor],
       );
     }
-    if (page.rows.length < PAGE) break;
+    if (page.rows.length < PAGE || !advanced) break;
   }
   return merged;
 }

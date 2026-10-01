@@ -69,3 +69,22 @@ fs.copyFileSync(
   path.join(root, 'src/content/missions.generated.json'),
 );
 console.log('missions.generated.json disalin');
+
+// Katalog poin untuk server (sumber kebenaran poin) — dihasilkan dari katalog misi.
+{
+  interface M { id: string; points: number; cadence: string; canBeShared: boolean; minPeople?: number }
+  const missions = JSON.parse(fs.readFileSync(path.join(root, 'content/missions.source.json'), 'utf8')) as M[];
+  const esc = (s: string) => s.replace(/'/g, "''");
+  const values = missions
+    .map((m) => `  ('${esc(m.id)}', ${m.points}, '${m.cadence}', ${m.canBeShared ? 'true' : 'false'}, ${m.canBeShared ? (m.minPeople ?? 2) : 'null'})`)
+    .join(',\n');
+  const sql = `-- DIHASILKAN oleh scripts/build-content.ts dari content/missions.source.json. Jangan diedit manual.
+insert into public.mission_points(mission_id, points, cadence, can_be_shared, min_people) values
+${values}
+on conflict (mission_id) do update set
+  points = excluded.points, cadence = excluded.cadence,
+  can_be_shared = excluded.can_be_shared, min_people = excluded.min_people;
+`;
+  fs.writeFileSync(path.join(root, 'supabase/migrations/0002_mission_points.sql'), sql);
+  console.log('0002_mission_points.sql dihasilkan');
+}

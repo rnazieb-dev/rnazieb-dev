@@ -14,7 +14,8 @@ export function createSupabaseRemote(client: SupabaseClient, userId: string): Re
     },
     async pull(table, cursor) {
       let q = client.from(table).select('*').eq('user_id', userId).order('synced_at', { ascending: true }).limit(PAGE);
-      if (cursor) q = q.gt('synced_at', cursor);
+      // gte: aman terhadap stempel waktu kembar di batas halaman (merge idempoten).
+      if (cursor) q = q.gte('synced_at', cursor);
       const { data, error } = await q;
       if (error) throw new Error(`Pull ${table} gagal: ${error.message}`);
       const rows = (data ?? []) as RemoteRow[];
