@@ -16,7 +16,9 @@ class FakeRemote implements Remote {
       const newer =
         !cur ||
         (table === 'private_items'
-          ? (r.rev as number) > (cur.rev as number) || ((r.rev as number) === (cur.rev as number) && String(r.updated_at) > String(cur.updated_at))
+          ? (r.rev as number) > (cur.rev as number) ||
+            ((r.rev as number) === (cur.rev as number) && String(r.updated_at) > String(cur.updated_at)) ||
+            ((r.rev as number) === (cur.rev as number) && String(r.updated_at) === String(cur.updated_at) && String(r.nonce) > String(cur.nonce))
           : String(r.updated_at) > String(cur.updated_at));
       if (newer) this.tables[table].set(r.id as string, { ...r, synced_at: String(++this.clock).padStart(8, '0') });
     }
@@ -94,6 +96,28 @@ describe('sinkronisasi', () => {
     await hydratePrivate(b, dek);
     expect((await getReflection(a, dek, DAY)).niat).toBe('a-3');
     expect((await getReflection(b, dek, DAY)).niat).toBe('a-3');
+  });
+
+  it('seri penuh (rev & hari sama di dua perangkat) tetap konvergen — nonce terbesar menang', async () => {
+    await saveReflection(a, dek, DAY, { niat: 'dasar', syukur: '', penyesalan: '', tekad: '' });
+    await syncAll(a, remote);
+    await syncAll(b, remote);
+    await hydratePrivate(b, dek);
+    // keduanya mengedit offline pada hari yang sama → rev sama (2), updated_at sama
+    await saveReflection(a, dek, DAY, { niat: 'dari-a', syukur: '', penyesalan: '', tekad: '' });
+    await saveReflection(b, dek, DAY, { niat: 'dari-b', syukur: '', penyesalan: '', tekad: '' });
+    for (let i = 0; i < 3; i++) {
+      await syncAll(a, remote);
+      await syncAll(b, remote);
+    }
+    await hydratePrivate(a, dek);
+    await hydratePrivate(b, dek);
+    const ra = (await getReflection(a, dek, DAY)).niat;
+    const rb = (await getReflection(b, dek, DAY)).niat;
+    expect(ra).toBe(rb);
+    expect(['dari-a', 'dari-b']).toContain(ra);
+    expect((await a.get<{ c: number }>('SELECT COUNT(*) c FROM private_items WHERE dirty = 1'))?.c).toBe(0);
+    expect((await b.get<{ c: number }>('SELECT COUNT(*) c FROM private_items WHERE dirty = 1'))?.c).toBe(0);
   });
 
   it('penghapusan merambat (soft delete)', async () => {

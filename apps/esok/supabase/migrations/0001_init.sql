@@ -185,12 +185,16 @@ create table public.points_ledger (
   circle_id uuid references public.circles(id) on delete cascade,
   source text not null check (source in ('deed')),
   ref text not null,
+  mission_id text,
   amount int not null check (amount > 0 and amount <= 30),
   day date not null,
   created_at timestamptz not null default now(),
   unique (user_id, source, ref)
 );
 create index points_ledger_circle on public.points_ledger(circle_id, day);
+-- Satu poin per (pengguna, misi, hari): mencegah dobel via amal ganda atau shared_id dikosongkan.
+create unique index points_ledger_once_per_mission_day on public.points_ledger(user_id, mission_id, day)
+  where mission_id is not null;
 create index points_ledger_user_day on public.points_ledger(user_id, day);
 
 -- =====================================================================
@@ -458,8 +462,12 @@ begin
     on conflict (user_id, id) do update set
       kind = excluded.kind, ciphertext = excluded.ciphertext, nonce = excluded.nonce, rev = excluded.rev,
       updated_at = excluded.updated_at, deleted_at = excluded.deleted_at
+    -- Seri (rev & hari sama dari dua perangkat) diputus deterministik oleh nonce terbesar;
+    -- klien memakai aturan yang sama sehingga semua perangkat konvergen.
     where private_items.rev < excluded.rev
-       or (private_items.rev = excluded.rev and private_items.updated_at < excluded.updated_at);
+       or (private_items.rev = excluded.rev and private_items.updated_at < excluded.updated_at)
+       or (private_items.rev = excluded.rev and private_items.updated_at = excluded.updated_at
+           and private_items.nonce < excluded.nonce);
   end loop;
 end $$;
 
@@ -484,17 +492,25 @@ begin
   -- cegah isi-ulang poin dari hari lampau
   if v_deed.day < current_date - 2 or v_deed.day > current_date + 1 then return 0; end if;
   v_pts := coalesce((select points from mission_points where mission_id = v_deed.mission_id), 3);
+  if v_deed.mission_id is not null and exists (
+       select 1 from points_ledger where user_id = v_uid and mission_id = v_deed.mission_id and day = v_deed.day) then
+    return 0;
+  end if;
   if v_deed.shared_id is not null then
-    if not exists (select 1 from shared_participants sp
-                   where sp.shared_id = v_deed.shared_id and sp.user_id = v_uid and sp.confirmed_by is not null) then
+    -- Tautan harus konsisten: misi, lingkaran, dan hari sama dengan misi bersama; peserta harus terkonfirmasi.
+    if not exists (select 1 from shared_missions sm
+                   join shared_participants sp on sp.shared_id = sm.id
+                   where sm.id = v_deed.shared_id and sm.mission_id is not distinct from v_deed.mission_id
+                     and sm.circle_id is not distinct from v_deed.circle_id and sm.day = v_deed.day
+                     and sp.user_id = v_uid and sp.confirmed_by is not null) then
       raise exception 'shared mission not confirmed';
     end if;
   end if;
   select coalesce(sum(amount), 0) into v_used from points_ledger where user_id = v_uid and day = v_deed.day;
   v_allowed := greatest(0, least(v_pts, 100 - v_used));
   if v_allowed = 0 then return 0; end if;
-  insert into points_ledger(user_id, circle_id, source, ref, amount, day)
-  values (v_uid, v_deed.circle_id, 'deed', p_deed_id::text, v_allowed, v_deed.day);
+  insert into points_ledger(user_id, circle_id, source, ref, mission_id, amount, day)
+  values (v_uid, v_deed.circle_id, 'deed', p_deed_id::text, v_deed.mission_id, v_allowed, v_deed.day);
   return v_allowed;
 end $$;
 

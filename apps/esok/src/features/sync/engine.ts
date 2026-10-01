@@ -52,15 +52,19 @@ function normalize(col: string, v: string | number | null | undefined): string |
 
 /** LWW: deeds → updated_at; private_items → rev, lalu updated_at. Seri → pertahankan lokal. */
 async function mergeRow(db: Db, table: SyncTable, row: RemoteRow): Promise<boolean> {
-  const local = await db.get<{ updated_at: string; rev?: number; dirty: number }>(
-    `SELECT updated_at, ${table === 'private_items' ? 'rev,' : ''} dirty FROM ${table} WHERE id = ?`,
+  const local = await db.get<{ updated_at: string; rev?: number; nonce?: string; dirty: number }>(
+    `SELECT updated_at, ${table === 'private_items' ? 'rev, nonce,' : ''} dirty FROM ${table} WHERE id = ?`,
     [row.id as string],
   );
   if (local) {
     const remoteNewer =
       table === 'private_items'
         ? (row.rev as number) > (local.rev ?? 0) ||
-          ((row.rev as number) === (local.rev ?? 0) && ts(row.updated_at) > ts(local.updated_at))
+          ((row.rev as number) === (local.rev ?? 0) && ts(row.updated_at) > ts(local.updated_at)) ||
+          // Seri penuh: nonce terbesar menang — aturan identik dengan server agar konvergen.
+          ((row.rev as number) === (local.rev ?? 0) &&
+            ts(row.updated_at) === ts(local.updated_at) &&
+            String(row.nonce) > (local.nonce ?? ''))
         : ts(row.updated_at) > ts(local.updated_at);
     if (!remoteNewer) return false;
   }

@@ -142,18 +142,23 @@ describe('deeds: tidak pernah menerima rahasia', () => {
   });
 });
 
+/** Misi berpoin tertinggi, berbeda-beda (poin hanya sekali per misi per hari). */
+const topMissions = async (n: number) =>
+  (await db.query<{ mission_id: string; points: number }>('select mission_id, points from public.mission_points order by points desc, mission_id limit $1', [n])).rows;
+
 describe('poin publik', () => {
   it('idempoten, memakai katalog server, batas harian 100', async () => {
     const a = await newUser(db);
     const ids: string[] = [];
+    const ms = await topMissions(6);
     await asUser(db, a, async (q) => {
-      for (let i = 0; i < 6; i++) {
-        const d = deedRow({ mission_id: 'bayar-utang-kecil', points: 30 });
+      for (const m of ms) {
+        const d = deedRow({ mission_id: m.mission_id, points: 30 });
         ids.push(d.id);
         await q('select public.push_deeds($1::jsonb)', [JSON.stringify([d])]);
       }
     });
-    const pts = (await db.query<{ points: number }>(`select points from public.mission_points where mission_id='bayar-utang-kecil'`)).rows[0]?.points;
+    const pts = ms[0]!.points;
     expect(pts).toBeGreaterThan(0);
     const first = await asUser(db, a, (q) => q<{ p: number }>('select public.award_points_for_deed($1) as p', [ids[0]]));
     expect(first[0]!.p).toBe(pts);
@@ -164,6 +169,40 @@ describe('poin publik', () => {
     expect(total).toBeLessThanOrEqual(100);
     const sum = (await asUser(db, a, (q) => q<{ s: string }>('select sum(amount)::text s from public.points_ledger')))[0]!.s;
     expect(Number(sum)).toBe(total);
+  });
+
+  it('satu poin per misi per hari: amal ganda / shared_id dikosongkan tidak menggandakan', async () => {
+    const a = await newUser(db);
+    const m = (await topMissions(1))[0]!;
+    const d1 = deedRow({ mission_id: m.mission_id });
+    const d2 = deedRow({ mission_id: m.mission_id });
+    await asUser(db, a, (q) => q('select public.push_deeds($1::jsonb)', [JSON.stringify([d1, d2])]));
+    expect((await asUser(db, a, (q) => q<{ p: number }>('select public.award_points_for_deed($1) as p', [d1.id])))[0]!.p).toBe(m.points);
+    expect((await asUser(db, a, (q) => q<{ p: number }>('select public.award_points_for_deed($1) as p', [d2.id])))[0]!.p).toBe(0);
+  });
+
+  it('shared_id harus konsisten (misi/lingkaran/hari) — tautan palsu ditolak', async () => {
+    const a = await newUser(db);
+    const b = await newUser(db);
+    const cid = await circleWith(a, [b]);
+    const shared = (await db.query<{ mission_id: string }>(`select mission_id from public.mission_points where can_be_shared order by mission_id limit 2`)).rows;
+    const sid = (await asUser(db, a, (q) => q<{ id: string }>('select public.start_shared_mission($1,$2,current_date) as id', [cid, shared[0]!.mission_id])))[0]!.id;
+    await asUser(db, b, (q) => q('select public.join_shared_mission($1)', [sid]));
+    await asUser(db, a, (q) => q('select public.mark_shared_done($1)', [sid]));
+    await asUser(db, b, (q) => q('select public.confirm_shared_done($1,$2)', [sid, a]));
+    // deed dengan misi berbeda tetapi menunjuk shared_id yang terkonfirmasi → ditolak
+    const wrong = deedRow({ visibility: 'circle', circle_id: cid, mission_id: shared[1]!.mission_id, shared_id: sid });
+    await asUser(db, a, (q) => q('select public.push_deeds($1::jsonb)', [JSON.stringify([wrong])]));
+    await expectDenied(asUser(db, a, (q) => q('select public.award_points_for_deed($1)', [wrong.id])));
+    // lingkaran berbeda → ditolak
+    const cid2 = await circleWith(a);
+    const wrongCircle = deedRow({ visibility: 'circle', circle_id: cid2, mission_id: shared[0]!.mission_id, shared_id: sid });
+    await asUser(db, a, (q) => q('select public.push_deeds($1::jsonb)', [JSON.stringify([wrongCircle])]));
+    await expectDenied(asUser(db, a, (q) => q('select public.award_points_for_deed($1)', [wrongCircle.id])));
+    // yang benar → diberi poin
+    const good = deedRow({ visibility: 'circle', circle_id: cid, mission_id: shared[0]!.mission_id, shared_id: sid });
+    await asUser(db, a, (q) => q('select public.push_deeds($1::jsonb)', [JSON.stringify([good])]));
+    expect((await asUser(db, a, (q) => q<{ p: number }>('select public.award_points_for_deed($1) as p', [good.id])))[0]!.p).toBeGreaterThan(0);
   });
 
   it('klien tidak dapat menulis ledger langsung', async () => {
@@ -222,9 +261,10 @@ describe('lingkaran & peringkat', () => {
     const u2 = await newUser(db, 'Dua');
     const u3 = await newUser(db, 'Tiga');
     const cid = await circleWith(admin, [u1, u2, u3]);
+    const ms = await topMissions(3);
     const award = async (u: string, n: number) => {
       for (let i = 0; i < n; i++) {
-        const d = deedRow({ visibility: 'circle', circle_id: cid, mission_id: 'bayar-utang-kecil' });
+        const d = deedRow({ visibility: 'circle', circle_id: cid, mission_id: ms[i]!.mission_id });
         await asUser(db, u, (q) => q('select public.push_deeds($1::jsonb)', [JSON.stringify([d])]));
         await asUser(db, u, (q) => q('select public.award_points_for_deed($1)', [d.id]));
       }
