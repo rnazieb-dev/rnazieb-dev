@@ -1,0 +1,1176 @@
+[
+  {
+    "id": "baca-quran-sehalaman",
+    "title": "Baca Al-Qur'an satu halaman",
+    "description": "Luangkan waktu tenang untuk membaca satu halaman Al-Qur'an, pelan dan tanpa terburu-buru.",
+    "category": "ibadah",
+    "cadence": "daily",
+    "difficulty": 1,
+    "points": 6,
+    "dalil": {
+      "source": "QS Al-Muzzammil 73:20",
+      "grade": "quran",
+      "gist": "Bacalah dari Al-Qur'an apa yang mudah bagimu."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 8
+  },
+  {
+    "id": "dzikir-tenang",
+    "title": "Berdzikir dengan tenang",
+    "description": "Duduk sejenak dan sebut nama Allah dengan hati hadir, berapa pun yang terasa cukup bagimu.",
+    "category": "ibadah",
+    "cadence": "daily",
+    "difficulty": 1,
+    "points": 6,
+    "dalil": {
+      "source": "QS Ar-Ra'd 13:28",
+      "grade": "quran",
+      "gist": "Dengan mengingat Allah, hati menjadi tenteram."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 5
+  },
+  {
+    "id": "istighfar-sejenak",
+    "title": "Mohon ampun sejenak",
+    "description": "Ucapkan istighfar dengan sadar dan tulus, sambil mengingat kesalahan yang ingin kamu perbaiki.",
+    "category": "ibadah",
+    "cadence": "daily",
+    "difficulty": 1,
+    "points": 6,
+    "dalil": {
+      "source": "QS Nuh 71:10",
+      "grade": "quran",
+      "gist": "Mohonlah ampun kepada Tuhanmu; Dia Maha Pengampun."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 5
+  },
+  {
+    "id": "shalawat-sejenak",
+    "title": "Bershalawat untuk Nabi",
+    "description": "Luangkan beberapa menit untuk bershalawat kepada Nabi Muhammad dengan khusyuk.",
+    "category": "ibadah",
+    "cadence": "daily",
+    "difficulty": 1,
+    "points": 6,
+    "dalil": {
+      "source": "QS Al-Ahzab 33:56",
+      "grade": "quran",
+      "gist": "Allah dan malaikat bershalawat kepada Nabi; orang beriman diperintahkan bershalawat."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 5
+  },
+  {
+    "id": "shalat-wajib-tenang",
+    "title": "Shalat wajib dengan lebih khusyuk",
+    "description": "Pilih satu shalat wajib hari ini dan kerjakan dengan lebih pelan serta penuh kesadaran.",
+    "category": "ibadah",
+    "cadence": "daily",
+    "difficulty": 2,
+    "points": 11,
+    "dalil": {
+      "source": "QS An-Nisa 4:103",
+      "grade": "quran",
+      "gist": "Shalat adalah kewajiban yang waktunya telah ditentukan bagi orang beriman."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 15
+  },
+  {
+    "id": "doakan-orang-tua",
+    "title": "Doakan kedua orang tuamu",
+    "description": "Selipkan doa untuk ayah dan ibu, yang masih ada maupun yang telah tiada.",
+    "category": "keluarga",
+    "cadence": "daily",
+    "difficulty": 1,
+    "points": 5,
+    "dalil": {
+      "source": "QS Ibrahim 14:41",
+      "grade": "quran",
+      "gist": "Doa memohon ampunan bagi diri, kedua orang tua, dan kaum mukminin."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 3
+  },
+  {
+    "id": "senyum-hari-ini",
+    "title": "Senyum pada seseorang",
+    "description": "Berikan senyum tulus kepada orang yang kamu temui hari ini, di rumah maupun di jalan.",
+    "category": "sosial",
+    "cadence": "daily",
+    "difficulty": 1,
+    "points": 5,
+    "dalil": {
+      "source": "HR. Tirmidzi no. 1956",
+      "grade": "sahih",
+      "gist": "Senyum kepada saudaramu adalah sedekah."
+    },
+    "canBeSecret": false,
+    "canBeShared": false,
+    "estimateMinutes": 2
+  },
+  {
+    "id": "salam-balas-baik",
+    "title": "Sapa dan balas salam dengan baik",
+    "description": "Mulai salam lebih dulu atau balas salam dengan lebih ramah kepada orang di sekitarmu.",
+    "category": "sosial",
+    "cadence": "daily",
+    "difficulty": 1,
+    "points": 5,
+    "dalil": {
+      "source": "QS An-Nisa 4:86",
+      "grade": "quran",
+      "gist": "Jika diberi penghormatan, balaslah dengan yang lebih baik atau yang serupa."
+    },
+    "canBeSecret": false,
+    "canBeShared": false,
+    "estimateMinutes": 3
+  },
+  {
+    "id": "kata-baik-atau-diam",
+    "title": "Berkata baik atau diam",
+    "description": "Hari ini pilih kata-kata yang baik; kalau ragu, lebih baik diam dulu.",
+    "category": "diri",
+    "cadence": "daily",
+    "difficulty": 2,
+    "points": 11,
+    "dalil": {
+      "source": "HR. Bukhari no. 6018 & Muslim no. 47",
+      "grade": "sahih",
+      "gist": "Siapa beriman kepada Allah dan hari akhir, hendaklah berkata baik atau diam."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 15
+  },
+  {
+    "id": "sedekah-kecil-harian",
+    "title": "Sedekah kecil hari ini",
+    "description": "Berikan sedikit rezeki langsung kepada orang yang membutuhkan atau ke kotak masjid, sebanyak yang ringan bagimu.",
+    "category": "sedekah",
+    "cadence": "daily",
+    "difficulty": 1,
+    "points": 6,
+    "dalil": {
+      "source": "QS Al-Baqarah 2:261",
+      "grade": "quran",
+      "gist": "Perumpamaan orang yang berinfak di jalan Allah adalah seperti sebutir benih yang tumbuh berlipat."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 5
+  },
+  {
+    "id": "catat-tiga-syukur",
+    "title": "Catat tiga hal yang disyukuri",
+    "description": "Tuliskan tiga hal sederhana yang membuat harimu lebih ringan.",
+    "category": "diri",
+    "cadence": "daily",
+    "difficulty": 1,
+    "points": 6,
+    "dalil": null,
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 5
+  },
+  {
+    "id": "kabari-orang-tua",
+    "title": "Kabari ayah atau ibu",
+    "description": "Telepon atau kirim pesan hangat kepada orang tuamu dan tanyakan kabar mereka.",
+    "category": "keluarga",
+    "cadence": "daily",
+    "difficulty": 2,
+    "points": 11,
+    "dalil": {
+      "source": "HR. Bukhari no. 5971 & Muslim no. 2548",
+      "grade": "sahih",
+      "gist": "Ibu adalah orang yang paling berhak atas baktimu."
+    },
+    "canBeSecret": false,
+    "canBeShared": false,
+    "estimateMinutes": 10
+  },
+  {
+    "id": "dengar-keluarga",
+    "title": "Dengarkan cerita keluarga",
+    "description": "Dengarkan satu anggota keluarga bercerita tanpa memotong dan tanpa melihat ponsel.",
+    "category": "keluarga",
+    "cadence": "daily",
+    "difficulty": 1,
+    "points": 7,
+    "dalil": null,
+    "canBeSecret": false,
+    "canBeShared": true,
+    "minPeople": 2,
+    "estimateMinutes": 10
+  },
+  {
+    "id": "bantu-kerjaan-rumah",
+    "title": "Bantu satu pekerjaan rumah",
+    "description": "Kerjakan satu tugas rumah tanpa diminta, seperti mencuci piring atau merapikan ruang tamu.",
+    "category": "keluarga",
+    "cadence": "daily",
+    "difficulty": 1,
+    "points": 7,
+    "dalil": {
+      "source": "HR. Bukhari no. 6021 & Muslim no. 1005",
+      "grade": "sahih",
+      "gist": "Setiap kebaikan adalah sedekah."
+    },
+    "canBeSecret": true,
+    "canBeShared": true,
+    "minPeople": 2,
+    "estimateMinutes": 10
+  },
+  {
+    "id": "baca-ilmu-sepuluh-menit",
+    "title": "Baca ilmu bermanfaat 10 menit",
+    "description": "Baca artikel atau buku yang menambah ilmu agama atau keterampilan hidupmu.",
+    "category": "ilmu",
+    "cadence": "daily",
+    "difficulty": 1,
+    "points": 7,
+    "dalil": {
+      "source": "QS Al-Mujadilah 58:11",
+      "grade": "quran",
+      "gist": "Allah mengangkat derajat orang beriman dan orang berilmu."
+    },
+    "canBeSecret": false,
+    "canBeShared": false,
+    "estimateMinutes": 10
+  },
+  {
+    "id": "ulang-hafalan-ayat",
+    "title": "Ulangi hafalan satu ayat",
+    "description": "Baca ulang satu ayat yang sudah kamu hafal, atau mulai menghafal satu ayat pendek.",
+    "category": "ilmu",
+    "cadence": "daily",
+    "difficulty": 2,
+    "points": 11,
+    "dalil": {
+      "source": "QS Al-Qamar 54:17",
+      "grade": "quran",
+      "gist": "Al-Qur'an telah dimudahkan untuk menjadi pelajaran."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 10
+  },
+  {
+    "id": "jalan-kaki-santai",
+    "title": "Jalan kaki santai 15 menit",
+    "description": "Berjalan kaki santai sambil bersyukur atas kesehatan dan hal-hal kecil di sekitarmu.",
+    "category": "diri",
+    "cadence": "daily",
+    "difficulty": 1,
+    "points": 8,
+    "dalil": null,
+    "canBeSecret": true,
+    "canBeShared": true,
+    "minPeople": 2,
+    "estimateMinutes": 15
+  },
+  {
+    "id": "jeda-dari-gawai",
+    "title": "Jeda sejam dari gawai",
+    "description": "Matikan notifikasi selama satu jam dan gunakan waktunya untuk hal yang lebih bermakna.",
+    "category": "diri",
+    "cadence": "daily",
+    "difficulty": 2,
+    "points": 15,
+    "dalil": null,
+    "canBeSecret": true,
+    "canBeShared": true,
+    "minPeople": 2,
+    "estimateMinutes": 60
+  },
+  {
+    "id": "buang-sampah-tepat",
+    "title": "Buang sampah pada tempatnya",
+    "description": "Pastikan semua sampahmu hari ini masuk tempatnya, dan pungut satu sampah yang bukan milikmu.",
+    "category": "lingkungan",
+    "cadence": "daily",
+    "difficulty": 1,
+    "points": 6,
+    "dalil": null,
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 5
+  },
+  {
+    "id": "hemat-air-listrik",
+    "title": "Hemat air dan listrik hari ini",
+    "description": "Matikan lampu dan kipas yang tidak dipakai, serta tutup keran selagi tidak digunakan.",
+    "category": "lingkungan",
+    "cadence": "daily",
+    "difficulty": 1,
+    "points": 6,
+    "dalil": {
+      "source": "QS Al-A'raf 7:31",
+      "grade": "quran",
+      "gist": "Makan dan minumlah, tetapi jangan berlebih-lebihan."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 5
+  },
+  {
+    "id": "niat-baik-untuk-esok",
+    "title": "Tulis satu niat baik untuk esok",
+    "description": "Tuliskan satu kebaikan kecil yang ingin kamu lakukan besok, lalu simpan di tempat yang terlihat.",
+    "category": "diri",
+    "cadence": "daily",
+    "difficulty": 1,
+    "points": 6,
+    "dalil": {
+      "source": "QS Al-Hasyr 59:18",
+      "grade": "quran",
+      "gist": "Hendaklah setiap orang memperhatikan apa yang ia persiapkan untuk hari esok."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 5
+  },
+  {
+    "id": "maafkan-kesalahan-kecil",
+    "title": "Maafkan satu kesalahan kecil",
+    "description": "Pilih satu kesalahan kecil seseorang kepadamu, lalu lepaskan tanpa perlu memberitahunya.",
+    "category": "memaafkan",
+    "cadence": "daily",
+    "difficulty": 2,
+    "points": 11,
+    "dalil": {
+      "source": "QS Ali Imran 3:134",
+      "grade": "quran",
+      "gist": "Orang bertakwa menahan amarah dan memaafkan sesama manusia."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 10
+  },
+  {
+    "id": "bantu-satu-orang",
+    "title": "Bantu satu orang yang kesulitan",
+    "description": "Cari satu orang di sekitarmu yang sedang kesulitan, lalu bantu sesuai kemampuanmu.",
+    "category": "sosial",
+    "cadence": "daily",
+    "difficulty": 2,
+    "points": 11,
+    "dalil": {
+      "source": "HR. Muslim no. 2699",
+      "grade": "sahih",
+      "gist": "Siapa melapangkan kesulitan seorang mukmin, Allah melapangkan kesulitannya."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 15
+  },
+  {
+    "id": "doakan-teman",
+    "title": "Doakan seorang teman",
+    "description": "Sebutkan satu nama temanmu dalam doa dan mohonkan kebaikan baginya.",
+    "category": "ibadah",
+    "cadence": "daily",
+    "difficulty": 1,
+    "points": 5,
+    "dalil": {
+      "source": "QS Al-Baqarah 2:186",
+      "grade": "quran",
+      "gist": "Allah dekat dan mengabulkan doa orang yang berdoa kepada-Nya."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 3
+  },
+  {
+    "id": "kunjungi-orang-tua-bersama",
+    "title": "Kunjungi orang tua bersama",
+    "description": "Ajak saudara atau pasanganmu mengunjungi orang tua pekan ini, cukup untuk duduk dan mengobrol.",
+    "category": "keluarga",
+    "cadence": "weekly",
+    "difficulty": 3,
+    "points": 30,
+    "dalil": {
+      "source": "HR. Bukhari no. 5971 & Muslim no. 2548",
+      "grade": "sahih",
+      "gist": "Ibu adalah orang yang paling berhak atas baktimu."
+    },
+    "canBeSecret": false,
+    "canBeShared": true,
+    "minPeople": 2,
+    "estimateMinutes": 120
+  },
+  {
+    "id": "makan-bersama-keluarga",
+    "title": "Makan bersama keluarga",
+    "description": "Siapkan satu kali makan bersama tanpa gawai, sambil saling bertukar cerita pekan ini.",
+    "category": "keluarga",
+    "cadence": "weekly",
+    "difficulty": 2,
+    "points": 15,
+    "dalil": null,
+    "canBeSecret": false,
+    "canBeShared": true,
+    "minPeople": 3,
+    "estimateMinutes": 45
+  },
+  {
+    "id": "bersih-masjid-bersama",
+    "title": "Bersih-bersih masjid bersama",
+    "description": "Ajak teman atau tetangga membersihkan masjid atau musala di lingkungan kalian.",
+    "category": "lingkungan",
+    "cadence": "weekly",
+    "difficulty": 3,
+    "points": 30,
+    "dalil": {
+      "source": "HR. Bukhari no. 6021 & Muslim no. 1005",
+      "grade": "sahih",
+      "gist": "Setiap kebaikan adalah sedekah."
+    },
+    "canBeSecret": false,
+    "canBeShared": true,
+    "minPeople": 3,
+    "estimateMinutes": 60
+  },
+  {
+    "id": "khatam-satu-juz-bersama",
+    "title": "Baca satu juz bersama",
+    "description": "Bacalah satu juz Al-Qur'an bersama teman atau keluarga, bergantian per halaman.",
+    "category": "ibadah",
+    "cadence": "weekly",
+    "difficulty": 3,
+    "points": 30,
+    "dalil": {
+      "source": "QS Al-Muzzammil 73:20",
+      "grade": "quran",
+      "gist": "Bacalah dari Al-Qur'an apa yang mudah bagimu."
+    },
+    "canBeSecret": false,
+    "canBeShared": true,
+    "minPeople": 2,
+    "estimateMinutes": 60
+  },
+  {
+    "id": "olahraga-ringan-pekanan",
+    "title": "Olahraga ringan bersama",
+    "description": "Lakukan olahraga ringan selama 30 menit, sendiri atau bersama teman.",
+    "category": "diri",
+    "cadence": "weekly",
+    "difficulty": 2,
+    "points": 13,
+    "dalil": null,
+    "canBeSecret": false,
+    "canBeShared": true,
+    "minPeople": 2,
+    "estimateMinutes": 30
+  },
+  {
+    "id": "telepon-kerabat-jauh",
+    "title": "Hubungi kerabat yang jauh",
+    "description": "Telepon atau video call satu kerabat yang jarang kamu hubungi dan tanyakan kabarnya.",
+    "category": "keluarga",
+    "cadence": "weekly",
+    "difficulty": 2,
+    "points": 12,
+    "dalil": null,
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 20
+  },
+  {
+    "id": "sedekah-pekanan-lembaga",
+    "title": "Sedekah ke lembaga resmi",
+    "description": "Salurkan sedekah pekanan langsung ke masjid, panti, atau lembaga resmi seperti BAZNAS dan LAZ.",
+    "category": "sedekah",
+    "cadence": "weekly",
+    "difficulty": 2,
+    "points": 11,
+    "dalil": {
+      "source": "QS Al-Baqarah 2:261",
+      "grade": "quran",
+      "gist": "Perumpamaan orang yang berinfak di jalan Allah adalah seperti sebutir benih yang tumbuh berlipat."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 10
+  },
+  {
+    "id": "bantu-tetangga-pekanan",
+    "title": "Bantu satu tetangga",
+    "description": "Tanyakan kabar tetanggamu dan tawarkan bantuan kecil yang mereka butuhkan.",
+    "category": "sosial",
+    "cadence": "weekly",
+    "difficulty": 2,
+    "points": 12,
+    "dalil": {
+      "source": "HR. Bukhari no. 6018 & Muslim no. 47",
+      "grade": "sahih",
+      "gist": "Siapa beriman kepada Allah dan hari akhir, hendaklah memuliakan tetangganya."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 20
+  },
+  {
+    "id": "kajian-pekanan",
+    "title": "Ikuti kajian atau belajar bersama",
+    "description": "Hadiri kajian di masjid atau belajar bersama teman satu topik agama.",
+    "category": "ilmu",
+    "cadence": "weekly",
+    "difficulty": 3,
+    "points": 30,
+    "dalil": {
+      "source": "QS Al-Mujadilah 58:11",
+      "grade": "quran",
+      "gist": "Allah mengangkat derajat orang beriman dan orang berilmu."
+    },
+    "canBeSecret": false,
+    "canBeShared": true,
+    "minPeople": 2,
+    "estimateMinutes": 60
+  },
+  {
+    "id": "kerja-bakti-lingkungan",
+    "title": "Kerja bakti lingkungan",
+    "description": "Ikut atau ajak tetangga membersihkan selokan, taman, atau jalan di sekitar rumah.",
+    "category": "lingkungan",
+    "cadence": "weekly",
+    "difficulty": 3,
+    "points": 30,
+    "dalil": null,
+    "canBeSecret": false,
+    "canBeShared": true,
+    "minPeople": 4,
+    "estimateMinutes": 60
+  },
+  {
+    "id": "ziarah-pekanan",
+    "title": "Ziarah ke makam keluarga",
+    "description": "Kunjungi makam keluarga, doakan mereka, dan renungkan akhirat dengan tenang.",
+    "category": "ibadah",
+    "cadence": "weekly",
+    "difficulty": 2,
+    "points": 15,
+    "dalil": {
+      "source": "HR. Muslim no. 977",
+      "grade": "sahih",
+      "gist": "Ziarah kubur mengingatkan akhirat."
+    },
+    "canBeSecret": false,
+    "canBeShared": true,
+    "minPeople": 2,
+    "estimateMinutes": 45
+  },
+  {
+    "id": "tahajud-sekali",
+    "title": "Bangun malam untuk tahajud",
+    "description": "Satu kali pekan ini bangun di sepertiga malam untuk shalat tahajud dengan tenang.",
+    "category": "ibadah",
+    "cadence": "weekly",
+    "difficulty": 3,
+    "points": 25,
+    "dalil": {
+      "source": "QS Al-Isra 17:79",
+      "grade": "quran",
+      "gist": "Pada sebagian malam, bertahajudlah sebagai ibadah tambahan."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 30
+  },
+  {
+    "id": "refleksi-pekanan",
+    "title": "Refleksi pekanan",
+    "description": "Tulis tiga kebaikan pekan ini dan satu hal yang ingin kamu perbaiki pekan depan.",
+    "category": "diri",
+    "cadence": "weekly",
+    "difficulty": 2,
+    "points": 11,
+    "dalil": {
+      "source": "QS Al-Hasyr 59:18",
+      "grade": "quran",
+      "gist": "Hendaklah setiap orang memperhatikan apa yang ia persiapkan untuk hari esok."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 15
+  },
+  {
+    "id": "masak-untuk-tetangga",
+    "title": "Masak untuk tetangga",
+    "description": "Masak sedikit lebih banyak lalu antarkan sepiring kepada tetangga.",
+    "category": "sedekah",
+    "cadence": "weekly",
+    "difficulty": 2,
+    "points": 15,
+    "dalil": {
+      "source": "HR. Bukhari no. 6018 & Muslim no. 47",
+      "grade": "sahih",
+      "gist": "Siapa beriman kepada Allah dan hari akhir, hendaklah memuliakan tetangganya."
+    },
+    "canBeSecret": true,
+    "canBeShared": true,
+    "minPeople": 2,
+    "estimateMinutes": 45
+  },
+  {
+    "id": "jumat-sedekah",
+    "title": "Sedekah di hari Jumat",
+    "description": "Sisihkan sedikit rezeki pada hari Jumat dan berikan langsung atau lewat kotak masjid.",
+    "category": "sedekah",
+    "cadence": "seasonal",
+    "season": "jumat",
+    "difficulty": 1,
+    "points": 6,
+    "dalil": {
+      "source": "QS Al-Baqarah 2:261",
+      "grade": "quran",
+      "gist": "Perumpamaan orang yang berinfak di jalan Allah adalah seperti sebutir benih yang tumbuh berlipat."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 5
+  },
+  {
+    "id": "silaturahmi-pekan-ini",
+    "title": "Silaturahmi pekan ini",
+    "description": "Hubungi satu kerabat atau sahabat yang lama tidak disapa dan sampaikan salam hangat.",
+    "category": "keluarga",
+    "cadence": "weekly",
+    "difficulty": 1,
+    "points": 7,
+    "dalil": null,
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 10
+  },
+  {
+    "id": "ramadan-berbagi-takjil",
+    "title": "Berbagi takjil",
+    "description": "Siapkan takjil sederhana dan bagikan kepada orang yang berpuasa di sekitarmu.",
+    "category": "sedekah",
+    "cadence": "seasonal",
+    "season": "ramadan",
+    "difficulty": 2,
+    "points": 15,
+    "dalil": {
+      "source": "HR. Tirmidzi no. 807",
+      "grade": "hasan",
+      "gist": "Siapa memberi makan orang berbuka puasa, ia mendapat pahala seperti orang yang berpuasa tanpa mengurangi pahalanya."
+    },
+    "canBeSecret": false,
+    "canBeShared": true,
+    "minPeople": 2,
+    "estimateMinutes": 40
+  },
+  {
+    "id": "ramadan-tadarus-harian",
+    "title": "Tadarus harian Ramadan",
+    "description": "Sediakan waktu tetap setiap hari untuk membaca Al-Qur'an selama Ramadan.",
+    "category": "ibadah",
+    "cadence": "seasonal",
+    "season": "ramadan",
+    "difficulty": 2,
+    "points": 12,
+    "dalil": {
+      "source": "QS Al-Baqarah 2:185",
+      "grade": "quran",
+      "gist": "Ramadan adalah bulan diturunkannya Al-Qur'an sebagai petunjuk."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 20
+  },
+  {
+    "id": "ramadan-buka-bersama-keluarga",
+    "title": "Berbuka bersama keluarga",
+    "description": "Berpuasa hari ini lalu berbuka bersama keluarga dengan sederhana dan penuh syukur.",
+    "category": "keluarga",
+    "cadence": "seasonal",
+    "season": "ramadan",
+    "difficulty": 2,
+    "points": 15,
+    "dalil": {
+      "source": "HR. Bukhari no. 1896 & Muslim no. 1152",
+      "grade": "sahih",
+      "gist": "Bagi orang yang berpuasa tersedia pintu surga Ar-Rayyan."
+    },
+    "canBeSecret": false,
+    "canBeShared": true,
+    "minPeople": 3,
+    "estimateMinutes": 60
+  },
+  {
+    "id": "ramadan-malam-terakhir",
+    "title": "Hidupkan malam terakhir Ramadan",
+    "description": "Di sepuluh malam terakhir, sisihkan waktu untuk ibadah malam sesuai kemampuanmu.",
+    "category": "ibadah",
+    "cadence": "seasonal",
+    "season": "ramadan",
+    "difficulty": 3,
+    "points": 26,
+    "dalil": {
+      "source": "QS Al-Qadr 97:3",
+      "grade": "quran",
+      "gist": "Lailatul Qadar lebih baik daripada seribu bulan."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 40
+  },
+  {
+    "id": "dzulhijjah-amal-saleh",
+    "title": "Perbanyak amal saleh",
+    "description": "Pilih satu amal saleh yang bisa kamu lakukan hari ini di awal Dzulhijjah.",
+    "category": "ibadah",
+    "cadence": "seasonal",
+    "season": "sepuluh_dzulhijjah",
+    "difficulty": 2,
+    "points": 12,
+    "dalil": {
+      "source": "HR. Bukhari no. 969",
+      "grade": "sahih",
+      "gist": "Tidak ada hari amal saleh yang lebih dicintai Allah daripada sepuluh hari Dzulhijjah."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 20
+  },
+  {
+    "id": "dzulhijjah-dzikir",
+    "title": "Perbanyak dzikir Dzulhijjah",
+    "description": "Isi hari-harimu dengan menyebut nama Allah seperti tahlil, takbir, dan tahmid sesuai kemampuan.",
+    "category": "ibadah",
+    "cadence": "seasonal",
+    "season": "sepuluh_dzulhijjah",
+    "difficulty": 1,
+    "points": 7,
+    "dalil": {
+      "source": "QS Al-Hajj 22:28",
+      "grade": "quran",
+      "gist": "Hendaklah mereka menyebut nama Allah pada hari-hari yang telah ditentukan."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 10
+  },
+  {
+    "id": "arafah-puasa",
+    "title": "Puasa hari Arafah",
+    "description": "Berpuasa sunnah pada hari Arafah (9 Dzulhijjah) bagi yang tidak sedang berhaji.",
+    "category": "ibadah",
+    "cadence": "seasonal",
+    "season": "arafah",
+    "difficulty": 3,
+    "points": 20,
+    "dalil": {
+      "source": "HR. Muslim no. 1162",
+      "grade": "sahih",
+      "gist": "Puasa Arafah menghapus dosa setahun sebelum dan sesudahnya."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 0
+  },
+  {
+    "id": "arafah-doa-istighfar",
+    "title": "Doa dan istighfar di hari Arafah",
+    "description": "Luangkan waktu berdoa dan beristighfar dengan tenang, memohon kebaikan bagi diri dan keluarga.",
+    "category": "ibadah",
+    "cadence": "seasonal",
+    "season": "arafah",
+    "difficulty": 1,
+    "points": 8,
+    "dalil": {
+      "source": "QS Al-Baqarah 2:186",
+      "grade": "quran",
+      "gist": "Allah dekat dan mengabulkan doa orang yang berdoa kepada-Nya."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 15
+  },
+  {
+    "id": "asyura-puasa",
+    "title": "Puasa Asyura",
+    "description": "Berpuasa sunnah pada hari Asyura (10 Muharram).",
+    "category": "ibadah",
+    "cadence": "seasonal",
+    "season": "asyura",
+    "difficulty": 3,
+    "points": 20,
+    "dalil": {
+      "source": "HR. Muslim no. 1162",
+      "grade": "sahih",
+      "gist": "Puasa Asyura menghapus dosa setahun yang lalu."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 0
+  },
+  {
+    "id": "puasa-senin-kamis",
+    "title": "Puasa Senin atau Kamis",
+    "description": "Berpuasa sunnah pada hari Senin atau Kamis jika kondisi tubuhmu memungkinkan.",
+    "category": "ibadah",
+    "cadence": "seasonal",
+    "season": "senin_kamis",
+    "difficulty": 3,
+    "points": 20,
+    "dalil": {
+      "source": "HR. Tirmidzi no. 747",
+      "grade": "sahih",
+      "gist": "Amal dihadapkan pada hari Senin dan Kamis, dan Nabi suka berpuasa saat amal dihadapkan."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 0
+  },
+  {
+    "id": "senin-kamis-berbagi-buka",
+    "title": "Berbagi buka puasa Senin-Kamis",
+    "description": "Siapkan satu porsi buka puasa untuk teman atau tetangga yang berpuasa.",
+    "category": "sedekah",
+    "cadence": "seasonal",
+    "season": "senin_kamis",
+    "difficulty": 2,
+    "points": 13,
+    "dalil": {
+      "source": "HR. Tirmidzi no. 807",
+      "grade": "hasan",
+      "gist": "Siapa memberi makan orang berbuka puasa, ia mendapat pahala seperti orang yang berpuasa tanpa mengurangi pahalanya."
+    },
+    "canBeSecret": true,
+    "canBeShared": true,
+    "minPeople": 2,
+    "estimateMinutes": 30
+  },
+  {
+    "id": "salam-senyum-tetangga",
+    "title": "Salam dan senyum ke orang asing",
+    "description": "Sapa satu orang yang belum kamu kenal dengan salam dan senyum ramah.",
+    "category": "sosial",
+    "cadence": "side",
+    "difficulty": 1,
+    "points": 5,
+    "dalil": {
+      "source": "HR. Tirmidzi no. 1956",
+      "grade": "sahih",
+      "gist": "Senyum kepada saudaramu adalah sedekah."
+    },
+    "canBeSecret": false,
+    "canBeShared": false,
+    "estimateMinutes": 3
+  },
+  {
+    "id": "telepon-kerabat-lama",
+    "title": "Telepon kerabat lama",
+    "description": "Hubungi seseorang yang sudah lama tidak kamu kabari, cukup untuk menanyakan kabarnya.",
+    "category": "keluarga",
+    "cadence": "side",
+    "difficulty": 2,
+    "points": 11,
+    "dalil": null,
+    "canBeSecret": false,
+    "canBeShared": false,
+    "estimateMinutes": 15
+  },
+  {
+    "id": "bayar-utang-kecil",
+    "title": "Lunasi utang kecil",
+    "description": "Ingat utang kecil yang belum kamu bayar, lalu lunasi atau minta waktu dengan jujur.",
+    "category": "sosial",
+    "cadence": "side",
+    "difficulty": 2,
+    "points": 11,
+    "dalil": {
+      "source": "HR. Tirmidzi no. 1078",
+      "grade": "sahih",
+      "gist": "Jiwa seorang mukmin tergantung pada utangnya hingga dilunasi."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 10
+  },
+  {
+    "id": "doakan-diam-diam",
+    "title": "Doakan seseorang diam-diam",
+    "description": "Pilih seseorang, lalu doakan kebaikannya tanpa ia tahu.",
+    "category": "ibadah",
+    "cadence": "side",
+    "difficulty": 1,
+    "points": 5,
+    "dalil": {
+      "source": "QS Ibrahim 14:41",
+      "grade": "quran",
+      "gist": "Doa memohon ampunan bagi diri, kedua orang tua, dan kaum mukminin."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 3
+  },
+  {
+    "id": "kembalikan-barang-pinjaman",
+    "title": "Kembalikan barang pinjaman",
+    "description": "Ingat barang milik orang lain yang masih kamu pegang, lalu kembalikan dengan ucapan terima kasih.",
+    "category": "sosial",
+    "cadence": "side",
+    "difficulty": 2,
+    "points": 11,
+    "dalil": null,
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 15
+  },
+  {
+    "id": "singkirkan-rintangan-jalan",
+    "title": "Singkirkan sampah atau duri dari jalan",
+    "description": "Ambil benda yang bisa melukai atau mengganggu pengguna jalan, lalu buang pada tempatnya.",
+    "category": "lingkungan",
+    "cadence": "side",
+    "difficulty": 1,
+    "points": 6,
+    "dalil": null,
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 5
+  },
+  {
+    "id": "bantu-tetangga-angkat",
+    "title": "Bantu tetangga membawa barang",
+    "description": "Tawarkan bantuan kepada tetangga yang sedang membawa barang berat atau butuh tenaga tambahan.",
+    "category": "sosial",
+    "cadence": "side",
+    "difficulty": 1,
+    "points": 7,
+    "dalil": {
+      "source": "HR. Bukhari no. 6018 & Muslim no. 47",
+      "grade": "sahih",
+      "gist": "Siapa beriman kepada Allah dan hari akhir, hendaklah memuliakan tetangganya."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 10
+  },
+  {
+    "id": "tulis-wasiat-catatan-utang",
+    "title": "Tulis catatan wasiat dan utang",
+    "description": "Catat utang, piutang, dan pesan penting untuk keluarga di tempat yang mudah ditemukan.",
+    "category": "diri",
+    "cadence": "side",
+    "difficulty": 3,
+    "points": 25,
+    "dalil": {
+      "source": "HR. Bukhari no. 2738 & Muslim no. 1627",
+      "grade": "sahih",
+      "gist": "Tidak pantas bagi seorang muslim yang memiliki sesuatu untuk diwasiatkan bermalam dua malam tanpa wasiat tertulis."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 30
+  },
+  {
+    "id": "minta-maaf-tulus",
+    "title": "Minta maaf dengan tulus",
+    "description": "Sampaikan permintaan maaf kepada seseorang yang pernah kamu sakiti, tanpa mencari pembelaan.",
+    "category": "memaafkan",
+    "cadence": "side",
+    "difficulty": 3,
+    "points": 22,
+    "dalil": null,
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 15
+  },
+  {
+    "id": "maafkan-diam-diam",
+    "title": "Maafkan seseorang dalam hati",
+    "description": "Lepaskan kesal kepada seseorang dan doakan kebaikan untuknya.",
+    "category": "memaafkan",
+    "cadence": "side",
+    "difficulty": 3,
+    "points": 22,
+    "dalil": {
+      "source": "QS An-Nur 24:22",
+      "grade": "quran",
+      "gist": "Hendaklah mereka memaafkan dan berlapang dada; Allah Maha Pengampun lagi Penyayang."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 15
+  },
+  {
+    "id": "sedekah-subuh",
+    "title": "Sedekah setelah subuh",
+    "description": "Mulai hari dengan sedekah kecil, langsung kepada orang yang membutuhkan atau ke kotak masjid.",
+    "category": "sedekah",
+    "cadence": "side",
+    "difficulty": 1,
+    "points": 6,
+    "dalil": {
+      "source": "QS Al-Baqarah 2:261",
+      "grade": "quran",
+      "gist": "Perumpamaan orang yang berinfak di jalan Allah adalah seperti sebutir benih yang tumbuh berlipat."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 5
+  },
+  {
+    "id": "sedekah-diam-diam",
+    "title": "Sedekah tanpa diketahui",
+    "description": "Berikan sedekah sedemikian rupa sehingga hanya kamu dan penerima yang tahu.",
+    "category": "sedekah",
+    "cadence": "side",
+    "difficulty": 2,
+    "points": 11,
+    "dalil": {
+      "source": "HR. Bukhari no. 660 & Muslim no. 1031",
+      "grade": "sahih",
+      "gist": "Salah satu golongan yang dinaungi Allah adalah orang yang bersedekah secara tersembunyi."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 10
+  },
+  {
+    "id": "ziarah-kubur-keluarga",
+    "title": "Ziarah kubur keluarga",
+    "description": "Kunjungi makam keluarga, doakan mereka, dan renungkan akhirat dengan tenang.",
+    "category": "ibadah",
+    "cadence": "side",
+    "difficulty": 2,
+    "points": 15,
+    "dalil": {
+      "source": "HR. Muslim no. 977",
+      "grade": "sahih",
+      "gist": "Ziarah kubur mengingatkan akhirat."
+    },
+    "canBeSecret": false,
+    "canBeShared": true,
+    "minPeople": 2,
+    "estimateMinutes": 45
+  },
+  {
+    "id": "jenguk-orang-sakit",
+    "title": "Jenguk orang sakit",
+    "description": "Kunjungi atau hubungi seseorang yang sedang sakit untuk menghibur dan mendoakannya.",
+    "category": "sosial",
+    "cadence": "side",
+    "difficulty": 2,
+    "points": 15,
+    "dalil": null,
+    "canBeSecret": false,
+    "canBeShared": true,
+    "minPeople": 2,
+    "estimateMinutes": 45
+  },
+  {
+    "id": "ajari-satu-ilmu",
+    "title": "Ajari seseorang satu hal",
+    "description": "Bagikan satu pengetahuan atau keterampilan yang kamu kuasai kepada orang lain.",
+    "category": "ilmu",
+    "cadence": "side",
+    "difficulty": 2,
+    "points": 12,
+    "dalil": {
+      "source": "HR. Muslim no. 1631",
+      "grade": "sahih",
+      "gist": "Ilmu yang bermanfaat adalah salah satu amal yang tidak terputus."
+    },
+    "canBeSecret": false,
+    "canBeShared": false,
+    "estimateMinutes": 20
+  },
+  {
+    "id": "lapangkan-kesulitan",
+    "title": "Bantu meringankan kesulitan orang",
+    "description": "Bantu seseorang menyelesaikan urusan yang membebaninya, sekecil apa pun.",
+    "category": "sosial",
+    "cadence": "side",
+    "difficulty": 2,
+    "points": 12,
+    "dalil": {
+      "source": "HR. Muslim no. 2699",
+      "grade": "sahih",
+      "gist": "Siapa melapangkan kesulitan seorang mukmin, Allah melapangkan kesulitannya."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 20
+  },
+  {
+    "id": "traktir-pekerja",
+    "title": "Traktir orang yang bekerja keras",
+    "description": "Belikan minuman atau makanan untuk satpam, kurir, atau pekerja lain yang kamu temui.",
+    "category": "sedekah",
+    "cadence": "side",
+    "difficulty": 1,
+    "points": 7,
+    "dalil": {
+      "source": "HR. Bukhari no. 6021 & Muslim no. 1005",
+      "grade": "sahih",
+      "gist": "Setiap kebaikan adalah sedekah."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 10
+  },
+  {
+    "id": "surat-terima-kasih",
+    "title": "Tulis pesan terima kasih",
+    "description": "Kirim pesan tulus kepada seseorang yang pernah membantumu.",
+    "category": "sosial",
+    "cadence": "side",
+    "difficulty": 1,
+    "points": 7,
+    "dalil": null,
+    "canBeSecret": false,
+    "canBeShared": false,
+    "estimateMinutes": 10
+  },
+  {
+    "id": "beri-tangguh-penagih",
+    "title": "Beri kelonggaran orang yang berutang",
+    "description": "Jika seseorang kesulitan melunasi utangnya kepadamu, beri waktu tambahan dengan baik.",
+    "category": "memaafkan",
+    "cadence": "side",
+    "difficulty": 3,
+    "points": 21,
+    "dalil": {
+      "source": "QS Al-Baqarah 2:280",
+      "grade": "quran",
+      "gist": "Jika orang yang berutang kesulitan, beri tangguh sampai ia lapang."
+    },
+    "canBeSecret": true,
+    "canBeShared": false,
+    "estimateMinutes": 10
+  },
+  {
+    "id": "kejutan-untuk-ibu",
+    "title": "Beri kejutan kecil untuk ibu",
+    "description": "Datang, telepon, atau bawakan sesuatu yang sederhana untuk ibumu tanpa alasan khusus.",
+    "category": "keluarga",
+    "cadence": "side",
+    "difficulty": 2,
+    "points": 13,
+    "dalil": {
+      "source": "HR. Bukhari no. 5971 & Muslim no. 2548",
+      "grade": "sahih",
+      "gist": "Ibu adalah orang yang paling berhak atas baktimu."
+    },
+    "canBeSecret": false,
+    "canBeShared": true,
+    "minPeople": 2,
+    "estimateMinutes": 30
+  }
+]
