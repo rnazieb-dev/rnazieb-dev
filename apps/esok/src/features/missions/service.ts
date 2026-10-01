@@ -68,3 +68,28 @@ export async function skipMission(db: Db, mission: Mission, day: DayKey): Promis
   await assignMission(db, mission, aday);
   await markMission(db, mission.id, aday, 'skipped', null);
 }
+
+/**
+ * Setelah sync/hydrate: tandai misi selesai di perangkat ini berdasarkan amal bermisi
+ * yang dibuat di perangkat lain (publik: tabel deeds; rahasia: kolom lokal hasil hydrate).
+ */
+export async function reconcileCompletedMissions(db: Db, catalog: readonly Mission[] = MISSIONS): Promise<number> {
+  const rows = await db.all<{ mission_id: string; day: string; id: string }>(
+    `SELECT mission_id, day, id FROM deeds WHERE mission_id IS NOT NULL AND deleted_at IS NULL
+     UNION ALL
+     SELECT mission_id, day, id FROM private_items WHERE kind = 'deed' AND mission_id IS NOT NULL AND day IS NOT NULL AND deleted_at IS NULL`,
+  );
+  let n = 0;
+  for (const r of rows) {
+    const m = catalog.find((x) => x.id === r.mission_id);
+    if (!m) continue;
+    const aday = assignmentDay(m, r.day);
+    await assignMission(db, m, aday);
+    const cur = (await missionRows(db, [aday])).find((x) => x.mission_id === m.id);
+    if (cur && cur.status !== 'done') {
+      await markMission(db, m.id, aday, 'done', r.id);
+      n++;
+    }
+  }
+  return n;
+}

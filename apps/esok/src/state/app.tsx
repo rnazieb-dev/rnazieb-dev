@@ -1,0 +1,264 @@
+import type { Session } from '@supabase/supabase-js';
+import * as Crypto from 'expo-crypto';
+import { type ReactNode, createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { AppState } from 'react-native';
+import { openExpoDb } from '@/db/expoAdapter';
+import { migrate } from '@/db/migrations';
+import { getSetting, setSetting } from '@/db/repos';
+import type { Db } from '@/db/types';
+import { DEFAULT_REMINDERS, type ReminderSettings } from '@/features/reminders/schedule';
+import { configureNotifications, rescheduleReminders } from '@/features/reminders/notifications';
+import { authenticate, ensureLocalDek, readDek } from '@/features/security/vault';
+import { runFullSync } from '@/features/sync/service';
+import { type DayKey, toDayKey } from '@/lib/dates';
+import { getSupabase, isCloudConfigured } from '@/lib/supabase';
+import { setRandomSource, uuid } from '@/lib/random';
+
+export interface AppSettings {
+  onboarded: boolean;
+  displayName: string;
+  seed: string;
+  reminders: ReminderSettings;
+  prayerMode: 'tetap' | 'salat';
+  coords: { latitude: number; longitude: number } | null;
+  appLock: boolean;
+  /** "Mode ikhlas": sembunyikan angka publik milik sendiri. */
+  honorMode: boolean;
+  showRankings: boolean;
+  hideStreak: boolean;
+  cloudEnabled: boolean;
+  /** Pengguna belum 13 tahun: fitur lingkaran/cloud dinonaktifkan. */
+  isMinor: boolean;
+  pushNudges: boolean;
+}
+
+const DEFAULTS = (): AppSettings => ({
+  onboarded: false,
+  displayName: 'Hamba Allah',
+  seed: '',
+  reminders: DEFAULT_REMINDERS,
+  prayerMode: 'tetap',
+  coords: null,
+  appLock: false,
+  honorMode: false,
+  showRankings: true,
+  hideStreak: false,
+  cloudEnabled: false,
+  isMinor: false,
+  pushNudges: false,
+});
+
+type SyncStatus = { state: 'idle' | 'syncing' | 'ok' | 'error'; at?: string; message?: string };
+
+interface AppContextValue {
+  ready: boolean;
+  db: Db;
+  settings: AppSettings;
+  updateSettings: (patch: Partial<AppSettings>) => Promise<void>;
+  today: DayKey;
+  version: number;
+  bump: () => void;
+  /** Kunci vault di memori (null = terkunci). */
+  dek: Uint8Array | null;
+  /** Buka vault (biometrik/kode sandi perangkat). Mengembalikan DEK atau null jika ditolak. */
+  unlockVault: () => Promise<Uint8Array | null>;
+  lockVault: () => void;
+  appLocked: boolean;
+  setAppLocked: (v: boolean) => void;
+  session: Session | null;
+  cloudConfigured: boolean;
+  sync: SyncStatus;
+  syncNow: () => Promise<void>;
+  reschedule: () => Promise<void>;
+}
+
+const Ctx = createContext<AppContextValue | null>(null);
+
+const VAULT_IDLE_MS = 60_000;
+
+/** Penanda siklus-hidup (satu AppProvider per proses); hanya dimutasi di callback/event. */
+const flags = { backgroundAt: null as number | null, syncing: false };
+
+export function AppProvider({ children }: { children: ReactNode }) {
+  const [db, setDb] = useState<Db | null>(null);
+  const [settings, setSettings] = useState<AppSettings>(DEFAULTS());
+  const [today, setToday] = useState<DayKey>(toDayKey(new Date()));
+  const [version, setVersion] = useState(0);
+  const [dek, setDek] = useState<Uint8Array | null>(null);
+  const [appLocked, setAppLocked] = useState(false);
+  const [session, setSession] = useState<Session | null>(null);
+  const [sync, setSync] = useState<SyncStatus>({ state: 'idle' });
+
+  const bump = useCallback(() => setVersion((v) => v + 1), []);
+
+  // ---- init ----
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setRandomSource((n) => Crypto.getRandomBytes(n));
+      const d = await openExpoDb();
+      await migrate(d);
+      const stored = await getSetting<Partial<AppSettings>>(d, 'app', {});
+      const merged: AppSettings = { ...DEFAULTS(), ...stored };
+      if (!merged.seed) {
+        merged.seed = uuid();
+        await setSetting(d, 'app', merged);
+      }
+      configureNotifications();
+      if (cancelled) return;
+      setSettings(merged);
+      setAppLocked(merged.appLock);
+      setDb(d);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // ---- sesi cloud ----
+  useEffect(() => {
+    const sb = getSupabase();
+    if (!sb) return;
+    void sb.auth.getSession().then(({ data }) => setSession(data.session));
+    const { data } = sb.auth.onAuthStateChange((_e, s) => setSession(s));
+    return () => data.subscription.unsubscribe();
+  }, []);
+
+  const updateSettings = useCallback(
+    async (patch: Partial<AppSettings>) => {
+      if (!db) return;
+      const next = { ...settings, ...patch };
+      setSettings(next);
+      await setSetting(db, 'app', next);
+      bump();
+    },
+    [db, settings, bump],
+  );
+
+  const reschedule = useCallback(async () => {
+    if (!db) return;
+    await rescheduleReminders(db, settings.reminders, { mode: settings.prayerMode, coords: settings.coords ?? undefined }, settings.seed);
+  }, [db, settings.reminders, settings.prayerMode, settings.coords, settings.seed]);
+
+  useEffect(() => {
+    if (db && settings.onboarded) void reschedule();
+  }, [db, settings.onboarded, reschedule]);
+
+  const unlockVault = useCallback(async (): Promise<Uint8Array | null> => {
+    if (dek) return dek;
+    const ok = await authenticate('Buka amalan rahasia Anda');
+    if (!ok) return null;
+    const key = (await readDek()) ?? (await ensureLocalDek());
+    setDek(key);
+    return key;
+  }, [dek]);
+
+  const lockVault = useCallback(() => setDek(null), []);
+
+  const syncNow = useCallback(async () => {
+    const sb = getSupabase();
+    if (!db || !sb || !session || !settings.cloudEnabled || flags.syncing) return;
+    flags.syncing = true;
+    setSync({ state: 'syncing' });
+    try {
+      await runFullSync(db, sb, session.user.id, dek);
+      setSync({ state: 'ok', at: new Date().toISOString() });
+      bump();
+    } catch (e) {
+      setSync({ state: 'error', message: e instanceof Error ? e.message : 'Sinkron gagal' });
+    } finally {
+      flags.syncing = false;
+    }
+  }, [db, session, settings.cloudEnabled, dek, bump]);
+
+  // ---- siklus app: hari baru, kunci otomatis, sync, jadwal ulang ----
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', (s) => {
+      if (s === 'background' || s === 'inactive') {
+        flags.backgroundAt ??= Date.now();
+        return;
+      }
+      const away = flags.backgroundAt ? Date.now() - flags.backgroundAt : 0;
+      flags.backgroundAt = null;
+      setToday(toDayKey(new Date()));
+      if (away > VAULT_IDLE_MS) {
+        setDek(null);
+        if (settings.appLock) setAppLocked(true);
+      }
+      void syncNow();
+      void reschedule();
+    });
+    return () => sub.remove();
+  }, [settings.appLock, syncNow, reschedule]);
+
+  const userId = session?.user.id;
+  useEffect(() => {
+    // Sinkron otomatis saat login/cloud diaktifkan.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (userId && settings.cloudEnabled) void syncNow();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId, settings.cloudEnabled]);
+
+  const value = useMemo<AppContextValue | null>(
+    () =>
+      db
+        ? {
+            ready: true,
+            db,
+            settings,
+            updateSettings,
+            today,
+            version,
+            bump,
+            dek,
+            unlockVault,
+            lockVault,
+            appLocked,
+            setAppLocked,
+            session,
+            cloudConfigured: isCloudConfigured(),
+            sync,
+            syncNow,
+            reschedule,
+          }
+        : null,
+    [db, settings, updateSettings, today, version, bump, dek, unlockVault, lockVault, appLocked, session, sync, syncNow, reschedule],
+  );
+
+  if (!value) return null;
+  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+}
+
+export function useApp(): AppContextValue {
+  const v = useContext(Ctx);
+  if (!v) throw new Error('useApp harus di dalam AppProvider');
+  return v;
+}
+
+/** Query DB yang dihitung ulang saat `version` berubah (setelah penulisan/sync). */
+export function useDbQuery<T>(fn: (db: Db) => Promise<T>, deps: readonly unknown[], initial: T): { data: T; loading: boolean; error: string | null } {
+  const { db, version } = useApp();
+  const [data, setData] = useState<T>(initial);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    let alive = true;
+    // Hook pengambilan data: menandai "memuat" saat permintaan baru dimulai adalah disengaja.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setLoading(true);
+    fn(db)
+      .then((r) => {
+        if (alive) {
+          setData(r);
+          setError(null);
+        }
+      })
+      .catch((e) => alive && setError(e instanceof Error ? e.message : String(e)))
+      .finally(() => alive && setLoading(false));
+    return () => {
+      alive = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [db, version, ...deps]);
+  return { data, loading, error };
+}

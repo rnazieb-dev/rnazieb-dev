@@ -152,3 +152,14 @@ describe('misi', () => {
     await expect(completeMission(db, { mission: m, day: DAY, visibility: 'secret', dek })).rejects.toThrow(/rahasia/);
   });
 });
+
+describe('batas poin harian lokal', () => {
+  it('poin per hari dibatasi 100 (publik & rahasia), seperti server', async () => {
+    const db = await createMigratedTestDb();
+    const key = generateDek();
+    for (let i = 0; i < 6; i++) await addDeed(db, null, { day: DAY, title: `p${i}`, category: 'diri', visibility: 'public', points: 30 });
+    for (let i = 0; i < 6; i++) await addDeed(db, key, { day: DAY, title: `s${i}`, category: 'diri', visibility: 'secret', points: 30 });
+    await addDeed(db, null, { day: '2026-10-02', title: 'x', category: 'diri', visibility: 'public', points: 10 });
+    expect(await pointTotals(db)).toEqual({ publicPoints: 110, secretPoints: 100, secretCount: 6 });
+  });
+});

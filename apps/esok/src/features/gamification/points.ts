@@ -1,7 +1,7 @@
 import type { DayKey } from '@/lib/dates';
 
 /** Batas poin publik per hari (dicerminkan di server: award_points_for_deed). */
-export const DAILY_PUBLIC_POINT_CAP = 100;
+export const DAILY_PUBLIC_POINT_CAP = 100; // sama dengan DAILY_POINT_CAP di db/repos
 /** Poin untuk amal bebas (di luar katalog misi) — kecil agar tidak bisa dikebut. */
 export const CUSTOM_DEED_POINTS = 3;
 

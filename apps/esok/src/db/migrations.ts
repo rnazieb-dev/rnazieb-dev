@@ -60,6 +60,10 @@ export const MIGRATIONS: string[] = [
   CREATE TABLE badges_earned (badge_id TEXT PRIMARY KEY, earned_at TEXT NOT NULL);
   CREATE TABLE sync_state (table_name TEXT PRIMARY KEY, cursor TEXT);
   `,
+  `
+  -- Amal bersama yang poin servernya sudah diminta (idempotensi sisi klien).
+  CREATE TABLE awarded (deed_id TEXT PRIMARY KEY, points INTEGER NOT NULL DEFAULT 0);
+  `,
 ];
 
 export async function migrate(db: Db): Promise<void> {

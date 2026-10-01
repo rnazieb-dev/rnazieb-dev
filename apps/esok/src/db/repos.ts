@@ -157,6 +157,21 @@ export async function listDeedsForDay(db: Db, day: DayKey, dek: Uint8Array | nul
   return out;
 }
 
+/** Semua amalan rahasia (terbaru dulu). Terkunci → hanya jumlah/metadata. */
+export async function listSecretDeeds(db: Db, dek: Uint8Array | null): Promise<DeedView[]> {
+  const rows = await db.all<PrivRow & { day: string }>(
+    `SELECT id, day, points, category, mission_id, ciphertext, nonce FROM private_items
+     WHERE kind = 'deed' AND day IS NOT NULL AND deleted_at IS NULL ORDER BY day DESC, updated_at DESC, id`,
+  );
+  return rows.map((r) => {
+    if (!dek) {
+      return { id: r.id, secret: true, locked: true, day: r.day, title: '', note: '', category: null, visibility: 'secret' as const, circleId: null, missionId: null, points: r.points };
+    }
+    const p = decryptItem<SecretPayload>(dek, r.id, 'deed', { ciphertext: r.ciphertext, nonce: r.nonce });
+    return { id: r.id, secret: true, locked: false, day: r.day, title: p.title, note: p.note, category: p.category, visibility: 'secret' as const, circleId: null, missionId: p.missionId, points: p.points };
+  });
+}
+
 /** Isi kolom lokal (day/points/category/mission_id) untuk item hasil pull dari perangkat lain. */
 export async function hydratePrivate(db: Db, dek: Uint8Array): Promise<number> {
   const rows = await db.all<PrivRow & { kind: 'deed' | 'reflection' }>(
@@ -255,12 +270,16 @@ export interface PointTotals {
   secretCount: number;
 }
 
+/** Batas poin per hari (sama dengan batas server) agar skor lokal tidak bisa "dikebut". */
+export const DAILY_POINT_CAP = 100;
+const cappedSum = (rows: { s: number | null }[]) => rows.reduce((t, r) => t + Math.min(DAILY_POINT_CAP, r.s ?? 0), 0);
+
 export async function pointTotals(db: Db): Promise<PointTotals> {
-  const pub = await db.get<{ s: number | null }>(`SELECT SUM(points) AS s FROM deeds WHERE deleted_at IS NULL`);
-  const sec = await db.get<{ s: number | null; c: number }>(
-    `SELECT SUM(points) AS s, COUNT(*) AS c FROM private_items WHERE kind = 'deed' AND deleted_at IS NULL`,
+  const pub = await db.all<{ s: number | null }>(`SELECT SUM(points) AS s FROM deeds WHERE deleted_at IS NULL GROUP BY day`);
+  const sec = await db.all<{ s: number | null; c: number }>(
+    `SELECT SUM(points) AS s, COUNT(*) AS c FROM private_items WHERE kind = 'deed' AND deleted_at IS NULL GROUP BY day`,
   );
-  return { publicPoints: pub?.s ?? 0, secretPoints: sec?.s ?? 0, secretCount: sec?.c ?? 0 };
+  return { publicPoints: cappedSum(pub), secretPoints: cappedSum(sec), secretCount: sec.reduce((t, r) => t + r.c, 0) };
 }
 
 export async function categoryCounts(db: Db, opts: { includeSecret: boolean }): Promise<Partial<Record<MissionCategory, number>>> {

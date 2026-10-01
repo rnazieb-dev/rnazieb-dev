@@ -63,6 +63,8 @@ export function buildSchedule(opts: {
   quotes: readonly Quote[];
   recentlySeen: readonly string[];
   seed: string;
+  /** Waktu per hari (mis. berbasis waktu salat). Bawaan: settings.times. */
+  timesForDay?: (day: DayKey) => string[];
 }): ScheduledReminder[] {
   const { now, today, settings, quotes, recentlySeen, seed } = opts;
   if (!settings.enabled) return [];
@@ -87,12 +89,12 @@ export function buildSchedule(opts: {
     return usable[Math.floor(rng() * usable.length)];
   };
 
-  const times = pickTimesForIntensity(settings.times, settings.intensity);
   const out: ScheduledReminder[] = [];
   let cycle = 0;
   for (let d = 0; d < settings.windowDays; d++) {
     const dayKey = addDays(today, d);
     const base = fromDayKey(dayKey);
+    const times = pickTimesForIntensity(opts.timesForDay ? opts.timesForDay(dayKey) : settings.times, settings.intensity);
     for (const t of times) {
       const [h, m] = parseTime(t);
       const at = new Date(base.getFullYear(), base.getMonth(), base.getDate(), h, m, 0, 0);
