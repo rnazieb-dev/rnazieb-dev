@@ -4,15 +4,28 @@ import en, { type Dict } from './en';
 import id from './id';
 import ar from './locales/ar';
 import az from './locales/az';
+import bn from './locales/bn';
 import bs from './locales/bs';
 import de from './locales/de';
+import es from './locales/es';
+import fa from './locales/fa';
 import fr from './locales/fr';
 import ha from './locales/ha';
+import hi from './locales/hi';
+import kk from './locales/kk';
 import ms from './locales/ms';
+import nl from './locales/nl';
+import ps from './locales/ps';
+import ru from './locales/ru';
+import so from './locales/so';
 import sq from './locales/sq';
 import sw from './locales/sw';
+import th from './locales/th';
+import tl from './locales/tl';
 import tr from './locales/tr';
 import ur from './locales/ur';
+import uz from './locales/uz';
+import yo from './locales/yo';
 import zh from './locales/zh';
 
 interface LangInfo {
@@ -29,16 +42,29 @@ export const LANGUAGES = {
   id: { label: 'Bahasa Indonesia', dict: id, rtl: false, locale: 'id' },
   ar: { label: 'العربية', dict: ar, rtl: true, locale: 'ar' },
   ur: { label: 'اردو', dict: ur, rtl: true, locale: 'ur' },
+  fa: { label: 'فارسی', dict: fa, rtl: true, locale: 'fa' },
+  ps: { label: 'پښتو', dict: ps, rtl: true, locale: 'ps' },
+  bn: { label: 'বাংলা', dict: bn, rtl: false, locale: 'bn' },
+  hi: { label: 'हिन्दी', dict: hi, rtl: false, locale: 'hi' },
   ms: { label: 'Bahasa Melayu', dict: ms, rtl: false, locale: 'ms' },
   tr: { label: 'Türkçe', dict: tr, rtl: false, locale: 'tr' },
   az: { label: 'Azərbaycan', dict: az, rtl: false, locale: 'az' },
+  uz: { label: 'Oʻzbek', dict: uz, rtl: false, locale: 'uz' },
+  kk: { label: 'Қазақ', dict: kk, rtl: false, locale: 'kk' },
+  ru: { label: 'Русский', dict: ru, rtl: false, locale: 'ru' },
   fr: { label: 'Français', dict: fr, rtl: false, locale: 'fr' },
   de: { label: 'Deutsch', dict: de, rtl: false, locale: 'de' },
+  es: { label: 'Español', dict: es, rtl: false, locale: 'es' },
+  nl: { label: 'Nederlands', dict: nl, rtl: false, locale: 'nl' },
   sq: { label: 'Shqip', dict: sq, rtl: false, locale: 'sq' },
   bs: { label: 'Bosanski', dict: bs, rtl: false, locale: 'bs' },
   sw: { label: 'Kiswahili', dict: sw, rtl: false, locale: 'sw' },
   ha: { label: 'Hausa', dict: ha, rtl: false, locale: 'ha' },
+  so: { label: 'Soomaali', dict: so, rtl: false, locale: 'so' },
+  yo: { label: 'Yorùbá', dict: yo, rtl: false, locale: 'yo' },
   zh: { label: '中文', dict: zh, rtl: false, locale: 'zh-CN' },
+  tl: { label: 'Tagalog', dict: tl, rtl: false, locale: 'fil' },
+  th: { label: 'ไทย', dict: th, rtl: false, locale: 'th' },
 } as const satisfies Record<string, LangInfo>;
 
 export type Lang = keyof typeof LANGUAGES;
