@@ -5,8 +5,9 @@ import { Button, Chip, Field, Row, Screen, Text } from '@/components/ui';
 import { ScreenGuard } from '@/components/ScreenGuard';
 import { parseRupiah } from '@/features/ledger/format';
 import { listLedger, saveLedgerItem } from '@/features/ledger/repo';
-import { LEDGER_LABEL, type LedgerPayload, type LedgerType } from '@/features/ledger/types';
+import { type LedgerPayload, type LedgerType } from '@/features/ledger/types';
 import { addDays } from '@/lib/dates';
+import { useT } from '@/i18n/useT';
 import { useApp } from '@/state/app';
 
 const DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
@@ -14,6 +15,7 @@ const TYPES: LedgerType[] = ['utang', 'piutang', 'amanah', 'wasiat'];
 
 export default function LedgerForm() {
   const router = useRouter();
+  const { t: tr } = useT();
   const { id } = useLocalSearchParams<{ id: string }>();
   const isNew = id === 'new';
   const { db, today, dek, unlockVault, bump, reschedule } = useApp();
@@ -57,7 +59,7 @@ export default function LedgerForm() {
     setBusy(true);
     try {
       const key = dek ?? (await unlockVault());
-      if (!key) return Alert.alert('Terkunci', 'Catatan ini pribadi dan butuh verifikasi perangkat.');
+      if (!key) return Alert.alert(tr('journal.common.locked'), tr('journal.ledger.form.lockedBody'));
       const payload: LedgerPayload = {
         type, title, counterparty, note,
         amountIdr: wasiat ? null : parseRupiah(amount),
@@ -71,7 +73,7 @@ export default function LedgerForm() {
       void reschedule();
       router.back();
     } catch (e) {
-      Alert.alert('Gagal menyimpan', e instanceof Error ? e.message : String(e));
+      Alert.alert(tr('journal.common.saveFailed'), e instanceof Error ? e.message : String(e));
     } finally {
       setBusy(false);
     }
@@ -80,8 +82,8 @@ export default function LedgerForm() {
   if (!ready) {
     return (
       <Screen>
-        <Text muted>Catatan bersifat pribadi & terenkripsi.</Text>
-        <Button title="Buka dengan biometrik/kode sandi" onPress={() => unlockVault()} />
+        <Text muted>{tr('journal.ledger.form.privateNote')}</Text>
+        <Button title={tr('journal.common.unlockBiometric')} onPress={() => unlockVault()} />
       </Screen>
     );
   }
@@ -89,23 +91,23 @@ export default function LedgerForm() {
   return (
     <Screen>
       <ScreenGuard active id="ledger-form" />
-      <Text variant="label">Jenis</Text>
-      <Row>{TYPES.map((t) => <Chip key={t} label={LEDGER_LABEL[t]} selected={type === t} onPress={() => setType(t)} />)}</Row>
-      <Field label={wasiat ? 'Judul wasiat' : 'Judul'} value={title} onChangeText={setTitle} maxLength={120} placeholder={wasiat ? 'mis. Wasiat untuk keluarga' : 'mis. Pinjaman modal usaha'} />
-      <Field label={type === 'piutang' ? 'Kepada siapa' : wasiat ? 'Untuk siapa (opsional)' : 'Dengan siapa'} value={counterparty} onChangeText={setCounterparty} maxLength={80} />
+      <Text variant="label">{tr('journal.ledger.form.type')}</Text>
+      <Row>{TYPES.map((t) => <Chip key={t} label={tr(`journal.ledger.types.${t}`)} selected={type === t} onPress={() => setType(t)} />)}</Row>
+      <Field label={wasiat ? tr('journal.ledger.form.willTitle') : tr('journal.ledger.form.titleLabel')} value={title} onChangeText={setTitle} maxLength={120} placeholder={wasiat ? tr('journal.ledger.form.willTitlePlaceholder') : tr('journal.ledger.form.titlePlaceholder')} />
+      <Field label={type === 'piutang' ? tr('journal.ledger.form.toWhom') : wasiat ? tr('journal.ledger.form.forWhom') : tr('journal.ledger.form.withWhom')} value={counterparty} onChangeText={setCounterparty} maxLength={80} />
       {!wasiat ? (
         <>
-          <Field label="Nominal (Rp, opsional)" value={amount} onChangeText={(v) => setAmount(v.replace(/[^0-9]/g, ''))} keyboardType="number-pad" />
-          <Field label="Jatuh tempo (YYYY-MM-DD, opsional)" value={due} onChangeText={setDue} maxLength={10} autoCapitalize="none" hint={dueValid ? undefined : 'Format: 2026-12-31'} />
+          <Field label={tr('journal.ledger.form.amount')} value={amount} onChangeText={(v) => setAmount(v.replace(/[^0-9]/g, ''))} keyboardType="number-pad" />
+          <Field label={tr('journal.ledger.form.due')} value={due} onChangeText={setDue} maxLength={10} autoCapitalize="none" hint={dueValid ? undefined : tr('journal.ledger.form.dueFormat')} />
           <Row>
-            <Chip label="+7 hari" onPress={() => setDue(addDays(today, 7))} />
-            <Chip label="+30 hari" onPress={() => setDue(addDays(today, 30))} />
-            <Chip label="Hapus tanggal" onPress={() => setDue('')} />
+            <Chip label={tr('journal.ledger.form.plus7')} onPress={() => setDue(addDays(today, 7))} />
+            <Chip label={tr('journal.ledger.form.plus30')} onPress={() => setDue(addDays(today, 30))} />
+            <Chip label={tr('journal.ledger.form.clearDate')} onPress={() => setDue('')} />
           </Row>
         </>
       ) : null}
-      <Field label={wasiat ? 'Isi wasiat' : 'Catatan'} value={note} onChangeText={setNote} multiline maxLength={4000} hint={wasiat ? 'Tulis amanah, utang yang belum lunas, dan pesan untuk keluarga. Pembagian harta/waris: konsultasikan ahlinya.' : undefined} />
-      <Button title="Simpan" onPress={save} loading={busy} disabled={!title.trim() || !dueValid} />
+      <Field label={wasiat ? tr('journal.ledger.form.willBody') : tr('journal.ledger.form.note')} value={note} onChangeText={setNote} multiline maxLength={4000} hint={wasiat ? tr('journal.ledger.form.willHint') : undefined} />
+      <Button title={tr('journal.common.save')} onPress={save} loading={busy} disabled={!title.trim() || !dueValid} />
     </Screen>
   );
 }

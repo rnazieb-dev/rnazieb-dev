@@ -1,6 +1,7 @@
 import { View } from 'react-native';
 import { useCircles } from '@/features/circles/useCircles';
 import type { Visibility } from '@/db/repos';
+import { useT } from '@/i18n/useT';
 import { space } from '@/lib/theme';
 import { Chip, Row, Text } from './ui';
 
@@ -23,24 +24,25 @@ export function VisibilityPicker({
   allowSecret?: boolean;
 }) {
   const { circles, enabled } = useCircles();
+  const { t } = useT();
   return (
     <View style={{ gap: space.sm }}>
-      <Text variant="label">Siapa yang boleh melihat?</Text>
+      <Text variant="label">{t('journal.visibility.question')}</Text>
       <Row>
-        {allowSecret ? <Chip label="🔒 Rahasia" tone="secret" selected={value.visibility === 'secret'} onPress={() => onChange({ visibility: 'secret', circleId: null })} /> : null}
+        {allowSecret ? <Chip label={t('journal.visibility.secretLocked')} tone="secret" selected={value.visibility === 'secret'} onPress={() => onChange({ visibility: 'secret', circleId: null })} /> : null}
         {enabled ? (
           <>
-            <Chip label="Grup" selected={value.visibility === 'circle'} onPress={() => onChange({ visibility: 'circle', circleId: value.circleId ?? circles[0]?.circle.id ?? null })} />
-            <Chip label="Semua teman grup" selected={value.visibility === 'public'} onPress={() => onChange({ visibility: 'public', circleId: null })} />
+            <Chip label={t('journal.visibility.circle')} selected={value.visibility === 'circle'} onPress={() => onChange({ visibility: 'circle', circleId: value.circleId ?? circles[0]?.circle.id ?? null })} />
+            <Chip label={t('journal.visibility.public')} selected={value.visibility === 'public'} onPress={() => onChange({ visibility: 'public', circleId: null })} />
           </>
         ) : null}
       </Row>
       {value.visibility === 'secret' ? (
-        <Text variant="small" muted>Terenkripsi di perangkat. Tidak masuk feed, peringkat, atau notifikasi siapa pun.</Text>
+        <Text variant="small" muted>{t('journal.visibility.secretHint')}</Text>
       ) : (
-        <Text variant="small" muted>Perbarui niat: untuk Allah, bukan pujian. Berbagi boleh untuk saling mengajak; amal paling utama sering yang tersembunyi.</Text>
+        <Text variant="small" muted>{t('journal.visibility.shareHint')}</Text>
       )}
-      {!enabled ? <Text variant="small" muted>Untuk berbagi ke grup, aktifkan akun & cloud di Profil.</Text> : null}
+      {!enabled ? <Text variant="small" muted>{t('journal.visibility.cloudOff')}</Text> : null}
       {value.visibility === 'circle' ? (
         circles.length ? (
           <Row>
@@ -49,7 +51,7 @@ export function VisibilityPicker({
             ))}
           </Row>
         ) : (
-          <Text variant="small" muted>Belum ada grup aktif. Buat atau gabung di tab Grup.</Text>
+          <Text variant="small" muted>{t('journal.visibility.noCircles')}</Text>
         )
       ) : null}
     </View>

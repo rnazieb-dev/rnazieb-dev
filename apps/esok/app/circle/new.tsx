@@ -3,27 +3,25 @@ import { useState } from 'react';
 import { Alert } from 'react-native';
 import { Button, Chip, Field, Row, Screen, Text } from '@/components/ui';
 import { type CircleKind, createCircle } from '@/features/circles/api';
+import { useT } from '@/i18n/useT';
 import { getSupabase } from '@/lib/supabase';
 
-const KINDS: { key: CircleKind; label: string; hint: string }[] = [
-  { key: 'keluarga', label: 'Keluarga', hint: 'Untuk keluarga inti/besar.' },
-  { key: 'sesama_jenis', label: 'Sesama jenis', hint: 'Anggota sesama jenis agar nyaman.' },
-  { key: 'campur', label: 'Terbuka', hint: 'Sahabat, kantor, komunitas.' },
-];
+const KINDS: CircleKind[] = ['keluarga', 'sesama_jenis', 'campur'];
 
 export default function NewCircle() {
   const router = useRouter();
+  const { t } = useT();
   const [name, setName] = useState('');
   const [kind, setKind] = useState<CircleKind>('keluarga');
   const [busy, setBusy] = useState(false);
   return (
     <Screen>
-      <Field label="Nama grup" value={name} onChangeText={setName} maxLength={60} placeholder="mis. Keluarga Besar Bani Fulan" />
-      <Text variant="label">Jenis</Text>
-      <Row>{KINDS.map((k) => <Chip key={k.key} label={k.label} selected={kind === k.key} onPress={() => setKind(k.key)} />)}</Row>
-      <Text variant="small" muted>{KINDS.find((k) => k.key === kind)?.hint} Anggota baru selalu perlu persetujuan Anda.</Text>
+      <Field label={t('groups.newGroup.name')} value={name} onChangeText={setName} maxLength={60} placeholder={t('groups.newGroup.namePlaceholder')} />
+      <Text variant="label">{t('groups.newGroup.kind')}</Text>
+      <Row>{KINDS.map((k) => <Chip key={k} label={t(`groups.kinds.${k}`)} selected={kind === k} onPress={() => setKind(k)} />)}</Row>
+      <Text variant="small" muted>{t(`groups.newGroup.hints.${kind}`)} {t('groups.newGroup.approvalNote')}</Text>
       <Button
-        title="Buat"
+        title={t('groups.create')}
         loading={busy}
         disabled={!name.trim()}
         onPress={async () => {
@@ -34,7 +32,7 @@ export default function NewCircle() {
             const id = await createCircle(sb, name.trim(), kind);
             router.replace({ pathname: '/circle/[id]', params: { id } });
           } catch (e) {
-            Alert.alert('Gagal', e instanceof Error ? e.message : String(e));
+            Alert.alert(t('groups.failed'), e instanceof Error ? e.message : String(e));
           } finally {
             setBusy(false);
           }

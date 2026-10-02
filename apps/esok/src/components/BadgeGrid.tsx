@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Animated, Pressable, Text as RNText, View } from 'react-native';
-import { type BadgeTrack, type Stats, badgeTracks } from '@/features/gamification/badges';
+import { type BadgeDef, type BadgeTrack, type Stats, badgeTracks } from '@/features/gamification/badges';
+import { useT } from '@/i18n/useT';
+import { badgeKeys } from '@/lib/labels';
 import { radius, space, useTheme } from '@/lib/theme';
 import { HexBadge } from './HexBadge';
 import type { GradientName } from './icons/IconTile';
@@ -22,9 +24,19 @@ const LOOK: Record<string, { glyph: IslamicGlyphName; gradient: GradientName }> 
   tantangan: { glyph: 'menara', gradient: 'night' },
 };
 
+/** Judul & deskripsi lencana sesuai bahasa; jatuh ke teks Indonesia di BADGES bila belum ada terjemahan. */
+function useBadgeText() {
+  const { t } = useT();
+  return (b: BadgeDef) => {
+    const k = badgeKeys(b.id);
+    return k ? { title: t(k.title), description: t(k.description) } : { title: b.title, description: b.description };
+  };
+}
+
 /** Kisi lencana: satu ubin per jenis (tingkatan digabung). Ketuk untuk detail & progres. */
 export function BadgeGrid({ stats }: { stats: Stats }) {
   const t = useTheme();
+  const { t: tr } = useT();
   const tracks = badgeTracks(stats);
   // Yang sudah diraih dulu, lalu yang paling dekat diraih.
   const sorted = [...tracks].sort((a, b) => b.tiersEarned - a.tiersEarned || b.progress - a.progress);
@@ -37,7 +49,7 @@ export function BadgeGrid({ stats }: { stats: Stats }) {
 
   return (
     <View style={{ gap: space.md }}>
-      <Text variant="small" muted>{earnedCount} dari {totalTiers} tingkatan diraih · ketuk lencana untuk melihat detail. Deskriptif saja; tidak ada klaim kedudukan atau pahala.</Text>
+      <Text variant="small" muted>{tr('missions.badgeGrid.summary', { earned: earnedCount, total: totalTiers })}</Text>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: space.sm }}>
         {shown.map((tr) => (
           <Tile key={tr.series} track={tr} selected={open === tr.series} onPress={() => setOpen(open === tr.series ? null : tr.series)} />
@@ -46,7 +58,7 @@ export function BadgeGrid({ stats }: { stats: Stats }) {
       {selected ? <Detail track={selected} /> : null}
       {sorted.length > 6 ? (
         <Pressable accessibilityRole="button" onPress={() => setAll(!all)} style={{ alignSelf: 'center', padding: space.sm }}>
-          <RNText style={{ color: t.primary, fontWeight: '600' }}>{all ? 'Tampilkan lebih sedikit' : `Lihat semua (${sorted.length})`}</RNText>
+          <RNText style={{ color: t.primary, fontWeight: '600' }}>{all ? tr('missions.badgeGrid.showLess') : tr('missions.badgeGrid.showAll', { n: sorted.length })}</RNText>
         </Pressable>
       ) : null}
     </View>
@@ -56,7 +68,9 @@ export function BadgeGrid({ stats }: { stats: Stats }) {
 function Tile({ track, selected, onPress }: { track: BadgeTrack; selected: boolean; onPress: () => void }) {
   const t = useTheme();
   const scale = useState(() => new Animated.Value(1))[0];
-  const def = track.current ?? track.next!;
+  const { t: tr } = useT();
+  const text = useBadgeText();
+  const def = text(track.current ?? track.next!);
   const earned = track.tiersEarned > 0;
   useEffect(() => {
     Animated.spring(scale, { toValue: selected ? 1.06 : 1, useNativeDriver: true, friction: 5 }).start();
@@ -65,7 +79,7 @@ function Tile({ track, selected, onPress }: { track: BadgeTrack; selected: boole
     <Animated.View style={{ width: '31.5%', transform: [{ scale }] }}>
       <Pressable
         accessibilityRole="button"
-        accessibilityLabel={`${def.title}${earned ? ', diraih' : ', belum diraih'}`}
+        accessibilityLabel={`${def.title}${earned ? tr('missions.badgeGrid.earned') : tr('missions.badgeGrid.notEarned')}`}
         accessibilityState={{ selected }}
         onPress={onPress}
         style={{
@@ -88,19 +102,22 @@ function Tile({ track, selected, onPress }: { track: BadgeTrack; selected: boole
 
 function Detail({ track }: { track: BadgeTrack }) {
   const t = useTheme();
-  const def = track.current ?? track.next!;
+  const { t: tr } = useT();
+  const text = useBadgeText();
+  const def = text(track.current ?? track.next!);
+  const next = track.next ? text(track.next) : null;
   return (
     <Card tone="accent">
       <Text variant="heading">{def.title}</Text>
       <Text muted>{def.description}</Text>
       {track.next ? (
         <>
-          <Text variant="label">{track.current ? `Berikutnya: ${track.next.title}` : 'Progres'} · {Math.min(track.value, track.next.target)}/{track.next.target}</Text>
+          <Text variant="label">{track.current ? tr('missions.badgeGrid.next', { title: next!.title }) : tr('missions.badgeGrid.progress')} · {Math.min(track.value, track.next.target)}/{track.next.target}</Text>
           <ProgressBar value={track.value / track.next.target} color={t.accent} />
-          <Text variant="small" muted>{track.next.description}</Text>
+          <Text variant="small" muted>{next!.description}</Text>
         </>
       ) : (
-        <Text variant="label" color={t.accent}>Semua tingkatan diraih. Alhamdulillah — teruskan dengan istiqamah.</Text>
+        <Text variant="label" color={t.accent}>{tr('missions.badgeGrid.allDone')}</Text>
       )}
     </Card>
   );
