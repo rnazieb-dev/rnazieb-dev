@@ -8,6 +8,7 @@ import { LANGUAGES, type LangSetting } from '@/i18n';
 import { useT } from '@/i18n/useT';
 import { loadProgress } from '@/features/gamification/progress';
 import { LEVELS } from '@/features/gamification/points';
+import { levelKey } from '@/lib/labels';
 import { getSupabase } from '@/lib/supabase';
 import { useApp, useDbQuery } from '@/state/app';
 import { useState } from 'react';
@@ -43,33 +44,33 @@ export default function Profil() {
       {p && !settings.honorMode ? (
         <Card>
           <Row style={{ justifyContent: 'space-between' }}>
-            <Text variant="heading">Level {p.personal.level.level} · {p.personal.level.name}</Text>
-            <Pill label={`${p.personal.points} poin`} tone="accent" />
+            <Text variant="heading">{t('prefs.profile.level', { level: p.personal.level.level, name: (() => { const k = levelKey(p.personal.level.level); return k ? t(k) : p.personal.level.name; })() })}</Text>
+            <Pill label={t('prefs.profile.points', { n: p.personal.points })} tone="accent" />
           </Row>
           <ProgressBar value={p.personal.level.progress} />
-          <Text variant="small" muted>Poin = penanda konsistensi, bukan nilai pahala. Pahala hanya di sisi Allah.</Text>
-          {!settings.hideStreak ? <Text>Beruntun {p.personal.streak} hari · total {p.stats.deedsTotal} catatan</Text> : null}
-          <Text variant="small" muted>Skor pribadi ini menyertakan amalan rahasia dan hanya terlihat oleh Anda. Yang terlihat orang lain hanya {p.publicView.points} poin dari amal yang Anda bagikan.</Text>
+          <Text variant="small" muted>{t('prefs.profile.pointsNote')}</Text>
+          {!settings.hideStreak ? <Text>{t('prefs.profile.streak', { n: p.personal.streak, total: p.stats.deedsTotal })}</Text> : null}
+          <Text variant="small" muted>{t('prefs.profile.privateScore', { n: p.publicView.points })}</Text>
         </Card>
       ) : (
-        <Card><Text muted>Mode ikhlas aktif: angka disembunyikan.</Text></Card>
+        <Card><Text muted>{t('prefs.profile.honorOn')}</Text></Card>
       )}
 
       <Card tone="secret">
-        <Text variant="heading">🔒 Amalan rahasia</Text>
-        <Text muted>{p ? `${p.personal.secretCount} tersimpan` : ''} · hanya Anda yang dapat membaca.</Text>
-        <Button title="Buka" variant="secondary" onPress={() => router.push('/vault')} />
+        <Text variant="heading">{t('prefs.profile.secretTitle')}</Text>
+        <Text muted>{p ? t('prefs.profile.secretSaved', { n: p.personal.secretCount }) : ''}{t('prefs.profile.secretOnlyYou')}</Text>
+        <Button title={t('prefs.profile.open')} variant="secondary" onPress={() => router.push('/vault')} />
       </Card>
 
       {!settings.honorMode ? (
         <>
-          <SectionTitle>Lencana</SectionTitle>
+          <SectionTitle>{t('prefs.profile.badges')}</SectionTitle>
           {p ? <BadgeGrid stats={p.stats} /> : null}
-          <Text variant="small" muted>Level: {LEVELS.map((l) => l.name).join(' › ')}</Text>
+          <Text variant="small" muted>{t('prefs.profile.levels', { list: LEVELS.map((l, i) => { const k = levelKey(i + 1); return k ? t(k) : l.name; }).join(' › ') })}</Text>
         </>
       ) : null}
 
-      <SectionTitle>Pengaturan</SectionTitle>
+      <SectionTitle>{t('prefs.profile.settingsTitle')}</SectionTitle>
       <Text variant="label">{t('settings.language')}</Text>
       <Row>
         {(['system', ...Object.keys(LANGUAGES)] as LangSetting[]).map((l) => (
@@ -77,23 +78,23 @@ export default function Profil() {
         ))}
       </Row>
       <Button title={t('hub.items.groups')} variant="secondary" onPress={() => router.push('/(tabs)/grup')} />
-      <Field label="Nama tampilan" value={name} onChangeText={setName} maxLength={40} onEndEditing={saveName} onBlur={saveName} />
+      <Field label={t('prefs.profile.displayName')} value={name} onChangeText={setName} maxLength={40} onEndEditing={saveName} onBlur={saveName} />
       <Toggle
-        label="Mode ikhlas"
-        hint="Sembunyikan angka poin/level/lencana milik Anda, di layar sendiri dan dari orang lain."
+        label={t('prefs.profile.honorMode')}
+        hint={t('prefs.profile.honorModeHint')}
         value={settings.honorMode}
         onValueChange={async (v) => { await updateSettings({ honorMode: v }); await syncPrivacy({ honor_mode: v }); }}
       />
       <Toggle
-        label="Ikut peringkat grup"
-        hint="Dimatikan = nama Anda tidak muncul di peringkat."
+        label={t('prefs.profile.rankings')}
+        hint={t('prefs.profile.rankingsHint')}
         value={settings.showRankings}
         onValueChange={async (v) => { await updateSettings({ showRankings: v }); await syncPrivacy({ show_in_rankings: v }); }}
       />
       {session && settings.cloudEnabled && !settings.isMinor ? (
         <Toggle
-          label="Notifikasi dari grup"
-          hint="Pengingat kebaikan & doa dari anggota (maks. 3/hari per pengirim). Isi hanya nama pengirim dan teks baku."
+          label={t('prefs.profile.groupNotifs')}
+          hint={t('prefs.profile.groupNotifsHint')}
           value={settings.pushNudges}
           onValueChange={async (v) => {
             const sb = getSupabase();
@@ -103,18 +104,18 @@ export default function Profil() {
               else await unregisterPush(sb, session.user.id);
               await updateSettings({ pushNudges: v });
             } catch (e) {
-              Alert.alert('Gagal', e instanceof Error ? e.message : String(e));
+              Alert.alert(t('prefs.shared.failed'), e instanceof Error ? e.message : String(e));
             }
           }}
         />
       ) : null}
-      <Toggle label="Sembunyikan rangkaian hari (streak)" value={settings.hideStreak} onValueChange={(v) => updateSettings({ hideStreak: v })} />
-      <Button title="Dzikir & doa" variant="secondary" onPress={() => router.push('/adhkar')} />
-      <Button title="Utang, amanah & wasiat" variant="secondary" onPress={() => router.push('/ledger')} />
-      <Button title="Pengingat" variant="secondary" onPress={() => router.push('/settings/reminders')} />
-      <Button title="Akun & cloud" variant="secondary" onPress={() => router.push('/auth')} />
-      <Button title="Keamanan & data" variant="secondary" onPress={() => router.push('/settings/security')} />
-      <Button title="Tentang & sumber konten" variant="ghost" onPress={() => router.push('/settings/about')} />
+      <Toggle label={t('prefs.profile.hideStreak')} value={settings.hideStreak} onValueChange={(v) => updateSettings({ hideStreak: v })} />
+      <Button title={t('prefs.profile.adhkar')} variant="secondary" onPress={() => router.push('/adhkar')} />
+      <Button title={t('prefs.profile.ledger')} variant="secondary" onPress={() => router.push('/ledger')} />
+      <Button title={t('prefs.profile.reminders')} variant="secondary" onPress={() => router.push('/settings/reminders')} />
+      <Button title={t('prefs.profile.account')} variant="secondary" onPress={() => router.push('/auth')} />
+      <Button title={t('prefs.profile.security')} variant="secondary" onPress={() => router.push('/settings/security')} />
+      <Button title={t('prefs.profile.about')} variant="ghost" onPress={() => router.push('/settings/about')} />
     </Screen>
   );
 }

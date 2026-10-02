@@ -1,5 +1,6 @@
 import { Notifications } from '@/lib/notifications';
-import { type AlertKey, type CalcOpts, labelFor, prayerAlerts } from '@/features/salat/logic';
+import { type AlertKey, type CalcOpts, prayerAlerts } from '@/features/salat/logic';
+import { type Lang, translate } from '@/i18n';
 import { Platform } from 'react-native';
 import { QUOTES } from '@/content';
 import { type Coordinates, autoMethod, computePrayerTimes, formatHour } from './prayerTimes';
@@ -64,6 +65,11 @@ export function adhkarTimes(day: DayKey, coords?: Coordinates): [string, string]
   return [formatHour(t.subuh + 30 / 60), formatHour(t.asar + 30 / 60)];
 }
 
+/** Nama waktu salat untuk judul adzan; Zuhur pada hari Jumat ditampilkan sebagai Jumat (sama seperti `labelFor`). */
+function prayerLabel(lang: Lang, key: AlertKey, at: Date): string {
+  return key === 'zuhur' && at.getDay() === 5 ? translate(lang, 'salat.friday') : translate(lang, `salat.names.${key}`);
+}
+
 export interface ReminderExtras {
   adhkar: boolean;
   due: boolean;
@@ -71,6 +77,8 @@ export interface ReminderExtras {
   prayerAlerts?: Partial<Record<AlertKey, boolean>>;
   coords?: Coordinates;
   calc?: CalcOpts;
+  /** Bahasa teks notifikasi; default 'id'. */
+  lang?: Lang;
 }
 
 /** Batalkan semua jadwal lama lalu jadwalkan ulang jendela ke depan. Dipanggil saat app dibuka & pengaturan berubah. */
@@ -86,6 +94,7 @@ export async function rescheduleReminders(
   if (!settings.enabled && !wantsAdzan) return 0;
   if (!(await notificationPermission().then((p) => p === 'granted'))) return 0;
   await ensureChannel();
+  const lang = extras.lang ?? 'id';
   const now = new Date();
   const today = toDayKey(now);
   const coords = prayer.mode === 'salat' ? prayer.coords : undefined;
@@ -107,7 +116,7 @@ export async function rescheduleReminders(
     if (!q) continue;
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: 'NAFS — pengingat',
+        title: translate(lang, 'prefs.notif.reminderTitle'),
         body: notificationBody(q),
         data: { quoteId: q.id },
         ...(Platform.OS === 'android' ? {} : {}),
@@ -118,8 +127,8 @@ export async function rescheduleReminders(
   for (const a of adhkar) {
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: a.kind === 'pagi' ? 'NAFS — dzikir pagi' : 'NAFS — dzikir petang',
-        body: 'Waktunya berdzikir. Ketuk untuk membuka.',
+        title: translate(lang, a.kind === 'pagi' ? 'prefs.notif.dhikrMorningTitle' : 'prefs.notif.dhikrEveningTitle'),
+        body: translate(lang, 'prefs.notif.dhikrBody'),
         data: { route: 'adhkar', tab: a.kind },
       },
       trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: a.at, channelId: CHANNEL_ID },
@@ -128,13 +137,13 @@ export async function rescheduleReminders(
   for (const d of due) {
     // Teks generik: tanpa nama/nominal agar tidak bocor di layar kunci.
     await Notifications.scheduleNotificationAsync({
-      content: { title: 'NAFS — pengingat', body: 'Ada catatan yang jatuh tempo hari ini. Tunaikan dengan baik.', data: { route: 'ledger' } },
+      content: { title: translate(lang, 'prefs.notif.reminderTitle'), body: translate(lang, 'prefs.notif.dueBody'), data: { route: 'ledger' } },
       trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: d.at, channelId: CHANNEL_ID },
     });
   }
   for (const p of adzan) {
     await Notifications.scheduleNotificationAsync({
-      content: { title: `NAFS — waktu ${labelFor(p.key, p.at)}`, body: 'Telah masuk waktu salat (perkiraan). Hayya ‘alash-shalah.', data: { route: 'salat' } },
+      content: { title: translate(lang, 'prefs.notif.prayerTitle', { name: prayerLabel(lang, p.key, p.at) }), body: translate(lang, 'prefs.notif.prayerBody'), data: { route: 'salat' } },
       trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: p.at, channelId: CHANNEL_ID },
     });
   }

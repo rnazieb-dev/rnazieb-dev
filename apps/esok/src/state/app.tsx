@@ -10,7 +10,7 @@ import { DEFAULT_REMINDERS, type ReminderSettings } from '@/features/reminders/s
 import { configureNotifications, rescheduleReminders } from '@/features/reminders/notifications';
 import type { AlertKey } from '@/features/salat/logic';
 import type { CalcMethod } from '@/features/reminders/prayerTimes';
-import type { LangSetting } from '@/i18n';
+import { type LangSetting, resolveLang } from '@/i18n';
 import { authenticate, ensureLocalDek, readDek, wipeDek } from '@/features/security/vault';
 import { canSyncAs, canUseLocalData } from '@/features/sync/binding';
 import { runFullSync } from '@/features/sync/service';
@@ -177,8 +177,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       prayerAlerts: settings.prayerAlerts,
       coords: settings.coords ?? undefined,
       calc: { method: settings.calcMethod, hanafi: settings.asrHanafi },
+      lang: resolveLang(settings.language),
     });
-  }, [db, settings.reminders, settings.prayerMode, settings.coords, settings.seed, settings.adhkarReminder, settings.dueReminders, settings.prayerAlerts, settings.calcMethod, settings.asrHanafi]);
+  }, [db, settings.reminders, settings.prayerMode, settings.coords, settings.seed, settings.adhkarReminder, settings.dueReminders, settings.prayerAlerts, settings.calcMethod, settings.asrHanafi, settings.language]);
 
   useEffect(() => {
     // Jadwalkan ulang setiap pengaturan pengingat berubah. Pengingat adzan boleh aktif walau pengenalan belum selesai.
