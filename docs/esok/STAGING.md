@@ -4,7 +4,7 @@ Profil `preview` di `apps/esok/eas.json` menghasilkan **APK internal** (distribu
 
 ## Sekali saja (butuh akun Expo; tidak dapat dilakukan dari lingkungan pengembangan Claude)
 1. `cd apps/esok && npx eas-cli login`
-2. `npx eas-cli init --id 9cfd7775-2dc4-496e-803a-8f1350b40e17` (proyek EAS `hidup-hanya-hari-ini`; `projectId` 2. `npx eas-cli init` — membuat proyek EAS dan mengisi `expo.extra.eas.projectId` di `app.json` (commit hasilnya). `slug` sudah terisi di `app.json`).
+2. `npx eas-cli init --id 4692677f-c617-4b96-8545-f4d666460e69` (proyek EAS `hidup-hanya-hari-ini`; `projectId` 2. `npx eas-cli init` — membuat proyek EAS dan mengisi `expo.extra.eas.projectId` di `app.json` (commit hasilnya). `slug` sudah terisi di `app.json`).
 3. Di dashboard Expo → proyek → **GitHub**: hubungkan repo `rnazieb-dev/rnazieb-dev` dan atur **Base directory** = `apps/esok` (monorepo).
 
 ## Jalankan build
