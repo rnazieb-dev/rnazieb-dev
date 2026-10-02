@@ -4,7 +4,7 @@ import { Notifications } from '@/lib/notifications';
 import { Platform } from 'react-native';
 import { requestNotificationPermission } from '@/features/reminders/notifications';
 
-/** Daftarkan token push (opsional) untuk pengingat/doa dari anggota lingkaran. Isi push tidak pernah memuat data privat. */
+/** Daftarkan token push (opsional) untuk pengingat/doa dari anggota grup. Isi push tidak pernah memuat data privat. */
 export async function registerPush(sb: SupabaseClient): Promise<void> {
   if (!(await requestNotificationPermission())) throw new Error('Izin notifikasi diperlukan.');
   const projectId = (Constants.expoConfig?.extra as { eas?: { projectId?: string } } | undefined)?.eas?.projectId;

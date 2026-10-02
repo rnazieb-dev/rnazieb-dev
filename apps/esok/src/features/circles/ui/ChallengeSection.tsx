@@ -29,9 +29,9 @@ export function ChallengeSection({ circle, isAdmin, today }: { circle: Circle; i
 
   return (
     <>
-      <Text muted>Target bersama lingkaran. Yang dihitung adalah kebaikan kolektif, bukan urutan siapa terbanyak.</Text>
+      <Text muted>Target bersama grup. Yang dihitung adalah kebaikan kolektif, bukan urutan siapa terbanyak.</Text>
       {list.error ? <Text color="#B3402F">{list.error}</Text> : null}
-      {!list.loading && list.data.length === 0 ? <Empty title="Belum ada tantangan" body={isAdmin ? 'Buat tantangan pertama untuk lingkaran.' : 'Admin dapat membuat tantangan.'} /> : null}
+      {!list.loading && list.data.length === 0 ? <Empty title="Belum ada tantangan" body={isAdmin ? 'Buat tantangan pertama untuk grup.' : 'Admin dapat membuat tantangan.'} /> : null}
       {list.data.map((c) => {
         const active = today >= c.starts_on && today <= c.ends_on;
         return (

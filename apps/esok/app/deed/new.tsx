@@ -76,7 +76,7 @@ export default function NewDeed() {
         ))}
       </Row>
       <VisibilityPicker value={vis} onChange={setVis} />
-      {vis.visibility === 'circle' ? <Toggle label="Posting ke feed lingkaran" value={post} onValueChange={setPost} /> : null}
+      {vis.visibility === 'circle' ? <Toggle label="Posting ke feed grup" value={post} onValueChange={setPost} /> : null}
       <Button title="Simpan" onPress={save} loading={busy} disabled={!title.trim() || (vis.visibility === 'circle' && !vis.circleId)} />
     </Screen>
   );

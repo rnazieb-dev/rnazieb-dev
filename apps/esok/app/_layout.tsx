@@ -42,7 +42,7 @@ function Shell() {
         }}
       >
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="onboarding" options={{ headerShown: false, gestureEnabled: false }} />
+        <Stack.Screen name="onboarding" options={{ headerShown: false, presentation: 'modal' }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="deed/new" options={{ title: 'Catat amal', presentation: 'modal' }} />
         <Stack.Screen name="reflection" options={{ title: 'Refleksi' }} />
@@ -54,9 +54,9 @@ function Shell() {
         <Stack.Screen name="auth" options={{ title: 'Akun & cloud', presentation: 'modal' }} />
         <Stack.Screen name="mission/[id]" options={{ title: 'Misi' }} />
         <Stack.Screen name="quote/[id]" options={{ title: 'Kutipan' }} />
-        <Stack.Screen name="circle/new" options={{ title: 'Lingkaran baru', presentation: 'modal' }} />
-        <Stack.Screen name="circle/join" options={{ title: 'Gabung lingkaran', presentation: 'modal' }} />
-        <Stack.Screen name="circle/[id]" options={{ title: 'Lingkaran' }} />
+        <Stack.Screen name="circle/new" options={{ title: 'Grup baru', presentation: 'modal' }} />
+        <Stack.Screen name="circle/join" options={{ title: 'Gabung grup', presentation: 'modal' }} />
+        <Stack.Screen name="circle/[id]" options={{ title: 'Grup' }} />
         <Stack.Screen name="settings/reminders" options={{ title: 'Pengingat' }} />
         <Stack.Screen name="settings/security" options={{ title: 'Keamanan & data' }} />
         <Stack.Screen name="settings/about" options={{ title: 'Tentang & sumber' }} />

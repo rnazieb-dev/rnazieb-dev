@@ -1,15 +1,20 @@
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import { Alert } from 'react-native';
+import { useRef, useState } from 'react';
+import { Alert, Pressable, ScrollView, View } from 'react-native';
 import { Button, Card, Empty, Row, Screen, SectionTitle, Text, Toggle } from '@/components/ui';
 import { ScreenGuard } from '@/components/ScreenGuard';
 import { DeedItem } from '@/components/DeedItem';
 import { activityDays, deleteDeed, getReflection, hasReflectionContent, listDeedsForDay, setUzur, uzurDays } from '@/db/repos';
-import { addDays, formatDayLong } from '@/lib/dates';
+import { addDays, formatDayLong, fromDayKey } from '@/lib/dates';
+import { radius, useTheme } from '@/lib/theme';
 import { useApp, useDbQuery } from '@/state/app';
+
+const HARI = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
 
 export default function Jurnal() {
   const router = useRouter();
+  const t = useTheme();
+  const stripRef = useRef<ScrollView>(null);
   const { db, today, dek, unlockVault, bump } = useApp();
   const [day, setDay] = useState(today);
   const isToday = day === today;
@@ -39,23 +44,30 @@ export default function Jurnal() {
     <Screen>
       <ScreenGuard active={!!dek} id="jurnal" />
       <Text variant="title">Jurnal amal</Text>
-      <Row style={{ gap: 6 }}>
-        {strip.map((k) => (
-          <Text
-            key={k}
-            accessibilityRole="button"
-            accessibilityLabel={formatDayLong(k)}
-            onPress={() => setDay(k)}
-            style={{
-              width: 22, height: 28, textAlign: 'center', lineHeight: 28, borderRadius: 8, overflow: 'hidden',
-              backgroundColor: k === day ? '#0F5C5A' : meta.data.active.has(k) ? '#A9801F55' : 'transparent',
-              color: k === day ? '#fff' : undefined,
-            }}
-          >
-            {Number(k.slice(8))}
-          </Text>
-        ))}
-      </Row>
+      <ScrollView ref={stripRef} horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 6 }} onContentSizeChange={() => stripRef.current?.scrollToEnd({ animated: false })}>
+        {strip.map((k) => {
+          const sel = k === day;
+          const active = meta.data.active.has(k);
+          return (
+            <Pressable
+              key={k}
+              accessibilityRole="button"
+              accessibilityState={{ selected: sel }}
+              accessibilityLabel={formatDayLong(k)}
+              onPress={() => setDay(k)}
+              style={{
+                width: 44, paddingVertical: 6, borderRadius: radius.md, alignItems: 'center', gap: 2,
+                backgroundColor: sel ? t.primary : t.surface,
+                borderWidth: 1, borderColor: sel ? t.primary : t.border,
+              }}
+            >
+              <Text variant="small" color={sel ? t.onPrimary : t.muted}>{HARI[fromDayKey(k).getDay()]}</Text>
+              <Text variant="heading" color={sel ? t.onPrimary : t.text}>{Number(k.slice(8))}</Text>
+              <View style={{ width: 5, height: 5, borderRadius: 3, backgroundColor: active ? (sel ? t.onPrimary : t.accent) : 'transparent' }} />
+            </Pressable>
+          );
+        })}
+      </ScrollView>
       <Row style={{ justifyContent: 'space-between' }}>
         <Button title="‹" variant="secondary" onPress={() => setDay(addDays(day, -1))} accessibilityLabel="Hari sebelumnya" />
         <Text variant="heading" style={{ flex: 1, textAlign: 'center' }}>{formatDayLong(day)}</Text>

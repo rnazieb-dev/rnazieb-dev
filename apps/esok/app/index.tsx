@@ -1,7 +1,6 @@
 import { Redirect } from 'expo-router';
-import { useApp } from '@/state/app';
 
 export default function Index() {
-  const { settings } = useApp();
-  return <Redirect href={settings.onboarded ? '/(tabs)' : '/onboarding'} />;
+  // Langsung ke isi aplikasi; pengenalan & setup ditawarkan lewat banner di Beranda.
+  return <Redirect href="/(tabs)" />;
 }

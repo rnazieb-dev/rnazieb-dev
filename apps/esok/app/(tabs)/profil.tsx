@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { Button, Card, Field, Pill, ProgressBar, Row, Screen, SectionTitle, Text, Toggle } from '@/components/ui';
-import { BADGES } from '@/features/gamification/badges';
+import { BadgeGrid } from '@/components/BadgeGrid';
 import { loadProgress } from '@/features/gamification/progress';
 import { LEVELS } from '@/features/gamification/points';
 import { getSupabase } from '@/lib/supabase';
@@ -15,7 +15,6 @@ export default function Profil() {
   const { today, settings, updateSettings, session } = useApp();
   const { data: p } = useDbQuery((d) => loadProgress(d, today), [today], null);
   const [name, setName] = useState(settings.displayName);
-  const earned = new Set(p?.badges.map((b) => b.id));
 
   const saveName = async () => {
     const n = sanitizeDisplayName(name);
@@ -55,10 +54,7 @@ export default function Profil() {
       {!settings.honorMode ? (
         <>
           <SectionTitle>Lencana</SectionTitle>
-          <Text variant="small" muted>Deskriptif saja; tidak ada klaim kedudukan atau pahala.</Text>
-          <Row>
-            {BADGES.map((b) => <Pill key={b.id} label={`${earned.has(b.id) ? '✓ ' : ''}${b.title}`} tone={earned.has(b.id) ? 'accent' : 'muted'} />)}
-          </Row>
+          {p ? <BadgeGrid stats={p.stats} /> : null}
           <Text variant="small" muted>Level: {LEVELS.map((l) => l.name).join(' › ')}</Text>
         </>
       ) : null}
@@ -72,14 +68,14 @@ export default function Profil() {
         onValueChange={async (v) => { await updateSettings({ honorMode: v }); await syncPrivacy({ honor_mode: v }); }}
       />
       <Toggle
-        label="Ikut peringkat lingkaran"
+        label="Ikut peringkat grup"
         hint="Dimatikan = nama Anda tidak muncul di peringkat."
         value={settings.showRankings}
         onValueChange={async (v) => { await updateSettings({ showRankings: v }); await syncPrivacy({ show_in_rankings: v }); }}
       />
       {session && settings.cloudEnabled && !settings.isMinor ? (
         <Toggle
-          label="Notifikasi dari lingkaran"
+          label="Notifikasi dari grup"
           hint="Pengingat kebaikan & doa dari anggota (maks. 3/hari per pengirim). Isi hanya nama pengirim dan teks baku."
           value={settings.pushNudges}
           onValueChange={async (v) => {

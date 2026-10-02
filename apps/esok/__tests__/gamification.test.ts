@@ -53,3 +53,23 @@ describe('badges', () => {
     );
   });
 });
+
+describe('badgeTracks', () => {
+  const { badgeTracks } = jest.requireActual('@/features/gamification/badges') as typeof import('@/features/gamification/badges');
+  const base = { deedsTotal: 0, distinctDays: 0, byCategory: {}, missionsCompleted: 0, sharedMissionsCompleted: 0, streak: 0, circlesJoined: 0, challengesContributed: 0 };
+  it('menggabungkan tingkatan per jenis dan menghitung progres ke tingkat berikutnya', () => {
+    const tracks = badgeTracks({ ...base, deedsTotal: 4 });
+    expect(new Set(tracks.map((t) => t.series)).size).toBe(tracks.length);
+    const c = tracks.find((t) => t.series === 'catatan')!;
+    expect(c.current?.id).toBe('first-deed');
+    expect(c.next?.id).toBe('ten-deeds');
+    expect(c.tiersEarned).toBe(1);
+    expect(c.progress).toBeCloseTo(3 / 9);
+  });
+  it('progres 1 dan next null bila semua tingkatan diraih', () => {
+    const c = badgeTracks({ ...base, deedsTotal: 60 }).find((t) => t.series === 'catatan')!;
+    expect(c.next).toBeNull();
+    expect(c.progress).toBe(1);
+    expect(c.tiersEarned).toBe(3);
+  });
+});

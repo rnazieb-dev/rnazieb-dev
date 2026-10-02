@@ -87,7 +87,7 @@ export async function addDeed(db: Db, dek: Uint8Array | null, input: DeedInput):
     );
     return id;
   }
-  if (input.visibility === 'circle' && !input.circleId) throw new Error('Pilih lingkaran untuk amal yang dibagikan ke lingkaran.');
+  if (input.visibility === 'circle' && !input.circleId) throw new Error('Pilih grup untuk amal yang dibagikan ke grup.');
   const t = nowIso();
   await db.run(
     `INSERT INTO deeds(id, day, title, note, category, visibility, circle_id, mission_id, shared_id, points, created_at, updated_at, dirty)

@@ -17,6 +17,8 @@ import { setRandomSource, uuid } from '@/lib/random';
 
 export interface AppSettings {
   onboarded: boolean;
+  /** Banner pengenalan di Beranda sudah ditutup ("Nanti saja"). */
+  introDismissed: boolean;
   displayName: string;
   seed: string;
   reminders: ReminderSettings;
@@ -28,7 +30,7 @@ export interface AppSettings {
   showRankings: boolean;
   hideStreak: boolean;
   cloudEnabled: boolean;
-  /** Pengguna belum 13 tahun: fitur lingkaran/cloud dinonaktifkan. */
+  /** Pengguna belum 13 tahun: fitur grup/cloud dinonaktifkan. */
   isMinor: boolean;
   pushNudges: boolean;
   /** Akun pemilik penyimpanan lokal ini (lihat features/sync/binding). */
@@ -41,6 +43,7 @@ export interface AppSettings {
 
 const DEFAULTS = (): AppSettings => ({
   onboarded: false,
+  introDismissed: false,
   displayName: 'Hamba Allah',
   seed: '',
   reminders: DEFAULT_REMINDERS,

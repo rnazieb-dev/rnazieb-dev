@@ -1,8 +1,10 @@
 import { Link, useRouter } from 'expo-router';
 import { useEffect, useMemo } from 'react';
+import { View } from 'react-native';
 import { QUOTES } from '@/content';
 import { Button, Card, Pill, ProgressBar, Row, Screen, SectionTitle, Text } from '@/components/ui';
 import { QuoteCard } from '@/components/QuoteCard';
+import { FadeIn, SproutHero } from '@/components/motion';
 import { markQuoteSeen, missionRows } from '@/db/repos';
 import { loadProgress } from '@/features/gamification/progress';
 import { dueCounts } from '@/features/ledger/repo';
@@ -15,7 +17,7 @@ import { useApp, useDbQuery } from '@/state/app';
 
 export default function Beranda() {
   const router = useRouter();
-  const { db, today, settings, bump } = useApp();
+  const { db, today, settings, updateSettings, bump } = useApp();
   const quote = useMemo(() => quoteOfDay(QUOTES, today, settings.seed, settings.reminders.allowKhauf), [today, settings.seed, settings.reminders.allowKhauf]);
   const h = gregorianToHijri(fromDayKey(today));
 
@@ -42,13 +44,34 @@ export default function Beranda() {
 
   return (
     <Screen>
-      <Text variant="small" muted>{formatDayLong(today)} · {h.day} {NAMA_BULAN_HIJRI[h.month - 1]} {h.year} H (perkiraan)</Text>
-      <Text variant="title">Assalamu’alaikum{settings.displayName !== 'Hamba Allah' ? `, ${settings.displayName}` : ''}</Text>
-      <QuoteCard quote={quote} />
-      <Row>
-        <Button title="Bekal hari ini" variant="secondary" onPress={() => router.push('/bekal')} />
-        <Button title={`Dzikir ${suggestedTab(new Date().getHours()) === 'pagi' ? 'pagi' : 'petang'}`} variant="secondary" onPress={() => router.push('/adhkar')} />
-      </Row>
+      <FadeIn>
+        <View style={{ alignItems: 'center', gap: 2 }}>
+          <SproutHero />
+          <Text variant="title" style={{ textAlign: 'center' }}>Assalamu’alaikum{settings.displayName !== 'Hamba Allah' ? `, ${settings.displayName}` : ''}</Text>
+          <Text variant="small" muted style={{ textAlign: 'center' }}>{formatDayLong(today)} · {h.day} {NAMA_BULAN_HIJRI[h.month - 1]} {h.year} H (perkiraan)</Text>
+        </View>
+      </FadeIn>
+      {!settings.onboarded && !settings.introDismissed ? (
+        <FadeIn index={1}>
+          <Card tone="accent">
+            <Text variant="heading">👋 Baru di Esok?</Text>
+            <Text muted>Silakan lihat-lihat dulu. Kalau sudah siap, kenali adabnya dan atur pengingat harian — hanya sekitar satu menit.</Text>
+            <Row>
+              <Button title="Mulai pengenalan" onPress={() => router.push('/onboarding')} />
+              <Button title="Nanti saja" variant="ghost" onPress={() => updateSettings({ introDismissed: true })} />
+            </Row>
+          </Card>
+        </FadeIn>
+      ) : null}
+      <FadeIn index={2}>
+        <QuoteCard quote={quote} />
+      </FadeIn>
+      <FadeIn index={3}>
+        <Row>
+          <Button title="Bekal hari ini" variant="secondary" onPress={() => router.push('/bekal')} />
+          <Button title={`Dzikir ${suggestedTab(new Date().getHours()) === 'pagi' ? 'pagi' : 'petang'}`} variant="secondary" onPress={() => router.push('/adhkar')} />
+        </Row>
+      </FadeIn>
       {due.data.overdue + due.data.soon > 0 ? (
         <Card tone="accent">
           <Text variant="heading">Catatan jatuh tempo</Text>
@@ -61,6 +84,7 @@ export default function Beranda() {
         </Card>
       ) : null}
 
+      <FadeIn index={4}>
       <Card>
         <Row style={{ justifyContent: 'space-between' }}>
           <Text variant="heading">Hari ini</Text>
@@ -84,10 +108,12 @@ export default function Beranda() {
           <Button title="Muhasabah malam" variant="secondary" onPress={() => router.push({ pathname: '/reflection', params: { mode: 'muhasabah' } })} />
         </Row>
       </Card>
+      </FadeIn>
 
       <SectionTitle>Misi hari ini ({doneCount}/{missions.data.daily.length})</SectionTitle>
-      {missions.data.daily.map((m) => (
-        <Link key={m.id} href={{ pathname: '/mission/[id]', params: { id: m.id } }} asChild>
+      {missions.data.daily.map((m, i) => (
+        <FadeIn key={m.id} index={5 + i}>
+        <Link href={{ pathname: '/mission/[id]', params: { id: m.id } }} asChild>
           <Card>
             <Row style={{ justifyContent: 'space-between' }}>
               <Text variant="heading" style={{ flex: 1 }}>{m.title}</Text>
@@ -96,6 +122,7 @@ export default function Beranda() {
             <Text muted>{m.description}</Text>
           </Card>
         </Link>
+        </FadeIn>
       ))}
       <Button title="Lihat semua misi" variant="ghost" onPress={() => router.push('/(tabs)/misi')} />
       {progress.error || missions.error ? <Text color="#B3402F" onPress={bump}>Gagal memuat. Ketuk untuk mencoba lagi.</Text> : null}

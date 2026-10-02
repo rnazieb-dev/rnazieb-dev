@@ -12,7 +12,7 @@ import { levelFor } from './points';
 import { computeStreak } from './streak';
 
 export interface Progress {
-  /** Tampilan PRIBADI (menyertakan amalan rahasia). Jangan pernah dikirim ke server/lingkaran. */
+  /** Tampilan PRIBADI (menyertakan amalan rahasia). Jangan pernah dikirim ke server/grup. */
   personal: { points: number; level: ReturnType<typeof levelFor>; streak: number; activeToday: boolean; secretCount: number };
   /** Tampilan PUBLIK (hanya amal yang dibagikan) — satu-satunya yang boleh tampil ke orang lain. */
   publicView: { points: number; level: ReturnType<typeof levelFor>; streak: number };

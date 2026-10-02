@@ -18,7 +18,7 @@ export default function NewCircle() {
   const [busy, setBusy] = useState(false);
   return (
     <Screen>
-      <Field label="Nama lingkaran" value={name} onChangeText={setName} maxLength={60} placeholder="mis. Keluarga Besar Bani Fulan" />
+      <Field label="Nama grup" value={name} onChangeText={setName} maxLength={60} placeholder="mis. Keluarga Besar Bani Fulan" />
       <Text variant="label">Jenis</Text>
       <Row>{KINDS.map((k) => <Chip key={k.key} label={k.label} selected={kind === k.key} onPress={() => setKind(k.key)} />)}</Row>
       <Text variant="small" muted>{KINDS.find((k) => k.key === kind)?.hint} Anggota baru selalu perlu persetujuan Anda.</Text>

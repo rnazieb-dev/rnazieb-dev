@@ -9,7 +9,7 @@ export function useCircles() {
   const [pending, setPending] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const enabled = !!session && settings.cloudEnabled && !settings.isMinor;
+  const enabled = !!session && settings.cloudEnabled && settings.onboarded && !settings.isMinor;
 
   const refresh = useCallback(async () => {
     const sb = getSupabase();
@@ -21,7 +21,7 @@ export function useCircles() {
       setPending(await myPendingCount(sb, session.user.id));
       setError(null);
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Gagal memuat lingkaran');
+      setError(e instanceof Error ? e.message : 'Gagal memuat grup');
     } finally {
       setLoading(false);
     }

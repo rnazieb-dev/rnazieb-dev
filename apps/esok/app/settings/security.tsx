@@ -128,14 +128,14 @@ export default function SecuritySettings() {
         variant="danger"
         onPress={() => Alert.alert('Hapus data lokal?', 'Seluruh catatan, refleksi, dan pengaturan di perangkat ini akan dihapus. Data di cloud (jika ada) tidak terhapus.', [
           { text: 'Batal', style: 'cancel' },
-          { text: 'Hapus', style: 'destructive', onPress: () => run(async () => { await wipeLocal(db); await wipeDek(); lockVault(); await SecureStore.deleteItemAsync(PIN_KEY); await updateSettings({ onboarded: false, appLock: false, cloudEnabled: false, boundUserId: null }); bump(); router.replace('/onboarding'); }) },
+          { text: 'Hapus', style: 'destructive', onPress: () => run(async () => { await wipeLocal(db); await wipeDek(); lockVault(); await SecureStore.deleteItemAsync(PIN_KEY); await updateSettings({ onboarded: false, appLock: false, cloudEnabled: false, boundUserId: null }); bump(); router.replace('/(tabs)'); }) },
         ])}
       />
       {session ? (
         <Button
           title="Hapus akun & seluruh data cloud"
           variant="danger"
-          onPress={() => Alert.alert('Hapus akun?', 'Akun dan SELURUH data cloud (amal dibagikan, amalan rahasia terenkripsi, keanggotaan lingkaran) dihapus permanen.', [
+          onPress={() => Alert.alert('Hapus akun?', 'Akun dan SELURUH data cloud (amal dibagikan, amalan rahasia terenkripsi, keanggotaan grup) dihapus permanen.', [
             { text: 'Batal', style: 'cancel' },
             { text: 'Hapus akun', style: 'destructive', onPress: () => run(async () => {
               const sb = getSupabase();

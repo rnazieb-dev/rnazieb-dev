@@ -60,7 +60,7 @@ export async function listMyCircles(sb: SupabaseClient, uid: string): Promise<{ 
   const mem = ok(await sb.from('circle_members').select('circle_id, role, status').eq('user_id', uid), 'Memuat keanggotaan');
   const active = (mem as { circle_id: string; role: string; status: 'pending' | 'active' }[]).filter((m) => m.status === 'active');
   const ids = active.map((m) => m.circle_id);
-  const circles = ids.length ? ((ok(await sb.from('circles').select('*').in('id', ids), 'Memuat lingkaran') as Circle[]) ?? []) : [];
+  const circles = ids.length ? ((ok(await sb.from('circles').select('*').in('id', ids), 'Memuat grup') as Circle[]) ?? []) : [];
   const pending = (mem as { status: string }[]).filter((m) => m.status === 'pending').length;
   const rows = circles.map((c) => {
     const m = active.find((x) => x.circle_id === c.id)!;
@@ -78,7 +78,7 @@ export async function myPendingCount(sb: SupabaseClient, uid: string): Promise<n
 
 export async function createCircle(sb: SupabaseClient, name: string, kind: CircleKind): Promise<string> {
   clientError(checkText(name, 60));
-  return ok(await sb.rpc('create_circle', { p_name: name, p_kind: kind }), 'Membuat lingkaran') as string;
+  return ok(await sb.rpc('create_circle', { p_name: name, p_kind: kind }), 'Membuat grup') as string;
 }
 
 export async function joinCircle(sb: SupabaseClient, code: string): Promise<void> {

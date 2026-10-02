@@ -25,8 +25,8 @@ export default function CircleScreen() {
   const { circles, refresh } = useCircles();
   const [tab, setTab] = useState<Tab>('feed');
   const entry = circles.find((c) => c.circle.id === id);
-  if (!session) return <Screen><Empty title="Masuk untuk melihat lingkaran" /></Screen>;
-  if (!entry) return <Screen><Empty title="Lingkaran tidak ditemukan" body="Anda mungkin belum disetujui admin atau telah keluar." /></Screen>;
+  if (!session) return <Screen><Empty title="Masuk untuk melihat grup" /></Screen>;
+  if (!entry) return <Screen><Empty title="Grup tidak ditemukan" body="Anda mungkin belum disetujui admin atau telah keluar." /></Screen>;
   const { circle, role } = entry;
   const isAdmin = role === 'admin';
   const uid = session.user.id;

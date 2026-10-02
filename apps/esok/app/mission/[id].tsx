@@ -81,7 +81,7 @@ export default function MissionScreen() {
     setBusy(true);
     try {
       await startSharedMission(sb, circleId, mission.id, today);
-      Alert.alert('Misi bersama dibuat', 'Anggota lingkaran dapat bergabung dari halaman lingkaran.');
+      Alert.alert('Misi bersama dibuat', 'Anggota grup dapat bergabung dari halaman grup.');
     } catch (e) {
       Alert.alert('Gagal', e instanceof Error ? e.message : String(e));
     } finally {
@@ -120,8 +120,8 @@ export default function MissionScreen() {
           <Field label="Catatan (opsional)" value={note} onChangeText={setNote} multiline maxLength={500} />
           {shared && circle ? (
             <Card>
-              <Text variant="label">Dibagikan ke lingkaran</Text>
-              <Text muted>Misi bersama otomatis dibagikan ke lingkaran tempat misi ini dimulai (agar teman dapat mengonfirmasi).</Text>
+              <Text variant="label">Dibagikan ke grup</Text>
+              <Text muted>Misi bersama otomatis dibagikan ke grup tempat misi ini dimulai (agar teman dapat mengonfirmasi).</Text>
             </Card>
           ) : (
             <VisibilityPicker value={vis} onChange={setVis} allowSecret={mission.canBeSecret} />
@@ -138,7 +138,7 @@ export default function MissionScreen() {
           {enabled && session && circles.length > 0 ? (
             circles.map((c) => <Button key={c.circle.id} title={`Mulai di “${c.circle.name}”`} variant="secondary" onPress={() => startTogether(c.circle.id)} loading={busy} />)
           ) : (
-            <Text variant="small" muted>Aktifkan akun & cloud dan gabung ke lingkaran untuk mengerjakan bersama.</Text>
+            <Text variant="small" muted>Aktifkan akun & cloud dan gabung ke grup untuk mengerjakan bersama.</Text>
           )}
           <Button title="Bagikan ajakan" variant="ghost" onPress={() => Share.share({ message: inviteMessage({ missionTitle: mission.title }) })} />
         </>

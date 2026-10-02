@@ -11,7 +11,7 @@ export default function JoinCircle() {
   const [busy, setBusy] = useState(false);
   return (
     <Screen>
-      <Text muted>Masukkan kode undangan dari admin lingkaran. Permintaan Anda akan menunggu persetujuan admin.</Text>
+      <Text muted>Masukkan kode undangan dari admin grup. Permintaan Anda akan menunggu persetujuan admin.</Text>
       <Field label="Kode undangan" value={code} onChangeText={(v) => setCode(v.toUpperCase())} autoCapitalize="characters" autoCorrect={false} maxLength={10} />
       <Button
         title="Kirim permintaan"

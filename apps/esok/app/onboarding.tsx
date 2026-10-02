@@ -33,7 +33,8 @@ export default function Onboarding() {
         isMinor: !adult,
         reminders: { ...settings.reminders, enabled: remind, intensity, allowKhauf },
       });
-      router.replace('/(tabs)');
+      if (router.canGoBack()) router.back();
+      else router.replace('/(tabs)');
     } finally {
       setBusy(false);
     }
@@ -41,7 +42,10 @@ export default function Onboarding() {
 
   return (
     <Screen>
-      <Text variant="small" muted>Langkah {step + 1} dari {STEPS}</Text>
+      <Row style={{ justifyContent: 'space-between' }}>
+        <Text variant="small" muted>Langkah {step + 1} dari {STEPS}</Text>
+        <Button title="Nanti saja" variant="ghost" onPress={() => (router.canGoBack() ? router.back() : router.replace('/(tabs)'))} />
+      </Row>
       {step === 0 ? (
         <>
           <Text variant="title">Hari ini seakan esok tiada</Text>
@@ -72,13 +76,13 @@ export default function Onboarding() {
       {step === 2 ? (
         <>
           <Text variant="title">Tentang Anda</Text>
-          <Field label="Nama tampilan (untuk lingkaran)" value={name} onChangeText={setName} placeholder="Hamba Allah" maxLength={40} hint="Boleh nama panggilan atau samaran. Anda bisa mengubahnya kapan saja." />
-          <Toggle label="Saya berusia 13 tahun ke atas" value={adult} onValueChange={setAdult} hint="Anak di bawah 13 tahun dapat memakai fitur pribadi dengan pendampingan orang tua, tanpa lingkaran." />
+          <Field label="Nama tampilan (untuk grup)" value={name} onChangeText={setName} placeholder="Hamba Allah" maxLength={40} hint="Boleh nama panggilan atau samaran. Anda bisa mengubahnya kapan saja." />
+          <Toggle label="Saya berusia 13 tahun ke atas" value={adult} onValueChange={setAdult} hint="Anak di bawah 13 tahun dapat memakai fitur pribadi dengan pendampingan orang tua, tanpa grup." />
           <Row>
             <Button title="Kembali" variant="ghost" onPress={() => setStep(1)} />
             <Button title="Lanjut" onPress={() => setStep(3)} />
           </Row>
-          {!adult ? <Text variant="small" muted>Tanpa konfirmasi usia 13+, fitur lingkaran & cloud dinonaktifkan. Jurnal, misi, dan pengingat tetap dapat dipakai.</Text> : null}
+          {!adult ? <Text variant="small" muted>Tanpa konfirmasi usia 13+, fitur grup & cloud dinonaktifkan. Jurnal, misi, dan pengingat tetap dapat dipakai.</Text> : null}
         </>
       ) : null}
       {step === 3 ? (

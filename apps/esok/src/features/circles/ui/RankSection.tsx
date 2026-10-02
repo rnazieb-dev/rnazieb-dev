@@ -8,7 +8,7 @@ export function RankSection({ circle, today }: { circle: Circle; today: string }
   const sb = getSupabase()!;
   const since = weekStart(today);
   const rank = useAsync(() => leaderboard(sb, circle.id, since), [circle.id, since], []);
-  if (!circle.rankings_enabled) return <Empty title="Peringkat dimatikan" body="Admin lingkaran menonaktifkan peringkat. Fokus pada kebersamaan." />;
+  if (!circle.rankings_enabled) return <Empty title="Peringkat dimatikan" body="Admin grup menonaktifkan peringkat. Fokus pada kebersamaan." />;
   return (
     <>
       <Text muted>Kontribusi pekan ini ({since} s.d. {addDays(since, 6)}). Hanya 10 teratas yang ditampilkan; yang memilih menyembunyikan angka tidak ikut. Berlomba dalam kebaikan, bukan untuk dipuji.</Text>

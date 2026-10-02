@@ -24,6 +24,16 @@ export default function Auth() {
   const [saved, setSaved] = useState(false);
   const [busy, setBusy] = useState(false);
 
+  if (!settings.onboarded) {
+    return (
+      <Screen>
+        <Text variant="title">Kenali Esok dulu</Text>
+        <Text muted>Sebelum memakai akun & cloud, selesaikan pengenalan singkat (adab, konfirmasi usia 13+, dan pengingat). Hanya sekitar satu menit.</Text>
+        <Button title="Mulai pengenalan" onPress={() => router.push('/onboarding')} />
+      </Screen>
+    );
+  }
+
   if (settings.isMinor) {
     return (
       <Screen>
@@ -120,7 +130,7 @@ export default function Auth() {
     return (
       <Screen>
         <Text variant="title">{mode === 'masuk' ? 'Masuk' : 'Daftar'}</Text>
-        <Text muted>Akun dipakai untuk lingkaran, tantangan, dan cadangan lintas perangkat.</Text>
+        <Text muted>Akun dipakai untuk grup, tantangan, dan cadangan lintas perangkat.</Text>
         <Field label="Email" value={email} onChangeText={setEmail} autoCapitalize="none" keyboardType="email-address" autoComplete="email" />
         <Field label="Kata sandi" value={password} onChangeText={setPassword} secureTextEntry autoComplete={mode === 'masuk' ? 'current-password' : 'new-password'} hint={mode === 'daftar' ? 'Minimal 8 karakter.' : undefined} />
         <Button title={mode === 'masuk' ? 'Masuk' : 'Daftar'} onPress={submitAuth} loading={busy} disabled={!email || password.length < 8} />
@@ -148,7 +158,7 @@ export default function Auth() {
       <Screen>
         <Text variant="title">Aktifkan cloud</Text>
         <Card>
-          <Text>• Amal yang Anda bagikan (Lingkaran/Publik) disimpan di server agar teman dapat melihatnya.</Text>
+          <Text>• Amal yang Anda bagikan (Grup/Publik) disimpan di server agar teman dapat melihatnya.</Text>
           <Text>• Amalan rahasia & refleksi hanya diunggah sebagai ciphertext terenkripsi; server tidak dapat membacanya.</Text>
           <Text>• Anda dapat menghapus akun dan seluruh data kapan saja di Pengaturan.</Text>
         </Card>

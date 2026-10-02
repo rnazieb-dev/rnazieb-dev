@@ -3,7 +3,7 @@ import type { DeedView } from '@/db/repos';
 import { CATEGORY_LABEL } from '@/lib/labels';
 import { Card, Pill, Row, Text } from './ui';
 
-const VIS: Record<string, string> = { secret: 'Rahasia', circle: 'Lingkaran', public: 'Semua teman lingkaran' };
+const VIS: Record<string, string> = { secret: 'Rahasia', circle: 'Grup', public: 'Semua teman grup' };
 
 export function DeedItem({ deed, onDelete }: { deed: DeedView; onDelete?: () => void }) {
   return (

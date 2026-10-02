@@ -18,7 +18,7 @@ export default function TabsLayout() {
       <Tabs.Screen name="index" options={{ title: 'Beranda' }} />
       <Tabs.Screen name="jurnal" options={{ title: 'Jurnal' }} />
       <Tabs.Screen name="misi" options={{ title: 'Misi' }} />
-      <Tabs.Screen name="lingkaran" options={{ title: 'Lingkaran' }} />
+      <Tabs.Screen name="grup" options={{ title: 'Grup' }} />
       <Tabs.Screen name="profil" options={{ title: 'Profil' }} />
     </Tabs>
   );

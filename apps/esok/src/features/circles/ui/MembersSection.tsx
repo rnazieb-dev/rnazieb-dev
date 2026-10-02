@@ -71,16 +71,16 @@ export function MembersSection({ circle, uid, isAdmin, onLeft, onChanged }: { ci
 
       {isAdmin ? (
         <Card>
-          <Text variant="heading">Pengaturan lingkaran</Text>
+          <Text variant="heading">Pengaturan grup</Text>
           <Toggle label="Tampilkan peringkat kontribusi" value={circle.rankings_enabled} onValueChange={(v) => act(async () => { await updateCircleSettings(sb, circle.id, { rankings_enabled: v }); onChanged(); })} />
           <Toggle label="Izinkan komentar" value={circle.comments_enabled} onValueChange={(v) => act(async () => { await updateCircleSettings(sb, circle.id, { comments_enabled: v }); onChanged(); })} />
         </Card>
       ) : null}
 
       <Button
-        title="Keluar dari lingkaran"
+        title="Keluar dari grup"
         variant="danger"
-        onPress={() => Alert.alert('Keluar?', 'Anda tidak akan melihat lingkaran ini lagi.', [
+        onPress={() => Alert.alert('Keluar?', 'Anda tidak akan melihat grup ini lagi.', [
           { text: 'Batal', style: 'cancel' },
           { text: 'Keluar', style: 'destructive', onPress: async () => { await act(() => removeMember(sb, circle.id, uid)); onLeft(); } },
         ])}

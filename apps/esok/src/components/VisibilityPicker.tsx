@@ -11,7 +11,7 @@ export interface VisibilityValue {
 
 /**
  * Pemilih visibilitas. Bawaan SELALU Rahasia. Saat memilih berbagi, pengguna diingatkan memperbarui niat.
- * Lingkaran/Publik hanya tersedia bila cloud aktif (butuh akun).
+ * Grup/Publik hanya tersedia bila cloud aktif (butuh akun).
  */
 export function VisibilityPicker({
   value,
@@ -30,8 +30,8 @@ export function VisibilityPicker({
         {allowSecret ? <Chip label="🔒 Rahasia" tone="secret" selected={value.visibility === 'secret'} onPress={() => onChange({ visibility: 'secret', circleId: null })} /> : null}
         {enabled ? (
           <>
-            <Chip label="Lingkaran" selected={value.visibility === 'circle'} onPress={() => onChange({ visibility: 'circle', circleId: value.circleId ?? circles[0]?.circle.id ?? null })} />
-            <Chip label="Semua teman lingkaran" selected={value.visibility === 'public'} onPress={() => onChange({ visibility: 'public', circleId: null })} />
+            <Chip label="Grup" selected={value.visibility === 'circle'} onPress={() => onChange({ visibility: 'circle', circleId: value.circleId ?? circles[0]?.circle.id ?? null })} />
+            <Chip label="Semua teman grup" selected={value.visibility === 'public'} onPress={() => onChange({ visibility: 'public', circleId: null })} />
           </>
         ) : null}
       </Row>
@@ -40,7 +40,7 @@ export function VisibilityPicker({
       ) : (
         <Text variant="small" muted>Perbarui niat: untuk Allah, bukan pujian. Berbagi boleh untuk saling mengajak; amal paling utama sering yang tersembunyi.</Text>
       )}
-      {!enabled ? <Text variant="small" muted>Untuk berbagi ke lingkaran, aktifkan akun & cloud di Profil.</Text> : null}
+      {!enabled ? <Text variant="small" muted>Untuk berbagi ke grup, aktifkan akun & cloud di Profil.</Text> : null}
       {value.visibility === 'circle' ? (
         circles.length ? (
           <Row>
@@ -49,7 +49,7 @@ export function VisibilityPicker({
             ))}
           </Row>
         ) : (
-          <Text variant="small" muted>Belum ada lingkaran aktif. Buat atau gabung di tab Lingkaran.</Text>
+          <Text variant="small" muted>Belum ada grup aktif. Buat atau gabung di tab Grup.</Text>
         )
       ) : null}
     </View>

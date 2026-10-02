@@ -158,8 +158,8 @@ describe('misi bersama harus terikat ke lingkaran', () => {
     const db = await createMigratedTestDb();
     const m = MISSIONS.find((x) => x.canBeShared)!;
     await ensureAssignments(db, DAY, 'u', 3);
-    await expect(completeMission(db, { mission: m, day: DAY, visibility: 'public', sharedId: 's1', dek: null })).rejects.toThrow(/lingkaran/);
-    await expect(completeMission(db, { mission: m, day: DAY, visibility: 'circle', circleId: null, sharedId: 's1', dek: null })).rejects.toThrow(/lingkaran/);
+    await expect(completeMission(db, { mission: m, day: DAY, visibility: 'public', sharedId: 's1', dek: null })).rejects.toThrow(/grup/);
+    await expect(completeMission(db, { mission: m, day: DAY, visibility: 'circle', circleId: null, sharedId: 's1', dek: null })).rejects.toThrow(/grup/);
     expect(await db.all(`SELECT * FROM user_missions WHERE mission_id = ? AND status = 'done'`, [m.id])).toHaveLength(0);
     expect(await db.all('SELECT * FROM deeds')).toHaveLength(0);
     await completeMission(db, { mission: m, day: DAY, visibility: 'circle', circleId: 'c1', sharedId: 's1', dek: null });
