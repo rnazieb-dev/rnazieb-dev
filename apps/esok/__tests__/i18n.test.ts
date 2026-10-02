@@ -1,7 +1,8 @@
+import { LANGUAGES } from '@/i18n';
+
+// babel-jest mengangkat jest.mock ke atas berkas, jadi aman diletakkan setelah import.
 jest.mock('expo-localization', () => ({ getLocales: () => [] }));
 jest.mock('react-native', () => ({ I18nManager: { isRTL: false } }));
-
-import { LANGUAGES } from '@/i18n';
 
 type Tree = { [k: string]: unknown };
 function leaves(o: unknown, prefix = ''): Map<string, string | string[]> {
