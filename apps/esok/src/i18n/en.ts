@@ -1,5 +1,14 @@
 /** English (source of truth for keys). Other languages must provide the same shape. */
+import groups from './locales/en/groups';
+import journal from './locales/en/journal';
+import missions from './locales/en/missions';
+import settingsNs from './locales/en/settings';
+
 const en = {
+  journal,
+  missions,
+  groups,
+  prefs: settingsNs,
   tabs: { home: 'Home', journal: 'Journal', worship: 'Worship', missions: 'Missions', profile: 'Profile', groups: 'Groups' },
   common: { search: 'Search', back: 'Back', reset: 'Reset', done: 'Done', later: 'Later', enable: 'Enable', open: 'Open', approx: 'approx.' },
   hub: {

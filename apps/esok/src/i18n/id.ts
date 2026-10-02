@@ -1,6 +1,14 @@
 import type { Dict } from './en';
+import groups from './locales/id/groups';
+import journal from './locales/id/journal';
+import missions from './locales/id/missions';
+import settingsNs from './locales/id/settings';
 
 const id: Dict = {
+  journal,
+  missions,
+  groups,
+  prefs: settingsNs,
   tabs: { home: 'Beranda', journal: 'Jurnal', worship: 'Ibadah', missions: 'Misi', profile: 'Profil', groups: 'Grup' },
   common: { search: 'Cari', back: 'Kembali', reset: 'Atur ulang', done: 'Selesai', later: 'Nanti', enable: 'Aktifkan', open: 'Buka', approx: 'perkiraan' },
   hub: {
