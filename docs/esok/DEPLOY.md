@@ -23,7 +23,7 @@ npm i -g eas-cli && eas login && eas init
 eas build --profile preview --platform all      # uji internal
 eas build --profile production --platform all && eas submit
 ```
-Sebelum rilis publik: selesaikan `docs/esok/SYARIAH-REVIEW.md`, tinjauan hukum `PRIVASI.md`, siapkan kebijakan privasi publik, kontak moderator, dan ikon/splash final (aset saat ini masih bawaan template).
+Sebelum rilis publik: selesaikan `docs/esok/SYARIAH-REVIEW.md`, tinjauan hukum `PRIVASI.md`, siapkan kebijakan privasi publik, kontak moderator. Ikon & splash final sudah ada (motif tunas kurma; sumber vektor `apps/esok/assets/*.svg`, bangun ulang dengan `npm run build:assets`); pertimbangkan tinjauan desainer sebelum rilis toko.
 
 ## 4. Uji manual wajib di perangkat (belum dilakukan di lingkungan pengembangan)
 - Notifikasi muncul tepat waktu setelah aplikasi ditutup/ponsel di-reboot; mode salat dengan lokasi.

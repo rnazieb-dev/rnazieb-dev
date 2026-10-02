@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="goldb" gradientUnits="userSpaceOnUse" x1="0" y1="300" x2="0" y2="800">
+      <stop offset="0" stop-color="#F6E6B0"/><stop offset="1" stop-color="#D6A93F"/>
+    </linearGradient>
+    <linearGradient id="bgb" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#16494A"/><stop offset="1" stop-color="#0F2A2A"/>
+    </linearGradient>
+    <radialGradient id="glowb" cx="512" cy="430" r="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3FA9A0" stop-opacity="0.60"/><stop offset="1" stop-color="#3FA9A0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+    <rect width="1024" height="1024" fill="url(#bgb)"/><rect width="1024" height="1024" fill="url(#glowb)"/></svg>
