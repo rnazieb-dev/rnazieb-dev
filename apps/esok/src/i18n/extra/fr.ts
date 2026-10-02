@@ -11,7 +11,7 @@ const extra: Extra = {
   money: {
     currency: 'Devise',
     currencyAuto: 'Automatique ({code})',
-    currencyHint: 'Utilisée pour les dettes et les dépôts confiés. Les montants existants gardent leurs chiffres ; seule l’étiquette change.',
+    currencyHint: 'Utilisée pour les dettes et les dépôts (amâna). Les montants existants gardent leurs chiffres ; seule l’étiquette change.',
     amountLabel: 'Montant ({code}, facultatif)',
   },
   legal: {
