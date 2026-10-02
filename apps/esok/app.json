@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Esok",
-    "slug": "esok",
+    "slug": "hidup-hanya-hari-ini",
     "scheme": "esok",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -73,7 +73,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": ""
+        "projectId": "9cfd7775-2dc4-496e-803a-8f1350b40e17"
       }
     }
   }
