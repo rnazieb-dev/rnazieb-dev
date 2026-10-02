@@ -3,11 +3,9 @@
 | Kolom | Nilai |
 |---|---|
 | Nama aplikasi (launcher, `expo.name`) | **NAFS App** |
-| Judul Google Play (maks. 30 karakter) | **NAFS: Your Daily Islamic Reminder** (33 karakter — lihat catatan) |
+| Judul Google Play (maks. 30 karakter) | **NAFS: Daily Islamic Reminder** (28 karakter) |
 | Nama App Store (maks. 30 karakter) | NAFS App |
 
-> Catatan: Google Play membatasi judul 30 karakter. "NAFS: Your Daily Islamic Reminder" = 33 karakter, jadi akan ditolak.
-> Alternatif ≤30: "NAFS: Daily Islamic Reminder" (28) atau "NAFS – Islamic Daily Reminder" (29). Pilih salah satu sebelum unggah.
 
 Deskripsi singkat (≤80): Ingat mati, isi hari ini dengan kebaikan: jurnal amal, misi, dzikir & jadwal salat.
 
