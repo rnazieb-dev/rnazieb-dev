@@ -3,6 +3,31 @@ import { I18nManager } from 'react-native';
 import en, { type Dict } from './en';
 import enExtra from './extra/en';
 import idExtra from './extra/id';
+import arExtra from './extra/ar';
+import azExtra from './extra/az';
+import bnExtra from './extra/bn';
+import bsExtra from './extra/bs';
+import deExtra from './extra/de';
+import esExtra from './extra/es';
+import faExtra from './extra/fa';
+import frExtra from './extra/fr';
+import haExtra from './extra/ha';
+import hiExtra from './extra/hi';
+import kkExtra from './extra/kk';
+import msExtra from './extra/ms';
+import nlExtra from './extra/nl';
+import psExtra from './extra/ps';
+import ruExtra from './extra/ru';
+import soExtra from './extra/so';
+import sqExtra from './extra/sq';
+import swExtra from './extra/sw';
+import thExtra from './extra/th';
+import tlExtra from './extra/tl';
+import trExtra from './extra/tr';
+import urExtra from './extra/ur';
+import uzExtra from './extra/uz';
+import yoExtra from './extra/yo';
+import zhExtra from './extra/zh';
 import id from './id';
 import ar from './locales/ar';
 import az from './locales/az';
@@ -95,7 +120,7 @@ type ExtraDict = typeof enExtra;
 export type TKey = Leaves<Dict> | Leaves<ExtraDict>;
 
 /** Teks tambahan per bahasa; yang belum ada jatuh ke bahasa Inggris. */
-export const EXTRAS: Partial<Record<Lang, unknown>> = { en: enExtra, id: idExtra };
+export const EXTRAS: Partial<Record<Lang, unknown>> = { en: enExtra, id: idExtra, ar: arExtra, az: azExtra, bn: bnExtra, bs: bsExtra, de: deExtra, es: esExtra, fa: faExtra, fr: frExtra, ha: haExtra, hi: hiExtra, kk: kkExtra, ms: msExtra, nl: nlExtra, ps: psExtra, ru: ruExtra, so: soExtra, sq: sqExtra, sw: swExtra, th: thExtra, tl: tlExtra, tr: trExtra, ur: urExtra, uz: uzExtra, yo: yoExtra, zh: zhExtra };
 
 function lookup(dict: unknown, key: string): unknown {
   return key.split('.').reduce<unknown>((o, k) => (o && typeof o === 'object' ? (o as Record<string, unknown>)[k] : undefined), dict);
