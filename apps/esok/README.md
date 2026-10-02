@@ -1,4 +1,4 @@
-# Esok
+# NAFS
 
 Pengingat kematian & jurnal/permainan kebaikan harian ("hari ini seakan esok tiada") — Android & iOS.
 

@@ -1,4 +1,4 @@
-# Esok — Staging preview (Android APK via EAS)
+# NAFS — Staging preview (Android APK via EAS)
 
 Profil `preview` di `apps/esok/eas.json` menghasilkan **APK internal** (distribusi internal, tanpa Play Store) yang dapat dipasang langsung. Preview bawaan berjalan **lokal saja** (tanpa Supabase); lingkaran/cloud nonaktif.
 

@@ -70,10 +70,10 @@ export default function RemindersSettings() {
         variant="secondary"
         onPress={async () => {
           if (!(await requestNotificationPermission())) return Alert.alert('Izin notifikasi diperlukan');
-          await Notifications.scheduleNotificationAsync({ content: { title: 'Esok — uji', body: 'Pengingat berfungsi. Semoga hari ini penuh kebaikan.' }, trigger: { type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: 5 } });
+          await Notifications.scheduleNotificationAsync({ content: { title: 'NAFS — uji', body: 'Pengingat berfungsi. Semoga hari ini penuh kebaikan.' }, trigger: { type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: 5 } });
         }}
       />
-      <Text variant="small" muted>iOS membatasi 64 notifikasi terjadwal; Esok menjadwalkan jendela 10 hari dan memperbarui setiap kali aplikasi dibuka.</Text>
+      <Text variant="small" muted>iOS membatasi 64 notifikasi terjadwal; NAFS menjadwalkan jendela 10 hari dan memperbarui setiap kali aplikasi dibuka.</Text>
     </Screen>
   );
 }

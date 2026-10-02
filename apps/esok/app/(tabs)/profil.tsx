@@ -1,6 +1,11 @@
 import { useRouter } from 'expo-router';
-import { Button, Card, Field, Pill, ProgressBar, Row, Screen, SectionTitle, Text, Toggle } from '@/components/ui';
+import { Button, Card, Field, Pill, ProgressBar, Row, Screen, SectionTitle, Text, Toggle , Chip } from '@/components/ui';
 import { BadgeGrid } from '@/components/BadgeGrid';
+import { CheckIn } from '@/components/CheckIn';
+import { FadeIn } from '@/components/motion';
+import { activityDays, uzurDays } from '@/db/repos';
+import { LANGUAGES, type LangSetting } from '@/i18n';
+import { useT } from '@/i18n/useT';
 import { loadProgress } from '@/features/gamification/progress';
 import { LEVELS } from '@/features/gamification/points';
 import { getSupabase } from '@/lib/supabase';
@@ -14,6 +19,8 @@ export default function Profil() {
   const router = useRouter();
   const { today, settings, updateSettings, session } = useApp();
   const { data: p } = useDbQuery((d) => loadProgress(d, today), [today], null);
+  const days = useDbQuery(async (d) => ({ active: await activityDays(d, { includeSecret: true }), uzur: await uzurDays(d) }), [], { active: new Set<string>(), uzur: new Set<string>() });
+  const { t } = useT();
   const [name, setName] = useState(settings.displayName);
 
   const saveName = async () => {
@@ -29,7 +36,10 @@ export default function Profil() {
 
   return (
     <Screen>
-      <Text variant="title">Profil</Text>
+      <Text variant="title">{t('tabs.profile')}</Text>
+      <FadeIn>
+        <CheckIn today={today} active={days.data.active} uzur={days.data.uzur} />
+      </FadeIn>
       {p && !settings.honorMode ? (
         <Card>
           <Row style={{ justifyContent: 'space-between' }}>
@@ -60,6 +70,13 @@ export default function Profil() {
       ) : null}
 
       <SectionTitle>Pengaturan</SectionTitle>
+      <Text variant="label">{t('settings.language')}</Text>
+      <Row>
+        {(['system', ...Object.keys(LANGUAGES)] as LangSetting[]).map((l) => (
+          <Chip key={l} label={l === 'system' ? t('settings.system') : LANGUAGES[l as keyof typeof LANGUAGES].label} selected={settings.language === l} onPress={() => updateSettings({ language: l })} />
+        ))}
+      </Row>
+      <Button title={t('hub.items.groups')} variant="secondary" onPress={() => router.push('/(tabs)/grup')} />
       <Field label="Nama tampilan" value={name} onChangeText={setName} maxLength={40} onEndEditing={saveName} onBlur={saveName} />
       <Toggle
         label="Mode ikhlas"

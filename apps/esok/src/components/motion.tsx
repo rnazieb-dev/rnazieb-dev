@@ -25,7 +25,7 @@ export function FadeIn({ children, index = 0 }: { children: ReactNode; index?: n
 
 const sprout = require('../../assets/splash-icon.png') as number;
 
-/** Tunas Esok: tumbuh saat layar dibuka, lalu "bernapas" pelan dengan cahaya lembut. */
+/** Tunas NAFS: tumbuh saat layar dibuka, lalu "bernapas" pelan dengan cahaya lembut. */
 export function SproutHero({ size = 88 }: { size?: number }) {
   const t = useTheme();
   const reduce = useReduceMotion();

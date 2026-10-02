@@ -51,7 +51,7 @@ export function LockGate({ children }: { children: ReactNode }) {
   const tryBiometric = useCallback(async () => {
     const { secured } = await authAvailability();
     if (!secured) return;
-    if (await authenticate('Buka Esok')) setAppLocked(false);
+    if (await authenticate('Buka NAFS')) setAppLocked(false);
   }, [setAppLocked]);
 
   useEffect(() => {
@@ -85,7 +85,7 @@ export function LockGate({ children }: { children: ReactNode }) {
   if (!appLocked || !settings.appLock) return <>{children}</>;
   return (
     <View style={{ flex: 1, backgroundColor: t.bg, justifyContent: 'center', padding: space.xl, gap: space.lg }}>
-      <Text variant="title">Esok terkunci</Text>
+      <Text variant="title">NAFS terkunci</Text>
       <Text muted>Buka dengan biometrik/kode sandi perangkat{hasPin ? ' atau PIN' : ''}.</Text>
       <Button title="Buka dengan biometrik" onPress={tryBiometric} />
       {hasPin ? (

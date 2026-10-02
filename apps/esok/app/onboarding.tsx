@@ -50,7 +50,7 @@ export default function Onboarding() {
         <>
           <Text variant="title">Hari ini seakan esok tiada</Text>
           <Text>
-            Esok membantu Anda mengingat kematian dengan tenang, lalu mengisi hari ini dengan kebaikan: mencatat amal, menjalankan misi kecil,
+            NAFS membantu Anda mengingat kematian dengan tenang, lalu mengisi hari ini dengan kebaikan: mencatat amal, menjalankan misi kecil,
             dan saling mengajak keluarga serta sahabat untuk berlomba dalam kebaikan.
           </Text>
           <QuoteCard quote={intro} />
@@ -64,7 +64,7 @@ export default function Onboarding() {
             <Text>• Niat karena Allah. Poin dan lencana hanya penanda konsistensi, <Text style={{ fontWeight: '700' }}>bukan nilai pahala</Text>; pahala hanya di sisi Allah.</Text>
             <Text>• Amalan <Text style={{ fontWeight: '700' }}>rahasia</Text> adalah bawaan: terenkripsi, tidak masuk feed atau peringkat, dan tak pernah tampil ke siapa pun.</Text>
             <Text>• Kita mengingat kematian agar beramal, bukan mengharapkannya. Rahmat Allah luas; jangan putus asa.</Text>
-            <Text>• Esok bukan pengganti ilmu. Untuk urusan hukum agama, rujuklah ulama/ustadz terpercaya.</Text>
+            <Text>• NAFS bukan pengganti ilmu. Untuk urusan hukum agama, rujuklah ulama/ustadz terpercaya.</Text>
           </Card>
           <Toggle label="Saya memahami hal di atas" value={agree} onValueChange={setAgree} />
           <Row>

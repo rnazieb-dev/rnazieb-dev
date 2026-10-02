@@ -11,7 +11,7 @@ export function QuoteCard({ quote, compact }: { quote: Quote; compact?: boolean 
       <Row>
         <Pill label={TONE_LABEL[quote.tone]} tone="accent" />
         {quote.grade ? <Pill label={GRADE_LABEL[quote.grade] ?? quote.grade} tone="muted" /> : null}
-        {quote.kind === 'renungan' ? <Pill label="Renungan Esok" tone="muted" /> : null}
+        {quote.kind === 'renungan' ? <Pill label="Renungan NAFS" tone="muted" /> : null}
       </Row>
       {quote.arabic && !compact ? <Arabic>{quote.arabic}</Arabic> : null}
       <Text style={{ fontSize: compact ? 16 : 17, lineHeight: 26 }}>{quote.text}</Text>

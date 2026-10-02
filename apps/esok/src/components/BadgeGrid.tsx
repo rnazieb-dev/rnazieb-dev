@@ -2,7 +2,25 @@ import { useEffect, useState } from 'react';
 import { Animated, Pressable, Text as RNText, View } from 'react-native';
 import { type BadgeTrack, type Stats, badgeTracks } from '@/features/gamification/badges';
 import { radius, space, useTheme } from '@/lib/theme';
+import { HexBadge } from './HexBadge';
+import type { GradientName } from './icons/IconTile';
+import type { IslamicGlyphName } from './icons/islamic';
 import { Card, ProgressBar, Text } from './ui';
+
+const LOOK: Record<string, { glyph: IslamicGlyphName; gradient: GradientName }> = {
+  catatan: { glyph: 'tunas', gradient: 'emerald' },
+  hari: { glyph: 'kalender', gradient: 'sunset' },
+  beruntun: { glyph: 'lentera', gradient: 'amber' },
+  keluarga: { glyph: 'kubah', gradient: 'rose' },
+  sedekah: { glyph: 'sedekah', gradient: 'sand' },
+  ilmu: { glyph: 'quran', gradient: 'sky' },
+  memaafkan: { glyph: 'hati', gradient: 'pink' },
+  lingkungan: { glyph: 'kurma', gradient: 'teal' },
+  misi: { glyph: 'misi', gradient: 'violet' },
+  bersama: { glyph: 'jamaah', gradient: 'indigo' },
+  grup: { glyph: 'jamaah', gradient: 'teal' },
+  tantangan: { glyph: 'menara', gradient: 'night' },
+};
 
 /** Kisi lencana: satu ubin per jenis (tingkatan digabung). Ketuk untuk detail & progres. */
 export function BadgeGrid({ stats }: { stats: Stats }) {
@@ -56,7 +74,7 @@ function Tile({ track, selected, onPress }: { track: BadgeTrack; selected: boole
           borderWidth: selected ? 2 : 1, borderColor: selected ? t.primary : earned ? t.accent : t.border,
         }}
       >
-        <RNText style={{ fontSize: 30, opacity: earned ? 1 : 0.35 }}>{def.icon}</RNText>
+        <HexBadge glyph={(LOOK[track.series] ?? LOOK.catatan!).glyph} gradient={(LOOK[track.series] ?? LOOK.catatan!).gradient} earned={earned} size={64} />
         <RNText numberOfLines={2} style={{ color: earned ? t.text : t.muted, fontSize: 12, fontWeight: '600', textAlign: 'center', minHeight: 32 }}>{def.title}</RNText>
         <View style={{ flexDirection: 'row', gap: 3 }}>
           {Array.from({ length: track.tiers }, (_, i) => (
@@ -73,7 +91,7 @@ function Detail({ track }: { track: BadgeTrack }) {
   const def = track.current ?? track.next!;
   return (
     <Card tone="accent">
-      <Text variant="heading">{def.icon} {def.title}</Text>
+      <Text variant="heading">{def.title}</Text>
       <Text muted>{def.description}</Text>
       {track.next ? (
         <>

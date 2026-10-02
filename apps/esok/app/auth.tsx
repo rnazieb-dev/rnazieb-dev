@@ -27,7 +27,7 @@ export default function Auth() {
   if (!settings.onboarded) {
     return (
       <Screen>
-        <Text variant="title">Kenali Esok dulu</Text>
+        <Text variant="title">Kenali NAFS dulu</Text>
         <Text muted>Sebelum memakai akun & cloud, selesaikan pengenalan singkat (adab, konfirmasi usia 13+, dan pengingat). Hanya sekitar satu menit.</Text>
         <Button title="Mulai pengenalan" onPress={() => router.push('/onboarding')} />
       </Screen>
@@ -117,9 +117,9 @@ export default function Auth() {
     return (
       <Screen>
         <Text variant="title">Simpan kunci pemulihan</Text>
-        <Text>Jika Anda lupa passphrase, kunci ini satu-satunya cara memulihkan amalan rahasia di cloud. Esok tidak menyimpannya dan tidak dapat membantu memulihkannya.</Text>
+        <Text>Jika Anda lupa passphrase, kunci ini satu-satunya cara memulihkan amalan rahasia di cloud. NAFS tidak menyimpannya dan tidak dapat membantu memulihkannya.</Text>
         <Card tone="accent"><Text selectable style={{ fontFamily: 'monospace', fontSize: 16 }}>{shownKey}</Text></Card>
-        <Button title="Salin/bagikan ke tempat aman" variant="secondary" onPress={() => Share.share({ message: `Kunci pemulihan Esok:\n${shownKey}` })} />
+        <Button title="Salin/bagikan ke tempat aman" variant="secondary" onPress={() => Share.share({ message: `Kunci pemulihan NAFS:\n${shownKey}` })} />
         <Toggle label="Saya sudah menyimpannya di tempat yang aman" value={saved} onValueChange={setSaved} />
         <Button title="Selesai" onPress={finishAfterKey} disabled={!saved} loading={busy} />
       </Screen>

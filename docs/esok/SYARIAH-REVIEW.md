@@ -1,4 +1,4 @@
-# Esok — Daftar tinjauan syar'i (WAJIB sebelum rilis publik)
+# NAFS — Daftar tinjauan syar'i (WAJIB sebelum rilis publik)
 
 Pengembang bukan ahli fikih. Semua konten keagamaan **harus ditinjau ustadz/dewan syariah** dan ditakhrij ulang dari kitab primer.
 

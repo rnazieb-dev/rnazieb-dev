@@ -8,7 +8,7 @@ export default function QuoteScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const q = quoteById(id);
   if (!q) return <Screen><Empty title="Kutipan tidak ditemukan" /></Screen>;
-  const share = () => Share.share({ message: `${q.arabic ? `${q.arabic}\n\n` : ''}${q.text}${q.source ? `\n— ${q.source}` : ''}\n\n(Dikirim dari Esok)` });
+  const share = () => Share.share({ message: `${q.arabic ? `${q.arabic}\n\n` : ''}${q.text}${q.source ? `\n— ${q.source}` : ''}\n\n(Dikirim dari NAFS)` });
   return (
     <Screen>
       <QuoteCard quote={q} />

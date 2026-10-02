@@ -5,16 +5,16 @@ import { MISSIONS, QUOTES } from '@/content';
 export default function About() {
   return (
     <Screen>
-      <Text variant="title">Tentang Esok</Text>
+      <Text variant="title">Tentang NAFS</Text>
       <Text muted>Pengingat kematian & jurnal kebaikan: “hari ini seakan esok tiada”.</Text>
 
       <SectionTitle>Catatan penting</SectionTitle>
       <Card>
-        <Text>• Esok bukan sumber hukum agama dan tidak menggantikan ulama/ustadz. Untuk masalah fikih, rujuklah ahlinya.</Text>
+        <Text>• NAFS bukan sumber hukum agama dan tidak menggantikan ulama/ustadz. Untuk masalah fikih, rujuklah ahlinya.</Text>
         <Text>• Setiap kutipan mencantumkan sumber dan derajat (shahih/hasan). Hadis lemah/palsu tidak dipakai. Kutipan tetap perlu ditinjau berkala oleh pihak berilmu.</Text>
-        <Text>• Poin, level, dan lencana hanyalah penanda konsistensi, bukan nilai pahala. Esok tidak menghitung pahala.</Text>
+        <Text>• Poin, level, dan lencana hanyalah penanda konsistensi, bukan nilai pahala. NAFS tidak menghitung pahala.</Text>
         <Text>• Penanggalan Hijriah dan waktu salat di aplikasi berupa perkiraan perhitungan; ikuti penetapan resmi setempat.</Text>
-        <Text>• Esok tidak memproses uang. Untuk zakat/sedekah, salurkan langsung atau lewat lembaga resmi (mis. BAZNAS/LAZ resmi).</Text>
+        <Text>• NAFS tidak memproses uang. Untuk zakat/sedekah, salurkan langsung atau lewat lembaga resmi (mis. BAZNAS/LAZ resmi).</Text>
       </Card>
 
       <SectionTitle>Sumber & atribusi</SectionTitle>

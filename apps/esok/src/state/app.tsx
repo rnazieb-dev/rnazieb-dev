@@ -8,6 +8,9 @@ import { getSetting, setSetting, wipeLocal } from '@/db/repos';
 import type { Db } from '@/db/types';
 import { DEFAULT_REMINDERS, type ReminderSettings } from '@/features/reminders/schedule';
 import { configureNotifications, rescheduleReminders } from '@/features/reminders/notifications';
+import type { AlertKey } from '@/features/salat/logic';
+import type { CalcMethod } from '@/features/reminders/prayerTimes';
+import type { LangSetting } from '@/i18n';
 import { authenticate, ensureLocalDek, readDek, wipeDek } from '@/features/security/vault';
 import { canSyncAs, canUseLocalData } from '@/features/sync/binding';
 import { runFullSync } from '@/features/sync/service';
@@ -19,6 +22,15 @@ export interface AppSettings {
   onboarded: boolean;
   /** Banner pengenalan di Beranda sudah ditutup ("Nanti saja"). */
   introDismissed: boolean;
+  /** Pengingat adzan per waktu salat (butuh lokasi). */
+  prayerAlerts: Partial<Record<AlertKey, boolean>>;
+  /** Bahasa antarmuka; 'system' = ikuti perangkat. */
+  language: LangSetting;
+  /** Metode hitung jadwal salat & mazhab Asar. */
+  calcMethod: CalcMethod;
+  asrHanafi: boolean;
+  /** Nama tempat (hasil reverse geocode di perangkat) untuk ditampilkan. */
+  placeName: string | null;
   displayName: string;
   seed: string;
   reminders: ReminderSettings;
@@ -44,6 +56,11 @@ export interface AppSettings {
 const DEFAULTS = (): AppSettings => ({
   onboarded: false,
   introDismissed: false,
+  prayerAlerts: {},
+  language: 'system',
+  calcMethod: 'auto',
+  asrHanafi: false,
+  placeName: null,
   displayName: 'Hamba Allah',
   seed: '',
   reminders: DEFAULT_REMINDERS,
@@ -157,12 +174,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
     await rescheduleReminders(db, settings.reminders, { mode: settings.prayerMode, coords: settings.coords ?? undefined }, settings.seed, {
       adhkar: settings.adhkarReminder,
       due: settings.dueReminders,
+      prayerAlerts: settings.prayerAlerts,
+      coords: settings.coords ?? undefined,
+      calc: { method: settings.calcMethod, hanafi: settings.asrHanafi },
     });
-  }, [db, settings.reminders, settings.prayerMode, settings.coords, settings.seed, settings.adhkarReminder, settings.dueReminders]);
+  }, [db, settings.reminders, settings.prayerMode, settings.coords, settings.seed, settings.adhkarReminder, settings.dueReminders, settings.prayerAlerts, settings.calcMethod, settings.asrHanafi]);
 
   useEffect(() => {
-    if (db && settings.onboarded) void reschedule();
-  }, [db, settings.onboarded, reschedule]);
+    // Jadwalkan ulang setiap pengaturan pengingat berubah. Pengingat adzan boleh aktif walau pengenalan belum selesai.
+    const anyAdzan = Object.values(settings.prayerAlerts).some(Boolean);
+    if (db && (settings.onboarded || anyAdzan)) void reschedule();
+  }, [db, settings.onboarded, settings.prayerAlerts, reschedule]);
 
   const accountMismatch = !canUseLocalData(settings.boundUserId, session?.user.id);
 

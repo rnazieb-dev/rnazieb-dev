@@ -69,7 +69,7 @@ export default function LedgerScreen() {
                 {x.note ? <Text>{x.note}</Text> : null}
                 {due ? <Text color={overdue ? '#B3402F' : undefined} variant="label">{due}</Text> : null}
                 {x.type === 'piutang' && !x.settled ? <Text variant="small" muted>Jika yang berutang kesulitan, beri tenggang waktu (QS Al-Baqarah 2:280).</Text> : null}
-                {x.type === 'wasiat' ? <Text variant="small" muted>Untuk pembagian harta/waris dan batasan wasiat, konsultasikan ustadz/ahli waris/notaris; Esok bukan pengganti.</Text> : null}
+                {x.type === 'wasiat' ? <Text variant="small" muted>Untuk pembagian harta/waris dan batasan wasiat, konsultasikan ustadz/ahli waris/notaris; NAFS bukan pengganti.</Text> : null}
                 <Row>
                   {x.type !== 'wasiat' ? (
                     <Button title={x.settled ? 'Batalkan selesai' : x.type === 'amanah' ? 'Tunaikan' : 'Tandai lunas'} variant="secondary" onPress={async () => { await settleLedgerItem(db, dek, x.id, !x.settled, today); bump(); void reschedule(); }} />

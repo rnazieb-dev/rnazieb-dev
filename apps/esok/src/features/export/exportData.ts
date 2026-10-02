@@ -9,5 +9,5 @@ export async function shareExport(db: Db, dek: Uint8Array | null): Promise<void>
   if (file.exists) file.delete();
   file.create();
   file.write(JSON.stringify(bundle, null, 2));
-  if (await Sharing.isAvailableAsync()) await Sharing.shareAsync(file.uri, { mimeType: 'application/json', dialogTitle: 'Ekspor data Esok' });
+  if (await Sharing.isAvailableAsync()) await Sharing.shareAsync(file.uri, { mimeType: 'application/json', dialogTitle: 'Ekspor data NAFS' });
 }

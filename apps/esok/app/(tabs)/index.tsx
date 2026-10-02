@@ -1,10 +1,13 @@
 import { Link, useRouter } from 'expo-router';
 import { useEffect, useMemo } from 'react';
-import { View } from 'react-native';
+import { View , ScrollView } from 'react-native';
 import { QUOTES } from '@/content';
 import { Button, Card, Pill, ProgressBar, Row, Screen, SectionTitle, Text } from '@/components/ui';
 import { QuoteCard } from '@/components/QuoteCard';
 import { FadeIn, SproutHero } from '@/components/motion';
+import { IconTile } from '@/components/icons/IconTile';
+import { NextPrayerCard } from '@/components/NextPrayerCard';
+import { useT } from '@/i18n/useT';
 import { markQuoteSeen, missionRows } from '@/db/repos';
 import { loadProgress } from '@/features/gamification/progress';
 import { dueCounts } from '@/features/ledger/repo';
@@ -18,6 +21,7 @@ import { useApp, useDbQuery } from '@/state/app';
 export default function Beranda() {
   const router = useRouter();
   const { db, today, settings, updateSettings, bump } = useApp();
+  const { t } = useT();
   const quote = useMemo(() => quoteOfDay(QUOTES, today, settings.seed, settings.reminders.allowKhauf), [today, settings.seed, settings.reminders.allowKhauf]);
   const h = gregorianToHijri(fromDayKey(today));
 
@@ -54,7 +58,7 @@ export default function Beranda() {
       {!settings.onboarded && !settings.introDismissed ? (
         <FadeIn index={1}>
           <Card tone="accent">
-            <Text variant="heading">👋 Baru di Esok?</Text>
+            <Text variant="heading">👋 Baru di NAFS?</Text>
             <Text muted>Silakan lihat-lihat dulu. Kalau sudah siap, kenali adabnya dan atur pengingat harian — hanya sekitar satu menit.</Text>
             <Row>
               <Button title="Mulai pengenalan" onPress={() => router.push('/onboarding')} />
@@ -64,9 +68,22 @@ export default function Beranda() {
         </FadeIn>
       ) : null}
       <FadeIn index={2}>
-        <QuoteCard quote={quote} />
+        <NextPrayerCard />
       </FadeIn>
       <FadeIn index={3}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 4 }}>
+          <IconTile size={56} label={t('hub.items.qibla')} icon={{ glyph: 'kabah' }} gradient="night" onPress={() => router.push('/kiblat')} />
+          <IconTile size={56} label={t('hub.items.tasbih')} icon={{ glyph: 'tasbih' }} gradient="teal" onPress={() => router.push('/tasbih')} />
+          <IconTile size={56} label={t('hub.items.dhikrAll')} icon={{ glyph: 'quran' }} gradient="pink" onPress={() => router.push('/dzikir')} />
+          <IconTile size={56} label={t('hub.items.hijri')} icon={{ glyph: 'kalender' }} gradient="sunset" onPress={() => router.push('/kalender')} />
+          <IconTile size={56} label={t('hub.items.provision')} icon={{ glyph: 'bekal' }} gradient="sand" onPress={() => router.push('/bekal')} />
+          <IconTile size={56} label={t('hub.items.secret')} icon={{ glyph: 'rahasia' }} gradient="indigo" onPress={() => router.push('/vault')} />
+        </ScrollView>
+      </FadeIn>
+      <FadeIn index={4}>
+        <QuoteCard quote={quote} />
+      </FadeIn>
+      <FadeIn index={5}>
         <Row>
           <Button title="Bekal hari ini" variant="secondary" onPress={() => router.push('/bekal')} />
           <Button title={`Dzikir ${suggestedTab(new Date().getHours()) === 'pagi' ? 'pagi' : 'petang'}`} variant="secondary" onPress={() => router.push('/adhkar')} />
@@ -84,7 +101,7 @@ export default function Beranda() {
         </Card>
       ) : null}
 
-      <FadeIn index={4}>
+      <FadeIn index={6}>
       <Card>
         <Row style={{ justifyContent: 'space-between' }}>
           <Text variant="heading">Hari ini</Text>
@@ -112,7 +129,7 @@ export default function Beranda() {
 
       <SectionTitle>Misi hari ini ({doneCount}/{missions.data.daily.length})</SectionTitle>
       {missions.data.daily.map((m, i) => (
-        <FadeIn key={m.id} index={5 + i}>
+        <FadeIn key={m.id} index={7 + i}>
         <Link href={{ pathname: '/mission/[id]', params: { id: m.id } }} asChild>
           <Card>
             <Row style={{ justifyContent: 'space-between' }}>

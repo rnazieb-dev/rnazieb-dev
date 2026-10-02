@@ -42,7 +42,7 @@ export const NUDGE_TEXT = {
 export function inviteMessage(opts: { circleName?: string; code?: string; missionTitle?: string }): string {
   const parts: string[] = [];
   if (opts.missionTitle) parts.push(`Yuk ikut misi kebaikan: "${opts.missionTitle}".`);
-  if (opts.circleName && opts.code) parts.push(`Gabung grup "${opts.circleName}" di aplikasi Esok dengan kode ${opts.code}.`);
+  if (opts.circleName && opts.code) parts.push(`Gabung grup "${opts.circleName}" di aplikasi NAFS dengan kode ${opts.code}.`);
   parts.push('Hari ini seakan esok tiada — mari berlomba dalam kebaikan.');
   return parts.join(' ');
 }

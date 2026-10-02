@@ -108,7 +108,7 @@ export default function MissionScreen() {
             <Text variant="small" muted>{mission.dalil.source} · {GRADE[mission.dalil.grade]}</Text>
           </>
         ) : (
-          <Text muted>Kebaikan umum (mubah). Esok tidak mengklaim keutamaan atau pahala tertentu untuk misi ini.</Text>
+          <Text muted>Kebaikan umum (mubah). NAFS tidak mengklaim keutamaan atau pahala tertentu untuk misi ini.</Text>
         )}
       </Card>
 

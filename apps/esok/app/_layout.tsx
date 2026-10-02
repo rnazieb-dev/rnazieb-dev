@@ -11,11 +11,13 @@ import { AccountGate } from '@/components/AccountGate';
 import { LockGate } from '@/components/LockGate';
 import { AppProvider } from '@/state/app';
 import { useTheme } from '@/lib/theme';
+import { useT } from '@/i18n/useT';
 
 void SplashScreen.preventAutoHideAsync();
 
 function Shell() {
-  const t = useTheme();
+  const th = useTheme();
+  const { t } = useT();
   const router = useRouter();
   useEffect(() => {
     // Buram pada pratinjau app switcher (iOS) agar isi jurnal tak terlihat.
@@ -25,6 +27,7 @@ function Shell() {
       const data = resp.notification.request.content.data;
       if (data?.route === 'adhkar') router.push({ pathname: '/adhkar', params: { tab: String(data.tab ?? '') } });
       else if (data?.route === 'ledger') router.push('/ledger');
+      else if (data?.route === 'salat') router.push('/salat');
       else if (typeof data?.quoteId === 'string') router.push({ pathname: '/quote/[id]', params: { id: data.quoteId } });
     });
     return () => sub.remove();
@@ -34,10 +37,10 @@ function Shell() {
       <AccountGate>
       <Stack
         screenOptions={{
-          headerStyle: { backgroundColor: t.bg },
-          headerTintColor: t.text,
+          headerStyle: { backgroundColor: th.bg },
+          headerTintColor: th.text,
           headerTitleStyle: { fontWeight: '700' },
-          contentStyle: { backgroundColor: t.bg },
+          contentStyle: { backgroundColor: th.bg },
           headerShadowVisible: false,
         }}
       >
@@ -60,6 +63,11 @@ function Shell() {
         <Stack.Screen name="settings/reminders" options={{ title: 'Pengingat' }} />
         <Stack.Screen name="settings/security" options={{ title: 'Keamanan & data' }} />
         <Stack.Screen name="settings/about" options={{ title: 'Tentang & sumber' }} />
+        <Stack.Screen name="salat" options={{ headerShown: false }} />
+        <Stack.Screen name="kiblat" options={{ title: t('qibla.title') }} />
+        <Stack.Screen name="tasbih" options={{ title: t('tasbih.title') }} />
+        <Stack.Screen name="kalender" options={{ title: t('calendar.title') }} />
+        <Stack.Screen name="dzikir" options={{ title: t('dhikr.title') }} />
       </Stack>
       <StatusBar style="auto" />
       </AccountGate>

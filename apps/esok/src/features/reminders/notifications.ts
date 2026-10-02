@@ -1,7 +1,8 @@
 import { Notifications } from '@/lib/notifications';
+import { type AlertKey, type CalcOpts, labelFor, prayerAlerts } from '@/features/salat/logic';
 import { Platform } from 'react-native';
 import { QUOTES } from '@/content';
-import { type Coordinates, computePrayerTimes, formatHour } from './prayerTimes';
+import { type Coordinates, autoMethod, computePrayerTimes, formatHour } from './prayerTimes';
 import { adhkarReminders, dueReminders, quoteBudget } from './extras';
 import { type ReminderSettings, buildSchedule, notificationBody } from './schedule';
 import { dueDaysBetween } from '@/features/ledger/repo';
@@ -43,13 +44,14 @@ export async function requestNotificationPermission(): Promise<boolean> {
 export interface PrayerMode {
   mode: 'tetap' | 'salat';
   coords?: Coordinates;
+  calc?: CalcOpts;
 }
 
 /** Waktu pengingat berbasis salat: 20 mnt setelah Subuh, 15 mnt setelah Asar, 15 mnt setelah Isya. */
 export function prayerBasedTimes(day: DayKey, coords: Coordinates): string[] {
   const d = fromDayKey(day);
   const tz = -d.getTimezoneOffset() / 60;
-  const t = computePrayerTimes(d.getFullYear(), d.getMonth() + 1, d.getDate(), coords, tz);
+  const t = computePrayerTimes(d.getFullYear(), d.getMonth() + 1, d.getDate(), coords, tz, { method: autoMethod(coords) });
   return [formatHour(t.subuh + 20 / 60), formatHour(t.asar + 15 / 60), formatHour(t.isya + 15 / 60)];
 }
 
@@ -58,13 +60,17 @@ export function adhkarTimes(day: DayKey, coords?: Coordinates): [string, string]
   if (!coords) return ['05:45', '16:30'];
   const d = fromDayKey(day);
   const tz = -d.getTimezoneOffset() / 60;
-  const t = computePrayerTimes(d.getFullYear(), d.getMonth() + 1, d.getDate(), coords, tz);
+  const t = computePrayerTimes(d.getFullYear(), d.getMonth() + 1, d.getDate(), coords, tz, { method: autoMethod(coords) });
   return [formatHour(t.subuh + 30 / 60), formatHour(t.asar + 30 / 60)];
 }
 
 export interface ReminderExtras {
   adhkar: boolean;
   due: boolean;
+  /** Pengingat adzan per waktu; memakai `coords` (lokasi tersimpan) walau mode pengingat bukan 'salat'. */
+  prayerAlerts?: Partial<Record<AlertKey, boolean>>;
+  coords?: Coordinates;
+  calc?: CalcOpts;
 }
 
 /** Batalkan semua jadwal lama lalu jadwalkan ulang jendela ke depan. Dipanggil saat app dibuka & pengaturan berubah. */
@@ -76,14 +82,16 @@ export async function rescheduleReminders(
   extras: ReminderExtras = { adhkar: false, due: false },
 ): Promise<number> {
   await Notifications.cancelAllScheduledNotificationsAsync();
-  if (!settings.enabled) return 0;
+  const wantsAdzan = !!extras.coords && Object.values(extras.prayerAlerts ?? {}).some(Boolean);
+  if (!settings.enabled && !wantsAdzan) return 0;
   if (!(await notificationPermission().then((p) => p === 'granted'))) return 0;
   await ensureChannel();
   const now = new Date();
   const today = toDayKey(now);
   const coords = prayer.mode === 'salat' ? prayer.coords : undefined;
-  const adhkar = extras.adhkar ? adhkarReminders({ now, today, days: 5, timesForDay: (d) => adhkarTimes(d, coords) }) : [];
-  const due = extras.due ? dueReminders({ now, dueDays: await dueDaysBetween(db, today, addDays(today, 30)) }) : [];
+  const adhkar = settings.enabled && extras.adhkar ? adhkarReminders({ now, today, days: 5, timesForDay: (d) => adhkarTimes(d, coords) }) : [];
+  const adzan = wantsAdzan ? prayerAlerts(now, extras.coords as Coordinates, extras.prayerAlerts ?? {}, 2, extras.calc) : [];
+  const due = settings.enabled && extras.due ? dueReminders({ now, dueDays: await dueDaysBetween(db, today, addDays(today, 30)) }) : [];
   const schedule = buildSchedule({
     now,
     today,
@@ -91,7 +99,7 @@ export async function rescheduleReminders(
     quotes: QUOTES,
     recentlySeen: await recentQuoteIds(db),
     seed,
-    limit: quoteBudget(adhkar.length, due.length),
+    limit: settings.enabled ? quoteBudget(adhkar.length + adzan.length, due.length) : 0,
     timesForDay: prayer.mode === 'salat' && prayer.coords ? (day) => prayerBasedTimes(day, prayer.coords as Coordinates) : undefined,
   });
   for (const r of schedule) {
@@ -99,7 +107,7 @@ export async function rescheduleReminders(
     if (!q) continue;
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: 'Esok — pengingat',
+        title: 'NAFS — pengingat',
         body: notificationBody(q),
         data: { quoteId: q.id },
         ...(Platform.OS === 'android' ? {} : {}),
@@ -110,7 +118,7 @@ export async function rescheduleReminders(
   for (const a of adhkar) {
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: a.kind === 'pagi' ? 'Esok — dzikir pagi' : 'Esok — dzikir petang',
+        title: a.kind === 'pagi' ? 'NAFS — dzikir pagi' : 'NAFS — dzikir petang',
         body: 'Waktunya berdzikir. Ketuk untuk membuka.',
         data: { route: 'adhkar', tab: a.kind },
       },
@@ -120,9 +128,15 @@ export async function rescheduleReminders(
   for (const d of due) {
     // Teks generik: tanpa nama/nominal agar tidak bocor di layar kunci.
     await Notifications.scheduleNotificationAsync({
-      content: { title: 'Esok — pengingat', body: 'Ada catatan yang jatuh tempo hari ini. Tunaikan dengan baik.', data: { route: 'ledger' } },
+      content: { title: 'NAFS — pengingat', body: 'Ada catatan yang jatuh tempo hari ini. Tunaikan dengan baik.', data: { route: 'ledger' } },
       trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: d.at, channelId: CHANNEL_ID },
     });
   }
-  return schedule.length + adhkar.length + due.length;
+  for (const p of adzan) {
+    await Notifications.scheduleNotificationAsync({
+      content: { title: `NAFS — waktu ${labelFor(p.key, p.at)}`, body: 'Telah masuk waktu salat (perkiraan). Hayya ‘alash-shalah.', data: { route: 'salat' } },
+      trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: p.at, channelId: CHANNEL_ID },
+    });
+  }
+  return schedule.length + adhkar.length + due.length + adzan.length;
 }
