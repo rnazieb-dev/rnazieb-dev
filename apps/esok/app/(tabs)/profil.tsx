@@ -96,6 +96,8 @@ export default function Profil() {
         />
       ) : null}
       <Toggle label="Sembunyikan rangkaian hari (streak)" value={settings.hideStreak} onValueChange={(v) => updateSettings({ hideStreak: v })} />
+      <Button title="Dzikir & doa" variant="secondary" onPress={() => router.push('/adhkar')} />
+      <Button title="Utang, amanah & wasiat" variant="secondary" onPress={() => router.push('/ledger')} />
       <Button title="Pengingat" variant="secondary" onPress={() => router.push('/settings/reminders')} />
       <Button title="Akun & cloud" variant="secondary" onPress={() => router.push('/auth')} />
       <Button title="Keamanan & data" variant="secondary" onPress={() => router.push('/settings/security')} />

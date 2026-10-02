@@ -5,6 +5,8 @@ import { Button, Card, Pill, ProgressBar, Row, Screen, SectionTitle, Text } from
 import { QuoteCard } from '@/components/QuoteCard';
 import { markQuoteSeen, missionRows } from '@/db/repos';
 import { loadProgress } from '@/features/gamification/progress';
+import { dueCounts } from '@/features/ledger/repo';
+import { suggestedTab } from '@/features/adhkar/logic';
 import { ensureAssignments } from '@/features/missions/service';
 import { quoteOfDay } from '@/features/reminders/daily';
 import { NAMA_BULAN_HIJRI, gregorianToHijri } from '@/lib/hijri';
@@ -22,6 +24,7 @@ export default function Beranda() {
   }, [db, quote.id]);
 
   const progress = useDbQuery((d) => loadProgress(d, today), [today], null);
+  const due = useDbQuery((d) => dueCounts(d, today, 7), [today], { overdue: 0, soon: 0 });
   const missions = useDbQuery(
     async (d) => {
       const level = (await loadProgress(d, today)).personal.level.level;
@@ -42,9 +45,21 @@ export default function Beranda() {
       <Text variant="small" muted>{formatDayLong(today)} · {h.day} {NAMA_BULAN_HIJRI[h.month - 1]} {h.year} H (perkiraan)</Text>
       <Text variant="title">Assalamu’alaikum{settings.displayName !== 'Hamba Allah' ? `, ${settings.displayName}` : ''}</Text>
       <QuoteCard quote={quote} />
-      <Link href="/bekal" asChild>
-        <Button title="Bekal hari ini" variant="secondary" />
-      </Link>
+      <Row>
+        <Button title="Bekal hari ini" variant="secondary" onPress={() => router.push('/bekal')} />
+        <Button title={`Dzikir ${suggestedTab(new Date().getHours()) === 'pagi' ? 'pagi' : 'petang'}`} variant="secondary" onPress={() => router.push('/adhkar')} />
+      </Row>
+      {due.data.overdue + due.data.soon > 0 ? (
+        <Card tone="accent">
+          <Text variant="heading">Catatan jatuh tempo</Text>
+          <Text muted>
+            {due.data.overdue > 0 ? `${due.data.overdue} sudah lewat` : ''}
+            {due.data.overdue > 0 && due.data.soon > 0 ? ' · ' : ''}
+            {due.data.soon > 0 ? `${due.data.soon} dalam 7 hari` : ''}. Tunaikan dengan baik.
+          </Text>
+          <Button title="Buka catatan" variant="secondary" onPress={() => router.push('/ledger')} />
+        </Card>
+      ) : null}
 
       <Card>
         <Row style={{ justifyContent: 'space-between' }}>

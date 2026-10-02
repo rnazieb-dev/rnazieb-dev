@@ -50,3 +50,24 @@ export interface Mission {
   minPeople?: number;
   estimateMinutes: number;
 }
+
+export type AdhkarGroup = 'pagi' | 'petang' | 'pagi_petang' | 'tidur' | 'harian' | 'kematian';
+
+/**
+ * Dzikir/doa bersumber. Teks Arab HANYA untuk ayat Al-Qur'an (diambil dari data Mushaf);
+ * doa dari hadis memuat terjemah + sumber + derajat (teks Arab dirujuk dari kitab, menunggu data terverifikasi).
+ */
+export interface Adhkar {
+  id: string;
+  group: AdhkarGroup;
+  title: string;
+  kind: 'quran' | 'hadith';
+  arabic?: string;
+  meaning: string;
+  source: string;
+  grade: Grade;
+  /** Jumlah bacaan HANYA bila disebut dalam dalil (lihat countSource). */
+  count?: number;
+  countSource?: string;
+  note?: string;
+}

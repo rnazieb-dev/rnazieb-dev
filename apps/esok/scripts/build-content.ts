@@ -88,3 +88,30 @@ on conflict (mission_id) do update set
   fs.writeFileSync(path.join(root, 'supabase/migrations/0002_mission_points.sql'), sql);
   console.log('0002_mission_points.sql dihasilkan');
 }
+
+// Dzikir & doa: ayat diselesaikan dari data Mushaf; doa hadis dibawa apa adanya (tanpa Arab).
+{
+  interface A { id: string; group: string; title: string; kind: 'quran' | 'hadith'; refs?: string[]; meaning?: string; source?: string; grade?: 'sahih' | 'hasan'; count?: number; countSource?: string; note?: string }
+  const src = JSON.parse(fs.readFileSync(path.join(root, 'content/adhkar.source.json'), 'utf8')) as A[];
+  const built = src.map((a) => {
+    if (a.kind === 'quran') {
+      const parts = (a.refs ?? []).map(resolveQuran);
+      return {
+        id: a.id, group: a.group, title: a.title, kind: a.kind,
+        arabic: parts.map((p) => p.arabic).join('\n\n'),
+        meaning: parts.map((p) => p.text).join('\n\n'),
+        source: parts.map((p) => p.source).join('; '),
+        grade: 'quran',
+        ...(a.count ? { count: a.count, countSource: a.countSource } : {}),
+        ...(a.note ? { note: a.note } : {}),
+      };
+    }
+    return {
+      id: a.id, group: a.group, title: a.title, kind: a.kind, meaning: a.meaning, source: a.source, grade: a.grade,
+      ...(a.count ? { count: a.count, countSource: a.countSource } : {}),
+      ...(a.note ? { note: a.note } : {}),
+    };
+  });
+  fs.writeFileSync(path.join(root, 'src/content/adhkar.generated.json'), JSON.stringify(built, null, 1) + '\n');
+  console.log(`adhkar.generated.json: ${built.length} item`);
+}

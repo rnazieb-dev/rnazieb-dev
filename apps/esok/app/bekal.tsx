@@ -53,6 +53,12 @@ export default function Bekal() {
           {it.mission ? <Button title="Jadikan misi" variant="secondary" onPress={() => router.push({ pathname: '/mission/[id]', params: { id: it.mission as string } })} /> : null}
         </Card>
       ))}
+      <Card>
+        <Text variant="heading">Catatan utang, amanah & wasiat</Text>
+        <Text muted>Catat yang harus ditunaikan dan wasiat Anda; terenkripsi dan pribadi.</Text>
+        <Button title="Buka catatan" variant="secondary" onPress={() => router.push('/ledger')} />
+        <Button title="Dzikir & doa" variant="secondary" onPress={() => router.push('/adhkar')} />
+      </Card>
       <SectionTitle>Menjaga harapan</SectionTitle>
       <Card tone="accent">
         <Text>Kita tidak mengharapkan kematian; kita berbaik sangka kepada Allah dan beramal selagi diberi waktu.</Text>

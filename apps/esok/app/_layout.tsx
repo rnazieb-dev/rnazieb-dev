@@ -22,8 +22,10 @@ function Shell() {
     void enableAppSwitcherProtectionAsync(50).catch(() => undefined);
     // Ketuk notifikasi pengingat → buka kutipannya.
     const sub = Notifications.addNotificationResponseReceivedListener((resp) => {
-      const id = resp.notification.request.content.data?.quoteId;
-      if (typeof id === 'string') router.push({ pathname: '/quote/[id]', params: { id } });
+      const data = resp.notification.request.content.data;
+      if (data?.route === 'adhkar') router.push({ pathname: '/adhkar', params: { tab: String(data.tab ?? '') } });
+      else if (data?.route === 'ledger') router.push('/ledger');
+      else if (typeof data?.quoteId === 'string') router.push({ pathname: '/quote/[id]', params: { id: data.quoteId } });
     });
     return () => sub.remove();
   }, [router]);
@@ -45,6 +47,9 @@ function Shell() {
         <Stack.Screen name="deed/new" options={{ title: 'Catat amal', presentation: 'modal' }} />
         <Stack.Screen name="reflection" options={{ title: 'Refleksi' }} />
         <Stack.Screen name="bekal" options={{ title: 'Bekal hari ini' }} />
+        <Stack.Screen name="adhkar" options={{ title: 'Dzikir & doa' }} />
+        <Stack.Screen name="ledger/index" options={{ title: 'Utang, amanah & wasiat' }} />
+        <Stack.Screen name="ledger/[id]" options={{ title: 'Catatan', presentation: 'modal' }} />
         <Stack.Screen name="vault" options={{ title: 'Amalan rahasia' }} />
         <Stack.Screen name="auth" options={{ title: 'Akun & cloud', presentation: 'modal' }} />
         <Stack.Screen name="mission/[id]" options={{ title: 'Misi' }} />

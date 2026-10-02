@@ -5,6 +5,8 @@
 ## Fitur
 - **Pengingat**: notifikasi lokal terjadwal (jam tetap atau mengikuti waktu salat), kutipan ayat/hadis bersumber dengan nada `khauf/raja/amal` yang seimbang (nada peringatan tak pernah berturut-turut). Tanpa hitung mundur/prediksi ajal.
 - **Bekal hari ini**: checklist tanpa prediksi usia (taubat, maaf, orang tua, utang, wasiat, sedekah) + tautan bantuan (Kemenkes 119 ext. 8, darurat 112).
+- **Dzikir & doa** (`/adhkar`): 20 item bersumber (pagi, petang, tidur/bangun, doa harian, ziarah & musibah). Teks Arab hanya untuk ayat Al-Qur'an (dari data Mushaf); doa dari hadis memuat terjemah + sumber + derajat. Jumlah bacaan hanya bila disebut dalil. **Tanpa poin/peringkat**; pengingat opsional.
+- **Utang, amanah & wasiat** (`/ledger`): catatan utang, piutang, amanah, dan wasiat; terenkripsi E2EE seperti amalan rahasia (`private_items` kind `ledger`), pengingat jatuh tempo bernada generik (tanpa nama/nominal), tidak dihitung sebagai amal/poin.
 - **Jurnal**: niat pagi → catat amal → muhasabah malam. Visibilitas per entri: **Rahasia (bawaan)**, Lingkaran, Semua teman lingkaran.
 - **Amalan rahasia**: terenkripsi E2EE; tak pernah masuk feed, peringkat, kartu ajakan, push, atau agregat server.
 - **Misi**: harian (3), mingguan (2), musiman (Jumat, Senin–Kamis, Ramadan, 10 Dzulhijjah, Arafah, Asyura), side quest kejutan (jenis misi acak, **bukan undian hadiah**).

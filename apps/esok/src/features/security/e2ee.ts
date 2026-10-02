@@ -188,7 +188,7 @@ export async function rewrapPassphrase(
 }
 
 // ---- item ----
-export type ItemKind = 'deed' | 'reflection';
+export type ItemKind = 'deed' | 'reflection' | 'ledger';
 
 export interface Sealed {
   ciphertext: string; // base64
