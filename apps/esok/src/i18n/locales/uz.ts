@@ -86,7 +86,7 @@ const uz: Dict = {
     },
     vault: {
       title: 'Maxfiy amallar',
-      intro: 'Bularni faqat siz oʻqiy olasiz. Qurilmangizda shifrlanadi; hech qaysi lentada, reytingda, taklif kartasida yoki birovning bildirishnomasida koʻrinmaydi. Ballari faqat shaxsiy hisobingizga qoʻshiladi.',
+      intro: 'Bularni faqat siz oʻqiy olasiz. Qurilmangizda shifrlanadi; hech qaysi lentada, reytingda, taklif kartasida yoki birovning bildirishnomasida koʻrinmaydi. Ularning ballari faqat shaxsiy umumiy ballingizga qoʻshiladi.',
       lockedCount: '🔒 {n} ta yashirin amal. Oʻqish uchun qurilma biometriyasi/paroli bilan oching.',
       lockNow: 'Hozir qulflash',
       emptyTitle: 'Hali maxfiy amal yoʻq',
@@ -97,7 +97,7 @@ const uz: Dict = {
     ledger: {
       types: {
         utang: 'Qarzlarim',
-        piutang: 'Mendan qarzdorlar',
+        piutang: 'Menga qarzdorlar',
         amanah: 'Omonatlar',
         wasiat: 'Vasiyat',
       },
@@ -268,8 +268,6 @@ const uz: Dict = {
       hopeHadith: '“Sizlardan hech biringiz Alloh haqida yaxshi gumonda boʻlgan holdagina vafot etsin.” — Muslim № 2877',
       helpTitle: 'Yordam kerakmi?',
       helpBody: 'Agar oʻzingizni juda ezilgan his qilsangiz yoki hayotingizga nuqta qoʻyish haqida oʻylar boʻlsa, siz yolgʻiz emassiz. Yaqin insoningiz yoki mutaxassisga, shuningdek quyidagi xizmatlarga murojaat qiling:',
-      hotline: 'Sogʻliqni saqlash vazirligi liniyasi 119, qoʻshimcha 8',
-      emergency: 'Favqulodda xizmat 112',
     },
     adhkar: {
       title: 'Zikr va duo',
@@ -295,8 +293,8 @@ const uz: Dict = {
       'first-deed': { title: 'Ilk qadam', description: 'Birinchi amalingizni yozdingiz.' },
       'ten-deeds': { title: 'Oʻnta yozuv', description: '10 ta amal yozdingiz.' },
       'fifty-deeds': { title: 'Ellikta yozuv', description: '50 ta amal yozdingiz.' },
-      'seven-days': { title: 'Yetti kunlik yaxshilik', description: '7 xil kunda yaxshilik qildingiz.' },
-      'thirty-days': { title: 'Oʻttiz kunlik yaxshilik', description: '30 xil kunda yaxshilik qildingiz.' },
+      'seven-days': { title: 'Yetti kunlik yaxshilik', description: '7 ta turli kunda yaxshilik qildingiz.' },
+      'thirty-days': { title: 'Oʻttiz kunlik yaxshilik', description: '30 ta turli kunda yaxshilik qildingiz.' },
       'streak-7': { title: 'Uzluksiz bir hafta', description: '7 kun ketma-ket yaxshilik qildingiz.' },
       'streak-30': { title: 'Uzluksiz bir oy', description: '30 kun ketma-ket yaxshilik qildingiz.' },
       'family-5': { title: 'Oilaga yaqin', description: 'Oila uchun 5 ta amal.' },
@@ -649,7 +647,7 @@ const uz: Dict = {
       points: '{n} ball',
       pointsNote: 'Ballar izchillikni bildiradi, savobingiz qiymatini emas. Savob yolgʻiz Alloh huzuridadir.',
       streak: '{n} kunlik ketma-ketlik · jami {total} ta yozuv',
-      privateScore: 'Bu shaxsiy hisob maxfiy amallaringizni ham oʻz ichiga oladi va faqat sizga koʻrinadi. Boshqalar faqat siz ulashgan amallardan {n} ballni koʻradi.',
+      privateScore: 'Bu shaxsiy umumiy ball maxfiy amallaringizni ham oʻz ichiga oladi va faqat sizga koʻrinadi. Boshqalar faqat siz ulashgan amallardan {n} ballni koʻradi.',
       honorOn: 'Ixlos rejimi yoqilgan: raqamlar yashirilgan.',
       secretTitle: '🔒 Maxfiy amallar',
       secretSaved: '{n} ta saqlangan',

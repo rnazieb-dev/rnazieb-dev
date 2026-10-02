@@ -31,6 +31,8 @@ export interface AppSettings {
   asrHanafi: boolean;
   /** Nama tempat (hasil reverse geocode di perangkat) untuk ditampilkan. */
   placeName: string | null;
+  /** Mata uang catatan: kode ISO 4217 atau 'auto' (ikuti perangkat). */
+  currency: string;
   displayName: string;
   seed: string;
   reminders: ReminderSettings;
@@ -61,6 +63,7 @@ const DEFAULTS = (): AppSettings => ({
   calcMethod: 'auto',
   asrHanafi: false,
   placeName: null,
+  currency: 'auto',
   displayName: 'Hamba Allah',
   seed: '',
   reminders: DEFAULT_REMINDERS,

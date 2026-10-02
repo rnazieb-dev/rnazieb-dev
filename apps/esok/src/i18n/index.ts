@@ -1,6 +1,33 @@
 import { getLocales } from 'expo-localization';
 import { I18nManager } from 'react-native';
 import en, { type Dict } from './en';
+import enExtra from './extra/en';
+import idExtra from './extra/id';
+import arExtra from './extra/ar';
+import azExtra from './extra/az';
+import bnExtra from './extra/bn';
+import bsExtra from './extra/bs';
+import deExtra from './extra/de';
+import esExtra from './extra/es';
+import faExtra from './extra/fa';
+import frExtra from './extra/fr';
+import haExtra from './extra/ha';
+import hiExtra from './extra/hi';
+import kkExtra from './extra/kk';
+import msExtra from './extra/ms';
+import nlExtra from './extra/nl';
+import psExtra from './extra/ps';
+import ruExtra from './extra/ru';
+import soExtra from './extra/so';
+import sqExtra from './extra/sq';
+import swExtra from './extra/sw';
+import thExtra from './extra/th';
+import tlExtra from './extra/tl';
+import trExtra from './extra/tr';
+import urExtra from './extra/ur';
+import uzExtra from './extra/uz';
+import yoExtra from './extra/yo';
+import zhExtra from './extra/zh';
 import id from './id';
 import ar from './locales/ar';
 import az from './locales/az';
@@ -35,6 +62,8 @@ interface LangInfo {
   rtl: boolean;
   /** Tag BCP-47 untuk format tanggal. */
   locale: string;
+  /** Terjemahan belum ditinjau penutur asli dan keyakinannya rendah → ditandai "beta" di pemilih. */
+  beta?: boolean;
 }
 
 export const LANGUAGES = {
@@ -43,7 +72,7 @@ export const LANGUAGES = {
   ar: { label: 'العربية', dict: ar, rtl: true, locale: 'ar' },
   ur: { label: 'اردو', dict: ur, rtl: true, locale: 'ur' },
   fa: { label: 'فارسی', dict: fa, rtl: true, locale: 'fa' },
-  ps: { label: 'پښتو', dict: ps, rtl: true, locale: 'ps' },
+  ps: { label: 'پښتو', dict: ps, rtl: true, locale: 'ps', beta: true },
   bn: { label: 'বাংলা', dict: bn, rtl: false, locale: 'bn' },
   hi: { label: 'हिन्दी', dict: hi, rtl: false, locale: 'hi' },
   ms: { label: 'Bahasa Melayu', dict: ms, rtl: false, locale: 'ms' },
@@ -61,7 +90,7 @@ export const LANGUAGES = {
   sw: { label: 'Kiswahili', dict: sw, rtl: false, locale: 'sw' },
   ha: { label: 'Hausa', dict: ha, rtl: false, locale: 'ha' },
   so: { label: 'Soomaali', dict: so, rtl: false, locale: 'so' },
-  yo: { label: 'Yorùbá', dict: yo, rtl: false, locale: 'yo' },
+  yo: { label: 'Yorùbá', dict: yo, rtl: false, locale: 'yo', beta: true },
   zh: { label: '中文', dict: zh, rtl: false, locale: 'zh-CN' },
   tl: { label: 'Tagalog', dict: tl, rtl: false, locale: 'fil' },
   th: { label: 'ไทย', dict: th, rtl: false, locale: 'th' },
@@ -89,14 +118,18 @@ export const resolveLang = (s: LangSetting | undefined): Lang => (!s || s === 's
 type Leaves<T, P extends string = ''> = {
   [K in keyof T & string]: T[K] extends string ? `${P}${K}` : T[K] extends readonly string[] ? `${P}${K}` : Leaves<T[K], `${P}${K}.`>;
 }[keyof T & string];
-export type TKey = Leaves<Dict>;
+type ExtraDict = typeof enExtra;
+export type TKey = Leaves<Dict> | Leaves<ExtraDict>;
+
+/** Teks tambahan per bahasa; yang belum ada jatuh ke bahasa Inggris. */
+export const EXTRAS: Partial<Record<Lang, unknown>> = { en: enExtra, id: idExtra, ar: arExtra, az: azExtra, bn: bnExtra, bs: bsExtra, de: deExtra, es: esExtra, fa: faExtra, fr: frExtra, ha: haExtra, hi: hiExtra, kk: kkExtra, ms: msExtra, nl: nlExtra, ps: psExtra, ru: ruExtra, so: soExtra, sq: sqExtra, sw: swExtra, th: thExtra, tl: tlExtra, tr: trExtra, ur: urExtra, uz: uzExtra, yo: yoExtra, zh: zhExtra };
 
 function lookup(dict: unknown, key: string): unknown {
   return key.split('.').reduce<unknown>((o, k) => (o && typeof o === 'object' ? (o as Record<string, unknown>)[k] : undefined), dict);
 }
 
 export function translate(lang: Lang, key: TKey, params?: Record<string, string | number>): string {
-  const raw = lookup(LANGUAGES[lang].dict, key) ?? lookup(en, key) ?? key;
+  const raw = lookup(LANGUAGES[lang].dict, key) ?? lookup(EXTRAS[lang], key) ?? lookup(en, key) ?? lookup(enExtra, key) ?? key;
   const s = Array.isArray(raw) ? raw.join(',') : String(raw);
   return params ? s.replace(/\{(\w+)\}/g, (_, k: string) => String(params[k] ?? `{${k}}`)) : s;
 }

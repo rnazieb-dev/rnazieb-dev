@@ -86,7 +86,7 @@ const az: Dict = {
     },
     vault: {
       title: 'Gizli əməllər',
-      intro: 'Bunları yalnız siz oxuya bilərsiniz. Cihazınızda şifrələnir; heç bir lentdə, reytinqdə, dəvət kartında və ya kiminsə bildirişində görünmür. Xalları yalnız şəxsi hesabınıza əlavə olunur.',
+      intro: 'Bunları yalnız siz oxuya bilərsiniz. Cihazınızda şifrələnir; heç bir lentdə, reytinqdə, dəvət kartında və ya kiminsə bildirişində görünmür. Xalları yalnız şəxsi xal cəminizə əlavə olunur.',
       lockedCount: '🔒 {n} gizli əməl. Oxumaq üçün cihazınızın biometrikası/parolu ilə açın.',
       lockNow: 'İndi kilidlə',
       emptyTitle: 'Hələ gizli əməl yoxdur',
@@ -268,8 +268,6 @@ const az: Dict = {
       hopeHadith: '“Sizdən heç kim Allah haqqında yaxşı güman etmədən ölməsin.” — Müslim № 2877',
       helpTitle: 'Köməyə ehtiyacınız var?',
       helpBody: 'Özünüzü çox sıxılmış hiss edirsinizsə və ya həyatınıza son qoymaq barədə fikirləriniz varsa, siz tək deyilsiniz. Yaxın birinə və ya mütəxəssisə, həmçinin aşağıdakı xidmətlərə müraciət edin:',
-      hotline: 'Səhiyyə Nazirliyi xətti 119, əlavə 8',
-      emergency: 'Təcili yardım 112',
     },
     adhkar: {
       title: 'Zikr və dua',
@@ -649,7 +647,7 @@ const az: Dict = {
       points: '{n} xal',
       pointsNote: 'Xallar ardıcıllığı göstərir, savabınızın dəyərini yox. Savab yalnız Allahın dərgahındadır.',
       streak: '{n} günlük seriya · cəmi {total} qeyd',
-      privateScore: 'Bu şəxsi hesab gizli əməllərinizi də əhatə edir və yalnız sizə görünür. Başqaları yalnız paylaşdığınız əməllərdən {n} xal görür.',
+      privateScore: 'Bu şəxsi xal gizli əməllərinizi də əhatə edir və yalnız sizə görünür. Başqaları yalnız paylaşdığınız əməllərdən {n} xal görür.',
       honorOn: 'İxlas rejimi aktivdir: rəqəmlər gizlədilib.',
       secretTitle: '🔒 Gizli əməllər',
       secretSaved: '{n} saxlanılıb',

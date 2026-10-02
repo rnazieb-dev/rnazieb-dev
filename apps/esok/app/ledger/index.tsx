@@ -4,7 +4,8 @@ import { Alert } from 'react-native';
 import { Button, Card, Chip, Empty, Pill, Row, Screen, SectionTitle, Text } from '@/components/ui';
 import { ScreenGuard } from '@/components/ScreenGuard';
 import { countLedger, deleteLedgerItem, listLedger, settleLedgerItem } from '@/features/ledger/repo';
-import { formatRupiah } from '@/features/ledger/format';
+import { formatMoney } from '@/features/support/money';
+import { useCurrency } from '@/features/support/useRegion';
 import { type LedgerType } from '@/features/ledger/types';
 import { daysBetween, formatDayLong } from '@/lib/dates';
 import { useT } from '@/i18n/useT';
@@ -24,7 +25,8 @@ function dueText(t: T, due: string | null, today: string): string | null {
 
 export default function LedgerScreen() {
   const router = useRouter();
-  const { t } = useT();
+  const { t, lang } = useT();
+  const currency = useCurrency();
   const { db, today, dek, unlockVault, bump, reschedule } = useApp();
   const [filter, setFilter] = useState<LedgerType | 'semua'>('semua');
   const items = useDbQuery((d) => (dek ? listLedger(d, dek) : Promise.resolve([])), [dek], []);
@@ -69,7 +71,7 @@ export default function LedgerScreen() {
                   <Pill label={x.settled ? t('journal.ledger.settled') : t(`journal.ledger.types.${x.type}`)} tone={x.settled ? 'muted' : 'accent'} />
                 </Row>
                 {x.counterparty ? <Text muted>{x.type === 'piutang' ? t('journal.ledger.to') : x.type === 'wasiat' ? t('journal.ledger.for') : t('journal.ledger.with')}: {x.counterparty}</Text> : null}
-                {x.amountIdr !== null ? <Text variant="heading">{formatRupiah(x.amountIdr)}</Text> : null}
+                {x.amountIdr !== null ? <Text variant="heading">{formatMoney(x.amountIdr, currency.code, lang)}</Text> : null}
                 {x.note ? <Text>{x.note}</Text> : null}
                 {due ? <Text color={overdue ? '#B3402F' : undefined} variant="label">{due}</Text> : null}
                 {x.type === 'piutang' && !x.settled ? <Text variant="small" muted>{t('journal.ledger.graceHint')}</Text> : null}

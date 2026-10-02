@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { Button, Chip, Field, Row, Screen, Text } from '@/components/ui';
 import { ScreenGuard } from '@/components/ScreenGuard';
-import { parseRupiah } from '@/features/ledger/format';
+import { parseMoney } from '@/features/support/money';
+import { useCurrency } from '@/features/support/useRegion';
 import { listLedger, saveLedgerItem } from '@/features/ledger/repo';
 import { type LedgerPayload, type LedgerType } from '@/features/ledger/types';
 import { addDays } from '@/lib/dates';
@@ -16,6 +17,7 @@ const TYPES: LedgerType[] = ['utang', 'piutang', 'amanah', 'wasiat'];
 export default function LedgerForm() {
   const router = useRouter();
   const { t: tr } = useT();
+  const currency = useCurrency();
   const { id } = useLocalSearchParams<{ id: string }>();
   const isNew = id === 'new';
   const { db, today, dek, unlockVault, bump, reschedule } = useApp();
@@ -62,7 +64,7 @@ export default function LedgerForm() {
       if (!key) return Alert.alert(tr('journal.common.locked'), tr('journal.ledger.form.lockedBody'));
       const payload: LedgerPayload = {
         type, title, counterparty, note,
-        amountIdr: wasiat ? null : parseRupiah(amount),
+        amountIdr: wasiat ? null : parseMoney(amount),
         dueDay: wasiat || !due ? null : due,
         createdDay: prev?.createdDay ?? today,
         settled: prev?.settled ?? false,
@@ -97,7 +99,7 @@ export default function LedgerForm() {
       <Field label={type === 'piutang' ? tr('journal.ledger.form.toWhom') : wasiat ? tr('journal.ledger.form.forWhom') : tr('journal.ledger.form.withWhom')} value={counterparty} onChangeText={setCounterparty} maxLength={80} />
       {!wasiat ? (
         <>
-          <Field label={tr('journal.ledger.form.amount')} value={amount} onChangeText={(v) => setAmount(v.replace(/[^0-9]/g, ''))} keyboardType="number-pad" />
+          <Field label={tr('money.amountLabel', { code: currency.code })} value={amount} onChangeText={(v) => setAmount(v.replace(/[^0-9]/g, ''))} keyboardType="number-pad" />
           <Field label={tr('journal.ledger.form.due')} value={due} onChangeText={setDue} maxLength={10} autoCapitalize="none" hint={dueValid ? undefined : tr('journal.ledger.form.dueFormat')} />
           <Row>
             <Chip label={tr('journal.ledger.form.plus7')} onPress={() => setDue(addDays(today, 7))} />
