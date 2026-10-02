@@ -1,12 +1,12 @@
 import { useCallback, useMemo } from 'react';
 import { setDateLocale } from '@/lib/dates';
 import { useApp } from '@/state/app';
-import { type Lang, type TKey, resolveLang, translate, translateList } from './index';
+import { LANGUAGES, type Lang, type TKey, resolveLang, translate, translateList } from './index';
 
 export function useLang(): Lang {
   const { settings } = useApp();
   const lang = useMemo(() => resolveLang(settings.language), [settings.language]);
-  setDateLocale(lang);
+  setDateLocale(LANGUAGES[lang].locale);
   return lang;
 }
 

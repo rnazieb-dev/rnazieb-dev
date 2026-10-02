@@ -12,6 +12,7 @@ import { LockGate } from '@/components/LockGate';
 import { AppProvider } from '@/state/app';
 import { useTheme } from '@/lib/theme';
 import { useT } from '@/i18n/useT';
+import { RtlSync } from '@/i18n/RtlSync';
 
 void SplashScreen.preventAutoHideAsync();
 
@@ -34,6 +35,7 @@ function Shell() {
   }, [router]);
   return (
     <LockGate>
+      <RtlSync />
       <AccountGate>
       <Stack
         screenOptions={{

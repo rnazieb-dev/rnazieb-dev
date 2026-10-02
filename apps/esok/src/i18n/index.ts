@@ -2,11 +2,32 @@ import { getLocales } from 'expo-localization';
 import { I18nManager } from 'react-native';
 import en, { type Dict } from './en';
 import id from './id';
+import ar from './locales/ar';
+import bs from './locales/bs';
+import ms from './locales/ms';
+import sw from './locales/sw';
+import tr from './locales/tr';
+import zh from './locales/zh';
+
+interface LangInfo {
+  /** Nama bahasa dalam bahasanya sendiri. */
+  label: string;
+  dict: Dict;
+  rtl: boolean;
+  /** Tag BCP-47 untuk format tanggal. */
+  locale: string;
+}
 
 export const LANGUAGES = {
-  en: { label: 'English', dict: en, rtl: false },
-  id: { label: 'Bahasa Indonesia', dict: id, rtl: false },
-} as const;
+  en: { label: 'English', dict: en, rtl: false, locale: 'en' },
+  id: { label: 'Bahasa Indonesia', dict: id, rtl: false, locale: 'id' },
+  ar: { label: 'العربية', dict: ar, rtl: true, locale: 'ar' },
+  ms: { label: 'Bahasa Melayu', dict: ms, rtl: false, locale: 'ms' },
+  tr: { label: 'Türkçe', dict: tr, rtl: false, locale: 'tr' },
+  sw: { label: 'Kiswahili', dict: sw, rtl: false, locale: 'sw' },
+  bs: { label: 'Bosanski', dict: bs, rtl: false, locale: 'bs' },
+  zh: { label: '中文', dict: zh, rtl: false, locale: 'zh-CN' },
+} as const satisfies Record<string, LangInfo>;
 
 export type Lang = keyof typeof LANGUAGES;
 export type LangSetting = Lang | 'system';
