@@ -1,0 +1,28 @@
+name: esok-ci
+on:
+  push:
+    paths: ['apps/esok/**', '.github/workflows/esok.yml']
+  pull_request:
+    paths: ['apps/esok/**', '.github/workflows/esok.yml']
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/esok
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/esok/package-lock.json
+      - run: npm ci
+      - run: npm run validate:content
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - name: Smoke bundle (Android & iOS)
+        run: |
+          EXPO_OFFLINE=1 CI=1 npx expo export --platform android --output-dir /tmp/out-android
+          EXPO_OFFLINE=1 CI=1 npx expo export --platform ios --output-dir /tmp/out-ios

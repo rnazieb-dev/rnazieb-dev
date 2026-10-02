@@ -1,0 +1,618 @@
+[
+ {
+  "id": "q-3-185",
+  "kind": "quran",
+  "tone": "khauf",
+  "theme": "kematian",
+  "arabic": "كُلُّ نَفۡسٖ ذَآئِقَةُ ٱلۡمَوۡتِۗ وَإِنَّمَا تُوَفَّوۡنَ أُجُورَكُمۡ يَوۡمَ ٱلۡقِيَٰمَةِۖ فَمَن زُحۡزِحَ عَنِ ٱلنَّارِ وَأُدۡخِلَ ٱلۡجَنَّةَ فَقَدۡ فَازَۗ وَمَا ٱلۡحَيَوٰةُ ٱلدُّنۡيَآ إِلَّا مَتَٰعُ ٱلۡغُرُورِ",
+  "text": "Setiap yang bernyawa akan merasakan mati. Dan hanya pada hari Kiamat sajalah diberikan dengan sempurna balasanmu. Barang siapa dijauhkan dari neraka dan dimasukkan ke dalam surga, sungguh, dia memperoleh kemenangan. Kehidupan dunia hanyalah kesenangan yang memperdaya",
+  "source": "QS Ali 'Imran 3:185",
+  "grade": "quran"
+ },
+ {
+  "id": "q-21-35",
+  "kind": "quran",
+  "tone": "khauf",
+  "theme": "kematian",
+  "arabic": "كُلُّ نَفۡسٖ ذَآئِقَةُ ٱلۡمَوۡتِۗ وَنَبۡلُوكُم بِٱلشَّرِّ وَٱلۡخَيۡرِ فِتۡنَةٗۖ وَإِلَيۡنَا تُرۡجَعُونَ",
+  "text": "Setiap yang bernyawa akan merasakan mati. Kami akan menguji kamu dengan keburukan dan kebaikan sebagai cobaan. Dan kamu akan dikembalikan hanya kepada Kami",
+  "source": "QS Al-Anbya 21:35",
+  "grade": "quran"
+ },
+ {
+  "id": "q-29-57",
+  "kind": "quran",
+  "tone": "khauf",
+  "theme": "kematian",
+  "arabic": "كُلُّ نَفۡسٖ ذَآئِقَةُ ٱلۡمَوۡتِۖ ثُمَّ إِلَيۡنَا تُرۡجَعُونَ",
+  "text": "Setiap yang bernyawa akan merasakan mati. Kemudian hanya kepada Kami kamu dikembalikan",
+  "source": "QS Al-'Ankabut 29:57",
+  "grade": "quran"
+ },
+ {
+  "id": "q-62-8",
+  "kind": "quran",
+  "tone": "khauf",
+  "theme": "kematian",
+  "arabic": "قُلۡ إِنَّ ٱلۡمَوۡتَ ٱلَّذِي تَفِرُّونَ مِنۡهُ فَإِنَّهُۥ مُلَٰقِيكُمۡۖ ثُمَّ تُرَدُّونَ إِلَىٰ عَٰلِمِ ٱلۡغَيۡبِ وَٱلشَّهَٰدَةِ فَيُنَبِّئُكُم بِمَا كُنتُمۡ تَعۡمَلُونَ",
+  "text": "Katakanlah, \"Sesungguhnya kematian yang kamu lari dari padanya, ia pasti menemui kamu, kemudian kamu akan dikembalikan kepada (Allah), yang mengetahui yang gaib dan yang nyata, lalu Dia beritakan kepadamu apa yang telah kamu kerjakan",
+  "source": "QS Al-Jumu'ah 62:8",
+  "grade": "quran"
+ },
+ {
+  "id": "q-63-10",
+  "kind": "quran",
+  "tone": "amal",
+  "theme": "sedekah",
+  "arabic": "وَأَنفِقُواْ مِن مَّا رَزَقۡنَٰكُم مِّن قَبۡلِ أَن يَأۡتِيَ أَحَدَكُمُ ٱلۡمَوۡتُ فَيَقُولَ رَبِّ لَوۡلَآ أَخَّرۡتَنِيٓ إِلَىٰٓ أَجَلٖ قَرِيبٖ فَأَصَّدَّقَ وَأَكُن مِّنَ ٱلصَّـٰلِحِينَ وَلَن يُؤَخِّرَ ٱللَّهُ نَفۡسًا إِذَا جَآءَ أَجَلُهَاۚ وَٱللَّهُ خَبِيرُۢ بِمَا تَعۡمَلُونَ",
+  "text": "Dan infakkanlah sebagian dari apa yang telah Kami berikan kepadamu sebelum kematian datang kepada salah seorang di antara kamu; lalu dia berkata (menyesali), \"Ya Tuhanku, sekiranya Engkau berkenan menunda (kematian)ku sedikit waktu lagi, maka aku dapat bersedekah dan aku akan termasuk orang-orang yang saleh Dan Allah tidak akan menunda (kematian) seseorang apabila waktu kematiannya telah datang. Dan Allah Mahateliti terhadap apa yang kamu kerjakan",
+  "source": "QS Al-Munafiqun 63:10-11",
+  "grade": "quran"
+ },
+ {
+  "id": "q-7-34",
+  "kind": "quran",
+  "tone": "khauf",
+  "theme": "ajal",
+  "arabic": "وَلِكُلِّ أُمَّةٍ أَجَلٞۖ فَإِذَا جَآءَ أَجَلُهُمۡ لَا يَسۡتَأۡخِرُونَ سَاعَةٗ وَلَا يَسۡتَقۡدِمُونَ",
+  "text": "Dan setiap umat mempunyai ajal (batas waktu). Apabila ajalnya tiba, mereka tidak dapat meminta penundaan atau percepatan sesaat pun",
+  "source": "QS Al-A'raf 7:34",
+  "grade": "quran"
+ },
+ {
+  "id": "q-4-78",
+  "kind": "quran",
+  "tone": "khauf",
+  "theme": "kematian",
+  "arabic": "أَيۡنَمَا تَكُونُواْ يُدۡرِككُّمُ ٱلۡمَوۡتُ وَلَوۡ كُنتُمۡ فِي بُرُوجٖ مُّشَيَّدَةٖۗ وَإِن تُصِبۡهُمۡ حَسَنَةٞ يَقُولُواْ هَٰذِهِۦ مِنۡ عِندِ ٱللَّهِۖ وَإِن تُصِبۡهُمۡ سَيِّئَةٞ يَقُولُواْ هَٰذِهِۦ مِنۡ عِندِكَۚ قُلۡ كُلّٞ مِّنۡ عِندِ ٱللَّهِۖ فَمَالِ هَـٰٓؤُلَآءِ ٱلۡقَوۡمِ لَا يَكَادُونَ يَفۡقَهُونَ حَدِيثٗا",
+  "text": "Dimanapun kamu berada, kematian akan mendapatkan kamu, kendatipun kamu berada di dalam benteng yang tinggi dan kokoh. Jika mereka memperoleh kebaikan, mereka mengatakan, \"Ini dari sisi Allah\", dan jika mereka ditimpa suatu keburukan mereka mengatakan, \"Ini dari engkau (Muhammad).\" Katakanlah, \"Semuanya (datang) dari sisi Allah.\" Maka mengapa orang-orang itu (orang-orang munafik) hampir-hampir tidak memahami pembicaraan (sedikit pun)",
+  "source": "QS An-Nisa 4:78",
+  "grade": "quran"
+ },
+ {
+  "id": "q-39-30",
+  "kind": "quran",
+  "tone": "khauf",
+  "theme": "kematian",
+  "arabic": "إِنَّكَ مَيِّتٞ وَإِنَّهُم مَّيِّتُونَ",
+  "text": "Sesungguhnya engkau (Muhammad) akan mati dan mereka akan mati (pula)",
+  "source": "QS Az-Zumar 39:30",
+  "grade": "quran"
+ },
+ {
+  "id": "q-55-26",
+  "kind": "quran",
+  "tone": "raja",
+  "theme": "keabadian",
+  "arabic": "كُلُّ مَنۡ عَلَيۡهَا فَانٖ وَيَبۡقَىٰ وَجۡهُ رَبِّكَ ذُو ٱلۡجَلَٰلِ وَٱلۡإِكۡرَامِ",
+  "text": "Semua yang ada di bumi itu akan binasa tetapi wajah Tuhanmu yang memiliki kebesaran dan kemuliaan tetap kekal",
+  "source": "QS Ar-Rahman 55:26-27",
+  "grade": "quran"
+ },
+ {
+  "id": "q-67-2",
+  "kind": "quran",
+  "tone": "amal",
+  "theme": "ujian-amal",
+  "arabic": "ٱلَّذِي خَلَقَ ٱلۡمَوۡتَ وَٱلۡحَيَوٰةَ لِيَبۡلُوَكُمۡ أَيُّكُمۡ أَحۡسَنُ عَمَلٗاۚ وَهُوَ ٱلۡعَزِيزُ ٱلۡغَفُورُ",
+  "text": "Yang menciptakan mati dan hidup, untuk menguji kamu, siapa di antara kamu yang lebih baik amalnya. Dan Dia Mahaperkasa, Maha Pengampun",
+  "source": "QS Al-Mulk 67:2",
+  "grade": "quran"
+ },
+ {
+  "id": "q-99-7",
+  "kind": "quran",
+  "tone": "amal",
+  "theme": "kebaikan-kecil",
+  "arabic": "فَمَن يَعۡمَلۡ مِثۡقَالَ ذَرَّةٍ خَيۡرٗا يَرَهُۥ وَمَن يَعۡمَلۡ مِثۡقَالَ ذَرَّةٖ شَرّٗا يَرَهُۥ",
+  "text": "Maka barangsiapa mengerjakan kebaikan seberat zarah, niscaya dia akan melihat (balasan)nya Dan barangsiapa mengerjakan kejahatan seberat zarah, niscaya dia akan melihat (balasan)nya",
+  "source": "QS Az-Zalzalah 99:7-8",
+  "grade": "quran"
+ },
+ {
+  "id": "q-102-1",
+  "kind": "quran",
+  "tone": "khauf",
+  "theme": "lalai",
+  "arabic": "أَلۡهَىٰكُمُ ٱلتَّكَاثُرُ حَتَّىٰ زُرۡتُمُ ٱلۡمَقَابِرَ",
+  "text": "Bermegah-megahan telah melalaikan kamu sampai kamu masuk ke dalam kubur",
+  "source": "QS At-Takathur 102:1-2",
+  "grade": "quran"
+ },
+ {
+  "id": "q-2-148",
+  "kind": "quran",
+  "tone": "amal",
+  "theme": "berlomba",
+  "arabic": "وَلِكُلّٖ وِجۡهَةٌ هُوَ مُوَلِّيهَاۖ فَٱسۡتَبِقُواْ ٱلۡخَيۡرَٰتِۚ أَيۡنَ مَا تَكُونُواْ يَأۡتِ بِكُمُ ٱللَّهُ جَمِيعًاۚ إِنَّ ٱللَّهَ عَلَىٰ كُلِّ شَيۡءٖ قَدِيرٞ",
+  "text": "Dan setiap umat mempunyai kiblat yang dia menghadap kepadanya. Maka berlomba-lombalah kamu dalam kebaikan. Di mana saja kamu berada pasti Allah akan mengumpulkan kamu semuanya. Sungguh, Allah Mahakuasa atas segala sesuatu",
+  "source": "QS Al-Baqarah 2:148",
+  "grade": "quran"
+ },
+ {
+  "id": "q-5-2",
+  "kind": "quran",
+  "tone": "amal",
+  "theme": "tolong-menolong",
+  "arabic": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ لَا تُحِلُّواْ شَعَـٰٓئِرَ ٱللَّهِ وَلَا ٱلشَّهۡرَ ٱلۡحَرَامَ وَلَا ٱلۡهَدۡيَ وَلَا ٱلۡقَلَـٰٓئِدَ وَلَآ ءَآمِّينَ ٱلۡبَيۡتَ ٱلۡحَرَامَ يَبۡتَغُونَ فَضۡلٗا مِّن رَّبِّهِمۡ وَرِضۡوَٰنٗاۚ وَإِذَا حَلَلۡتُمۡ فَٱصۡطَادُواْۚ وَلَا يَجۡرِمَنَّكُمۡ شَنَـَٔانُ قَوۡمٍ أَن صَدُّوكُمۡ عَنِ ٱلۡمَسۡجِدِ ٱلۡحَرَامِ أَن تَعۡتَدُواْۘ وَتَعَاوَنُواْ عَلَى ٱلۡبِرِّ وَٱلتَّقۡوَىٰۖ وَلَا تَعَاوَنُواْ عَلَى ٱلۡإِثۡمِ وَٱلۡعُدۡوَٰنِۚ وَٱتَّقُواْ ٱللَّهَۖ إِنَّ ٱللَّهَ شَدِيدُ ٱلۡعِقَابِ",
+  "text": "(Wahai orang-orang yang beriman! Janganlah kamu melanggar syiar-syiar kesucian Allah,253) dan jangan (melanggar kehormatan) bulan-bulan haram,254) jangan (mengganggu) hadyu (hewan-hewan kurban)255) dan qalāid (hewan-hewan kurban yang diberi tanda),256) dan jangan (pula) mengganggu orang-orang yang mengunjungi Baitulharam; mereka mencari karunia dan keridaan Tuhannya.257) Tetapi apabila kamu telah menyelesaikan ihram, maka bolehlah kamu berburu. Jangan sampai kebencian (mu) kepada suatu kaum karena mereka menghalang-halangimu dari Masjidilharam, mendorongmu berbuat melampaui batas (kepada mereka). Dan tolong-menolonglah kamu dalam (mengerjakan) kebajikan dan takwa, dan jangan tolong-menolong dalam berbuat dosa dan permusuhan. Bertakwalah kepada Allah, sungguh, Allah sangat berat siksa-Nya",
+  "source": "QS Al-Ma'idah 5:2",
+  "grade": "quran"
+ },
+ {
+  "id": "q-2-271",
+  "kind": "quran",
+  "tone": "amal",
+  "theme": "sedekah-rahasia",
+  "arabic": "إِن تُبۡدُواْ ٱلصَّدَقَٰتِ فَنِعِمَّا هِيَۖ وَإِن تُخۡفُوهَا وَتُؤۡتُوهَا ٱلۡفُقَرَآءَ فَهُوَ خَيۡرٞ لَّكُمۡۚ وَيُكَفِّرُ عَنكُم مِّن سَيِّـَٔاتِكُمۡۗ وَٱللَّهُ بِمَا تَعۡمَلُونَ خَبِيرٞ",
+  "text": "(Jika kamu menampakkan sedekah-sedekahmu,104) maka itu baik. Dan jika kamu menyembunyikannya dan memberikannya kepada orang-orang fakir, maka itu lebih baik bagimu dan Allah akan menghapus sebagian kesalahan-kesalahanmu. Dan Allah Mahateliti atas apa yang kamu kerjakan",
+  "source": "QS Al-Baqarah 2:271",
+  "grade": "quran"
+ },
+ {
+  "id": "q-2-261",
+  "kind": "quran",
+  "tone": "amal",
+  "theme": "sedekah",
+  "arabic": "مَّثَلُ ٱلَّذِينَ يُنفِقُونَ أَمۡوَٰلَهُمۡ فِي سَبِيلِ ٱللَّهِ كَمَثَلِ حَبَّةٍ أَنۢبَتَتۡ سَبۡعَ سَنَابِلَ فِي كُلِّ سُنۢبُلَةٖ مِّاْئَةُ حَبَّةٖۗ وَٱللَّهُ يُضَٰعِفُ لِمَن يَشَآءُۚ وَٱللَّهُ وَٰسِعٌ عَلِيمٌ",
+  "text": "Perumpamaan orang yang menginfakkan hartanya di jalan Allah seperti sebutir biji yang menumbuhkan tujuh tangkai, pada setiap tangkai ada seratus biji. Allah melipatgandakan bagi siapa yang Dia kehendaki, Dan Allah Mahaluas, Maha Mengetahui",
+  "source": "QS Al-Baqarah 2:261",
+  "grade": "quran"
+ },
+ {
+  "id": "q-2-264",
+  "kind": "quran",
+  "tone": "amal",
+  "theme": "ikhlas",
+  "arabic": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ لَا تُبۡطِلُواْ صَدَقَٰتِكُم بِٱلۡمَنِّ وَٱلۡأَذَىٰ كَٱلَّذِي يُنفِقُ مَالَهُۥ رِئَآءَ ٱلنَّاسِ وَلَا يُؤۡمِنُ بِٱللَّهِ وَٱلۡيَوۡمِ ٱلۡأٓخِرِۖ فَمَثَلُهُۥ كَمَثَلِ صَفۡوَانٍ عَلَيۡهِ تُرَابٞ فَأَصَابَهُۥ وَابِلٞ فَتَرَكَهُۥ صَلۡدٗاۖ لَّا يَقۡدِرُونَ عَلَىٰ شَيۡءٖ مِّمَّا كَسَبُواْۗ وَٱللَّهُ لَا يَهۡدِي ٱلۡقَوۡمَ ٱلۡكَٰفِرِينَ",
+  "text": "Wahai orang-orang yang beriman! Janganlah kamu merusak sedekahmu dengan menyebut-nyebutnya dan menyakiti (perasaan penerima), seperti orang yang menginfakkan hartanya karena riya` (pamer) kepada manusia dan dia tidak beriman kepada Allah dan hari akhir. Perumpaannya (orang itu) seperti batu licin yang di atasnya ada debu, kemudian batu itu ditimpa hujan lebat, maka tinggallah batu itu licin lagi. Mereka tidak memperoleh sesuatu apa pun dari apa yang mereka kerjakan. Dan Allah tidak memberi petunjuk kepada orang-orang kafir",
+  "source": "QS Al-Baqarah 2:264",
+  "grade": "quran"
+ },
+ {
+  "id": "q-76-8",
+  "kind": "quran",
+  "tone": "amal",
+  "theme": "ikhlas",
+  "arabic": "وَيُطۡعِمُونَ ٱلطَّعَامَ عَلَىٰ حُبِّهِۦ مِسۡكِينٗا وَيَتِيمٗا وَأَسِيرًا إِنَّمَا نُطۡعِمُكُمۡ لِوَجۡهِ ٱللَّهِ لَا نُرِيدُ مِنكُمۡ جَزَآءٗ وَلَا شُكُورًا",
+  "text": "Dan mereka memberikan makanan yang disukainya kepada orang miskin, anak yatim dan orang yang ditawan (sambil berkata), \"Sesungguhnya kami memberi makanan kepadamu hanyalah karena mengharapkan keridaan Allah, kami tidak mengharap balasan dan terima kasih dari kamu",
+  "source": "QS Al-Insan 76:8-9",
+  "grade": "quran"
+ },
+ {
+  "id": "q-39-53",
+  "kind": "quran",
+  "tone": "raja",
+  "theme": "taubat",
+  "arabic": "۞قُلۡ يَٰعِبَادِيَ ٱلَّذِينَ أَسۡرَفُواْ عَلَىٰٓ أَنفُسِهِمۡ لَا تَقۡنَطُواْ مِن رَّحۡمَةِ ٱللَّهِۚ إِنَّ ٱللَّهَ يَغۡفِرُ ٱلذُّنُوبَ جَمِيعًاۚ إِنَّهُۥ هُوَ ٱلۡغَفُورُ ٱلرَّحِيمُ",
+  "text": "(Katakanlah, \"Wahai hamba-hamba-Ku yang melampaui batas terhadap diri mereka sendiri! Janganlah kamu berputus asa dari rahmat Allah. Sesungguhnya Allah mengampuni dosa-dosa765) semuanya. Sungguh, Dialah Yang Maha Pengampun, Maha Penyayang",
+  "source": "QS Az-Zumar 39:53",
+  "grade": "quran"
+ },
+ {
+  "id": "q-59-18",
+  "kind": "quran",
+  "tone": "amal",
+  "theme": "muhasabah",
+  "arabic": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ ٱتَّقُواْ ٱللَّهَ وَلۡتَنظُرۡ نَفۡسٞ مَّا قَدَّمَتۡ لِغَدٖۖ وَٱتَّقُواْ ٱللَّهَۚ إِنَّ ٱللَّهَ خَبِيرُۢ بِمَا تَعۡمَلُونَ",
+  "text": "Wahai orang-orang yang beriman! Bertakwalah kepada Allah dan hendaklah setiap orang memperhatikan apa yang telah diperbuatnya untuk hari esok (akhirat), dan bertakwalah kepada Allah. Sungguh, Allah Mahateliti terhadap apa yang kamu kerjakan",
+  "source": "QS Al-Hashr 59:18",
+  "grade": "quran"
+ },
+ {
+  "id": "q-57-20",
+  "kind": "quran",
+  "tone": "khauf",
+  "theme": "dunia",
+  "arabic": "ٱعۡلَمُوٓاْ أَنَّمَا ٱلۡحَيَوٰةُ ٱلدُّنۡيَا لَعِبٞ وَلَهۡوٞ وَزِينَةٞ وَتَفَاخُرُۢ بَيۡنَكُمۡ وَتَكَاثُرٞ فِي ٱلۡأَمۡوَٰلِ وَٱلۡأَوۡلَٰدِۖ كَمَثَلِ غَيۡثٍ أَعۡجَبَ ٱلۡكُفَّارَ نَبَاتُهُۥ ثُمَّ يَهِيجُ فَتَرَىٰهُ مُصۡفَرّٗا ثُمَّ يَكُونُ حُطَٰمٗاۖ وَفِي ٱلۡأٓخِرَةِ عَذَابٞ شَدِيدٞ وَمَغۡفِرَةٞ مِّنَ ٱللَّهِ وَرِضۡوَٰنٞۚ وَمَا ٱلۡحَيَوٰةُ ٱلدُّنۡيَآ إِلَّا مَتَٰعُ ٱلۡغُرُورِ",
+  "text": "Ketahuilah, sesungguhnya kehidupan dunia itu hanyalah permainan dan senda gurauan, perhiasan dan saling berbangga di antara kamu serta berlomba dalam kekayaan dan anak keturunan, seperti hujan yang tanam-tanamannya mengagumkan para petani; kemudian (tanaman) itu menjadi kering dan kamu lihat warnanya kuning kemudian menjadi hancur. Dan di akhirat (nanti) ada azab yang keras dan ampunan dari Allah serta keridaan-Nya. Dan kehidupan dunia tidak lain hanyalah kesenangan yang palsu",
+  "source": "QS Al-Hadid 57:20",
+  "grade": "quran"
+ },
+ {
+  "id": "q-18-46",
+  "kind": "quran",
+  "tone": "raja",
+  "theme": "amal-kekal",
+  "arabic": "ٱلۡمَالُ وَٱلۡبَنُونَ زِينَةُ ٱلۡحَيَوٰةِ ٱلدُّنۡيَاۖ وَٱلۡبَٰقِيَٰتُ ٱلصَّـٰلِحَٰتُ خَيۡرٌ عِندَ رَبِّكَ ثَوَابٗا وَخَيۡرٌ أَمَلٗا",
+  "text": "Harta dan anak-anak adalah perhiasan kehidupan dunia tetapi amal kebajikan yang terus menerus adalah lebih baik pahalanya di sisi Tuhanmu serta lebih baik untuk menjadi harapan",
+  "source": "QS Al-Kahf 18:46",
+  "grade": "quran"
+ },
+ {
+  "id": "q-103-1",
+  "kind": "quran",
+  "tone": "amal",
+  "theme": "waktu",
+  "arabic": "وَٱلۡعَصۡرِ إِنَّ ٱلۡإِنسَٰنَ لَفِي خُسۡرٍ إِلَّا ٱلَّذِينَ ءَامَنُواْ وَعَمِلُواْ ٱلصَّـٰلِحَٰتِ وَتَوَاصَوۡاْ بِٱلۡحَقِّ وَتَوَاصَوۡاْ بِٱلصَّبۡرِ",
+  "text": "Demi masa Sungguh, manusia berada dalam kerugian kecuali orang-orang yang beriman dan mengerjakan kebajikan serta saling menasihati untuk kebenaran dan saling menasihati untuk kesabaran",
+  "source": "QS Al-'Asr 103:1-3",
+  "grade": "quran"
+ },
+ {
+  "id": "q-2-195",
+  "kind": "quran",
+  "tone": "amal",
+  "theme": "ihsan",
+  "arabic": "وَأَنفِقُواْ فِي سَبِيلِ ٱللَّهِ وَلَا تُلۡقُواْ بِأَيۡدِيكُمۡ إِلَى ٱلتَّهۡلُكَةِ وَأَحۡسِنُوٓاْۚ إِنَّ ٱللَّهَ يُحِبُّ ٱلۡمُحۡسِنِينَ",
+  "text": "Dan infakkanlah (hartamu) di jalan Allah, dan janganlah kamu jatuhkan (diri sendiri) ke dalam kebinasaan dengan tangan sendiri, dan berbuat baiklah. Sungguh, Allah menyukai orang-orang yang berbuat baik",
+  "source": "QS Al-Baqarah 2:195",
+  "grade": "quran"
+ },
+ {
+  "id": "q-16-97",
+  "kind": "quran",
+  "tone": "raja",
+  "theme": "amal-saleh",
+  "arabic": "مَنۡ عَمِلَ صَٰلِحٗا مِّن ذَكَرٍ أَوۡ أُنثَىٰ وَهُوَ مُؤۡمِنٞ فَلَنُحۡيِيَنَّهُۥ حَيَوٰةٗ طَيِّبَةٗۖ وَلَنَجۡزِيَنَّهُمۡ أَجۡرَهُم بِأَحۡسَنِ مَا كَانُواْ يَعۡمَلُونَ",
+  "text": "(Barangsiapa mengerjakan kebajikan, baik laki-laki maupun perempuan dalam keadaan beriman, maka pasti akan Kami berikan kepadanya kehidupan yang baik463) dan akan Kami beri balasan dengan pahala yang lebih baik dari apa yang telah mereka kerjakan",
+  "source": "QS An-Nahl 16:97",
+  "grade": "quran"
+ },
+ {
+  "id": "q-41-34",
+  "kind": "quran",
+  "tone": "amal",
+  "theme": "memaafkan",
+  "arabic": "وَلَا تَسۡتَوِي ٱلۡحَسَنَةُ وَلَا ٱلسَّيِّئَةُۚ ٱدۡفَعۡ بِٱلَّتِي هِيَ أَحۡسَنُ فَإِذَا ٱلَّذِي بَيۡنَكَ وَبَيۡنَهُۥ عَدَٰوَةٞ كَأَنَّهُۥ وَلِيٌّ حَمِيمٞ",
+  "text": "Dan tidaklah sama kebaikan dan kejahatan. Tolaklah (kejahatan itu) dengan cara yang lebih baik, sehingga orang yang ada rasa permusuhan antara kamu dan dia akan seperti teman yang setia",
+  "source": "QS Fussilat 41:34",
+  "grade": "quran"
+ },
+ {
+  "id": "q-4-36",
+  "kind": "quran",
+  "tone": "amal",
+  "theme": "berbuat-baik",
+  "arabic": "۞وَٱعۡبُدُواْ ٱللَّهَ وَلَا تُشۡرِكُواْ بِهِۦ شَيۡـٔٗاۖ وَبِٱلۡوَٰلِدَيۡنِ إِحۡسَٰنٗا وَبِذِي ٱلۡقُرۡبَىٰ وَٱلۡيَتَٰمَىٰ وَٱلۡمَسَٰكِينِ وَٱلۡجَارِ ذِي ٱلۡقُرۡبَىٰ وَٱلۡجَارِ ٱلۡجُنُبِ وَٱلصَّاحِبِ بِٱلۡجَنۢبِ وَٱبۡنِ ٱلسَّبِيلِ وَمَا مَلَكَتۡ أَيۡمَٰنُكُمۡۗ إِنَّ ٱللَّهَ لَا يُحِبُّ مَن كَانَ مُخۡتَالٗا فَخُورًا",
+  "text": "(Dan sembahlah Allah dan janganlah kamu mempersekutukan-Nya dengan sesuatu apa pun. Dan berbuat baiklah kepada kedua orang tua, karib-kerabat, anak-anak yatim, orang-orang miskin, tetangga dekat dan tetangga jauh,193) teman sejawat, ibnu sabīl194) dan hamba sahaya yang kamu miliki. Sungguh, Allah tidak menyukai orang yang sombong dan membanggakan diri",
+  "source": "QS An-Nisa 4:36",
+  "grade": "quran"
+ },
+ {
+  "id": "q-17-23",
+  "kind": "quran",
+  "tone": "amal",
+  "theme": "orang-tua",
+  "arabic": "۞وَقَضَىٰ رَبُّكَ أَلَّا تَعۡبُدُوٓاْ إِلَّآ إِيَّاهُ وَبِٱلۡوَٰلِدَيۡنِ إِحۡسَٰنًاۚ إِمَّا يَبۡلُغَنَّ عِندَكَ ٱلۡكِبَرَ أَحَدُهُمَآ أَوۡ كِلَاهُمَا فَلَا تَقُل لَّهُمَآ أُفّٖ وَلَا تَنۡهَرۡهُمَا وَقُل لَّهُمَا قَوۡلٗا كَرِيمٗا",
+  "text": "Dan Tuhanmu telah memerintahkan agar kamu jangan menyembah selain Dia dan hendaklah berbuat baik kepada ibu bapak. Jika salah seorang di antara keduanya atau kedua-duanya sampai berusia lanjut dalam pemeliharaanmu, maka sekali-kali janganlah engkau mengatakan kepada keduanya perkataan \"ah\" dan janganlah engkau membentak keduanya, dan ucapkanlah kepada keduanya perkataan yang baik",
+  "source": "QS Al-Isra 17:23",
+  "grade": "quran"
+ },
+ {
+  "id": "q-49-12",
+  "kind": "quran",
+  "tone": "amal",
+  "theme": "lisan",
+  "arabic": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ ٱجۡتَنِبُواْ كَثِيرٗا مِّنَ ٱلظَّنِّ إِنَّ بَعۡضَ ٱلظَّنِّ إِثۡمٞۖ وَلَا تَجَسَّسُواْ وَلَا يَغۡتَب بَّعۡضُكُم بَعۡضًاۚ أَيُحِبُّ أَحَدُكُمۡ أَن يَأۡكُلَ لَحۡمَ أَخِيهِ مَيۡتٗا فَكَرِهۡتُمُوهُۚ وَٱتَّقُواْ ٱللَّهَۚ إِنَّ ٱللَّهَ تَوَّابٞ رَّحِيمٞ",
+  "text": "Wahai orang-orang yang beriman! Jauhilah banyak dari prasangka, sesungguhnya sebagian prasangka itu dosa, dan janganlah kamu mencari-cari kesalahan orang lain, dan janganlah ada di antara kamu yang menggunjing sebagian yang lain. Apakah ada di antara kamu yang suka memakan daging saudaranya yang sudah mati? Tentu kamu merasa jijik. Dan bertakwalah kepada Allah, sungguh Allah Maha Penerima tobat, Maha Penyayang",
+  "source": "QS Al-Hujurat 49:12",
+  "grade": "quran"
+ },
+ {
+  "id": "q-3-133",
+  "kind": "quran",
+  "tone": "raja",
+  "theme": "memaafkan",
+  "arabic": "۞وَسَارِعُوٓاْ إِلَىٰ مَغۡفِرَةٖ مِّن رَّبِّكُمۡ وَجَنَّةٍ عَرۡضُهَا ٱلسَّمَٰوَٰتُ وَٱلۡأَرۡضُ أُعِدَّتۡ لِلۡمُتَّقِينَ ٱلَّذِينَ يُنفِقُونَ فِي ٱلسَّرَّآءِ وَٱلضَّرَّآءِ وَٱلۡكَٰظِمِينَ ٱلۡغَيۡظَ وَٱلۡعَافِينَ عَنِ ٱلنَّاسِۗ وَٱللَّهُ يُحِبُّ ٱلۡمُحۡسِنِينَ",
+  "text": "Dan bersegeralah kamu mencari ampunan dari Tuhanmu dan mendapatkan surga yang luasnya seluas langit dan bumi yang disediakan bagi orang-orang yang bertakwa (yaitu) orang yang berinfak, baik di waktu lapang maupun sempit, dan orang-orang yang menahan amarahnya dan memaafkan (kesalahan) orang lain. Dan Allah mencintai orang yang berbuat kebaikan",
+  "source": "QS Ali 'Imran 3:133-134",
+  "grade": "quran"
+ },
+ {
+  "id": "q-2-286",
+  "kind": "quran",
+  "tone": "raja",
+  "theme": "kemudahan",
+  "arabic": "لَا يُكَلِّفُ ٱللَّهُ نَفۡسًا إِلَّا وُسۡعَهَاۚ لَهَا مَا كَسَبَتۡ وَعَلَيۡهَا مَا ٱكۡتَسَبَتۡۗ رَبَّنَا لَا تُؤَاخِذۡنَآ إِن نَّسِينَآ أَوۡ أَخۡطَأۡنَاۚ رَبَّنَا وَلَا تَحۡمِلۡ عَلَيۡنَآ إِصۡرٗا كَمَا حَمَلۡتَهُۥ عَلَى ٱلَّذِينَ مِن قَبۡلِنَاۚ رَبَّنَا وَلَا تُحَمِّلۡنَا مَا لَا طَاقَةَ لَنَا بِهِۦۖ وَٱعۡفُ عَنَّا وَٱغۡفِرۡ لَنَا وَٱرۡحَمۡنَآۚ أَنتَ مَوۡلَىٰنَا فَٱنصُرۡنَا عَلَى ٱلۡقَوۡمِ ٱلۡكَٰفِرِينَ",
+  "text": "Allah tidak membebani seseorang melainkan sesuai dengan kesanggupannya. Dia mendapat (pahala) dari kebajikan yang dikerjakannya dan dia mendapat (siksa) dari (kejahatan) yang diperbuatnya. (Mereka berdoa), \"Ya Tuhan kami, janganlah Engkau hukum kami jika kami lupa atau kami melakukan kesalahan. Ya Tuhan kami, janganlah Engkau bebani kami dengan beban yang berat sebagaimana Engkau bebankan kepada orang-orang sebelum kami. Ya Tuhan kami, janganlah Engkau pikulkan kepada kami apa yang tidak sanggup kami memikulnya. Maafkanlah kami, ampunilah kami, dan rahmatilah kami. Engkaulah pelindung kami, maka tolonglah kami menghadapi orang-orang kafir",
+  "source": "QS Al-Baqarah 2:286",
+  "grade": "quran"
+ },
+ {
+  "id": "q-94-5",
+  "kind": "quran",
+  "tone": "raja",
+  "theme": "kemudahan",
+  "arabic": "فَإِنَّ مَعَ ٱلۡعُسۡرِ يُسۡرًا إِنَّ مَعَ ٱلۡعُسۡرِ يُسۡرٗا",
+  "text": "Maka sesungguhnya bersama kesulitan ada kemudahan sesungguhnya bersama kesulitan ada kemudahan",
+  "source": "QS Ash-Sharh 94:5-6",
+  "grade": "quran"
+ },
+ {
+  "id": "h-tirmidzi-2307",
+  "kind": "hadith",
+  "tone": "khauf",
+  "theme": "kematian",
+  "text": "Perbanyaklah mengingat pemutus kenikmatan, yaitu kematian.",
+  "source": "HR. Tirmidzi no. 2307",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-bukhari-6416",
+  "kind": "hadith",
+  "tone": "amal",
+  "theme": "dunia",
+  "text": "Jadilah engkau di dunia seakan-akan orang asing atau seorang musafir.",
+  "source": "HR. Bukhari no. 6416",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-bukhari-6416-atsar",
+  "kind": "hadith",
+  "tone": "amal",
+  "theme": "segera",
+  "text": "Jika engkau berada di sore hari, janganlah menunggu pagi; jika engkau berada di pagi hari, janganlah menunggu sore. Manfaatkan sehatmu sebelum sakitmu, dan hidupmu sebelum matimu.",
+  "source": "Perkataan Ibnu Umar r.a. dalam riwayat HR. Bukhari no. 6416",
+  "grade": "sahih",
+  "note": "Perkataan sahabat (mauquf), bukan sabda Nabi."
+ },
+ {
+  "id": "h-ahmad-bibit-kurma",
+  "kind": "hadith",
+  "tone": "amal",
+  "theme": "segera",
+  "text": "Jika hari kiamat terjadi sementara di tangan salah seorang kalian ada bibit kurma, maka jika ia mampu menanamnya sebelum kiamat terjadi, hendaklah ia menanamnya.",
+  "source": "HR. Ahmad (Musnad Anas bin Malik); Silsilah Ash-Shahihah no. 9",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-bukhari-2738",
+  "kind": "hadith",
+  "tone": "amal",
+  "theme": "wasiat",
+  "text": "Tidak pantas bagi seorang muslim yang memiliki sesuatu yang hendak diwasiatkan, bermalam selama dua malam kecuali wasiatnya tertulis di sisinya.",
+  "source": "HR. Bukhari no. 2738 & Muslim no. 1627",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-tirmidzi-1078",
+  "kind": "hadith",
+  "tone": "amal",
+  "theme": "utang",
+  "text": "Jiwa seorang mukmin tergantung pada utangnya hingga utang itu dilunasi.",
+  "source": "HR. Tirmidzi no. 1078",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-muslim-2877",
+  "kind": "hadith",
+  "tone": "raja",
+  "theme": "husnuzhan",
+  "text": "Janganlah salah seorang di antara kalian meninggal kecuali dalam keadaan berbaik sangka kepada Allah.",
+  "source": "HR. Muslim no. 2877",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-bukhari-5671",
+  "kind": "hadith",
+  "tone": "raja",
+  "theme": "harapan",
+  "text": "Janganlah salah seorang di antara kalian mengharapkan kematian karena musibah yang menimpanya. Jika terpaksa, hendaklah ia berdoa: \"Ya Allah, hidupkanlah aku selama kehidupan itu baik bagiku, dan wafatkanlah aku apabila kematian itu baik bagiku.\"",
+  "source": "HR. Bukhari no. 5671 & Muslim no. 2680",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-muslim-1631",
+  "kind": "hadith",
+  "tone": "amal",
+  "theme": "amal-jariyah",
+  "text": "Apabila manusia meninggal dunia, terputuslah amalnya kecuali dari tiga perkara: sedekah jariyah, ilmu yang bermanfaat, atau anak saleh yang mendoakannya.",
+  "source": "HR. Muslim no. 1631",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-bukhari-6412",
+  "kind": "hadith",
+  "tone": "amal",
+  "theme": "waktu",
+  "text": "Ada dua nikmat yang banyak manusia tertipu di dalamnya: kesehatan dan waktu luang.",
+  "source": "HR. Bukhari no. 6412",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-hakim-lima",
+  "kind": "hadith",
+  "tone": "amal",
+  "theme": "waktu",
+  "text": "Manfaatkanlah lima perkara sebelum datang lima perkara: masa mudamu sebelum tuamu, sehatmu sebelum sakitmu, kayamu sebelum miskinmu, waktu luangmu sebelum sibukmu, dan hidupmu sebelum matimu.",
+  "source": "HR. Al-Hakim; Shahih Al-Jami' no. 1077",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-bukhari-660",
+  "kind": "hadith",
+  "tone": "amal",
+  "theme": "sedekah-rahasia",
+  "text": "Di antara tujuh golongan yang dinaungi Allah pada hari tiada naungan selain naungan-Nya: seseorang yang bersedekah lalu menyembunyikannya sehingga tangan kirinya tidak mengetahui apa yang diinfakkan tangan kanannya.",
+  "source": "HR. Bukhari no. 660 & Muslim no. 1031",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-bukhari-6464",
+  "kind": "hadith",
+  "tone": "raja",
+  "theme": "istiqamah",
+  "text": "Amal yang paling dicintai Allah ialah yang terus-menerus dilakukan meskipun sedikit.",
+  "source": "HR. Bukhari no. 6464 & Muslim no. 783",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-tirmidzi-1956",
+  "kind": "hadith",
+  "tone": "amal",
+  "theme": "kebaikan-kecil",
+  "text": "Senyummu kepada saudaramu adalah sedekah.",
+  "source": "HR. Tirmidzi no. 1956",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-muslim-2699",
+  "kind": "hadith",
+  "tone": "amal",
+  "theme": "membantu",
+  "text": "Barangsiapa melapangkan satu kesusahan seorang mukmin di dunia, Allah akan melapangkan darinya satu kesusahan pada hari kiamat.",
+  "source": "HR. Muslim no. 2699",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-bukhari-6021",
+  "kind": "hadith",
+  "tone": "amal",
+  "theme": "kebaikan-kecil",
+  "text": "Setiap kebaikan adalah sedekah.",
+  "source": "HR. Bukhari no. 6021 & Muslim no. 1005",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-bukhari-1417",
+  "kind": "hadith",
+  "tone": "amal",
+  "theme": "sedekah",
+  "text": "Jagalah diri kalian dari api neraka walaupun dengan separuh kurma. Barangsiapa tidak mendapatkannya, maka dengan ucapan yang baik.",
+  "source": "HR. Bukhari no. 1417 & Muslim no. 1016",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-bukhari-10",
+  "kind": "hadith",
+  "tone": "amal",
+  "theme": "lisan",
+  "text": "Muslim (sejati) ialah orang yang kaum muslimin lainnya selamat dari gangguan lisan dan tangannya.",
+  "source": "HR. Bukhari no. 10 & Muslim no. 40",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-bukhari-6018",
+  "kind": "hadith",
+  "tone": "amal",
+  "theme": "lisan",
+  "text": "Barangsiapa beriman kepada Allah dan hari akhir, hendaklah ia berkata baik atau diam.",
+  "source": "HR. Bukhari no. 6018 & Muslim no. 47",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-bukhari-5971",
+  "kind": "hadith",
+  "tone": "amal",
+  "theme": "orang-tua",
+  "text": "Seorang laki-laki bertanya: \"Siapakah yang paling berhak kuperlakukan dengan baik?\" Nabi menjawab: \"Ibumu.\" Ia bertanya lagi, \"Lalu siapa?\" \"Ibumu.\" \"Lalu siapa?\" \"Ibumu.\" \"Lalu siapa?\" \"Ayahmu.\"",
+  "source": "HR. Bukhari no. 5971 & Muslim no. 2548",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-bukhari-1",
+  "kind": "hadith",
+  "tone": "amal",
+  "theme": "niat",
+  "text": "Sesungguhnya setiap amal tergantung pada niatnya, dan setiap orang mendapatkan sesuai dengan apa yang ia niatkan.",
+  "source": "HR. Bukhari no. 1 & Muslim no. 1907",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-muslim-977",
+  "kind": "hadith",
+  "tone": "khauf",
+  "theme": "ziarah",
+  "text": "Dahulu aku melarang kalian berziarah kubur, maka (sekarang) berziarahlah, karena ia mengingatkan akhirat.",
+  "source": "HR. Muslim no. 977",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-tirmidzi-1987",
+  "kind": "hadith",
+  "tone": "raja",
+  "theme": "taubat",
+  "text": "Bertakwalah kepada Allah di mana pun engkau berada, iringilah perbuatan buruk dengan kebaikan niscaya ia menghapusnya, dan pergaulilah manusia dengan akhlak yang baik.",
+  "source": "HR. Tirmidzi no. 1987",
+  "grade": "hasan"
+ },
+ {
+  "id": "h-muslim-2564",
+  "kind": "hadith",
+  "tone": "amal",
+  "theme": "ikhlas",
+  "text": "Sesungguhnya Allah tidak melihat rupa dan harta kalian, tetapi Dia melihat hati dan amal kalian.",
+  "source": "HR. Muslim no. 2564",
+  "grade": "sahih"
+ },
+ {
+  "id": "h-tirmidzi-2499",
+  "kind": "hadith",
+  "tone": "raja",
+  "theme": "taubat",
+  "text": "Setiap anak Adam banyak berbuat salah, dan sebaik-baik orang yang berbuat salah adalah yang banyak bertaubat.",
+  "source": "HR. Tirmidzi no. 2499",
+  "grade": "hasan"
+ },
+ {
+  "id": "r-1",
+  "kind": "renungan",
+  "tone": "amal",
+  "theme": "muhasabah",
+  "text": "Jika hari ini hari terakhirku, siapa yang ingin kuhubungi dan kuminta maaf?"
+ },
+ {
+  "id": "r-2",
+  "kind": "renungan",
+  "tone": "amal",
+  "theme": "segera",
+  "text": "Satu kebaikan kecil yang kutunda sampai nanti: apa yang bisa kulakukan sekarang?"
+ },
+ {
+  "id": "r-3",
+  "kind": "renungan",
+  "tone": "amal",
+  "theme": "waktu",
+  "text": "Tidak ada yang tahu kapan. Yang bisa kita pilih hanyalah bagaimana kita mengisi hari ini."
+ },
+ {
+  "id": "r-4",
+  "kind": "renungan",
+  "tone": "amal",
+  "theme": "utang",
+  "text": "Adakah utang, janji, atau amanah yang belum kutunaikan hari ini?"
+ },
+ {
+  "id": "r-5",
+  "kind": "renungan",
+  "tone": "amal",
+  "theme": "ikhlas",
+  "text": "Perbarui niat: aku beramal karena Allah, bukan karena dilihat atau dipuji."
+ },
+ {
+  "id": "r-6",
+  "kind": "renungan",
+  "tone": "raja",
+  "theme": "harapan",
+  "text": "Rahmat Allah luas. Mulailah dari yang mampu kita lakukan hari ini, sekecil apa pun."
+ },
+ {
+  "id": "r-7",
+  "kind": "renungan",
+  "tone": "amal",
+  "theme": "silaturahmi",
+  "text": "Siapa orang tuaku, keluargaku, atau sahabatku yang sudah lama tidak kusapa?"
+ },
+ {
+  "id": "r-9",
+  "kind": "renungan",
+  "tone": "raja",
+  "theme": "taubat",
+  "text": "Taubat selalu terbuka. Hari ini boleh jadi awal yang baru, mulai dari satu langkah kecil."
+ },
+ {
+  "id": "r-10",
+  "kind": "renungan",
+  "tone": "raja",
+  "theme": "istiqamah",
+  "text": "Amal kecil yang terus dijaga lebih ringan dipikul daripada target besar yang membuat lelah."
+ },
+ {
+  "id": "r-8",
+  "kind": "renungan",
+  "tone": "raja",
+  "theme": "syukur",
+  "text": "Sudahkah aku bersyukur atas sehat dan waktu luang yang masih Allah titipkan hari ini?"
+ }
+]
