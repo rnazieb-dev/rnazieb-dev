@@ -6,6 +6,7 @@
 | Data | Lokal | Cloud (jika diaktifkan) | Dapat dibaca server? |
 |---|---|---|---|
 | Amalan rahasia, refleksi (niat/muhasabah) | Ciphertext (+ kolom `day/points/category/mission_id` lokal-saja untuk streak & skor pribadi) | Ciphertext + `rev` + stempel waktu **dikaburkan ke hari** | **Tidak** (E2EE) |
+| Catatan utang/piutang/amanah/wasiat | Ciphertext (+ kolom lokal-saja `day`, `due_day`, `open` untuk pengingat jatuh tempo & hitungan di Beranda tanpa membuka vault) | Ciphertext + `rev` + stempel waktu hari | **Tidak** (E2EE) |
 | Amal dibagikan (Lingkaran/Semua teman lingkaran) | Teks | Teks | Ya (agar teman dapat melihat) |
 | Poin publik | — | `points_ledger` (hanya dari amal yang dibagikan, dibatasi 100/hari) | Ya |
 | Profil (nama tampilan, preferensi peringkat/mode ikhlas) | Ya | Ya | Ya |
@@ -22,7 +23,9 @@
 - Lupa passphrase **dan** kunci pemulihan = amalan rahasia di cloud tak dapat dipulihkan (disengaja).
 - Metadata kasar (adanya item privat, jumlah, hari perubahan) terlihat server.
 - Berkas ekspor JSON tidak terenkripsi.
-- Cadangan perangkat (iCloud/Google) dapat memuat SQLite lokal; isi rahasia tetap ciphertext, tetapi kolom `day/points/category` lokal terbaca dari cadangan.
+- Cadangan perangkat (iCloud/Google) dapat memuat SQLite lokal; isi rahasia tetap ciphertext, tetapi kolom `day/points/category/due_day/open` lokal terbaca dari cadangan.
+- Beranda menampilkan jumlah catatan jatuh tempo tanpa membuka vault (dari kolom lokal). Aktifkan kunci aplikasi bila perangkat dipakai bergantian.
+- Notifikasi jatuh tempo memakai teks generik; judul/nama/nominal tidak pernah muncul di layar kunci.
 
 ## Hak pengguna
 Ekspor (Profil › Keamanan & data), hapus data lokal, hapus akun (`delete_my_account()` menghapus seluruh baris lewat `ON DELETE CASCADE`).

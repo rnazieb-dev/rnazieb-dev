@@ -33,6 +33,10 @@ export interface AppSettings {
   pushNudges: boolean;
   /** Akun pemilik penyimpanan lokal ini (lihat features/sync/binding). */
   boundUserId: string | null;
+  /** Pengingat dzikir pagi/petang (opsional). */
+  adhkarReminder: boolean;
+  /** Pengingat jatuh tempo catatan utang/amanah (teks generik). */
+  dueReminders: boolean;
 }
 
 const DEFAULTS = (): AppSettings => ({
@@ -50,6 +54,8 @@ const DEFAULTS = (): AppSettings => ({
   isMinor: false,
   pushNudges: false,
   boundUserId: null,
+  adhkarReminder: false,
+  dueReminders: true,
 });
 
 type SyncStatus = { state: 'idle' | 'syncing' | 'ok' | 'error'; at?: string; message?: string };
@@ -145,8 +151,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const reschedule = useCallback(async () => {
     if (!db) return;
-    await rescheduleReminders(db, settings.reminders, { mode: settings.prayerMode, coords: settings.coords ?? undefined }, settings.seed);
-  }, [db, settings.reminders, settings.prayerMode, settings.coords, settings.seed]);
+    await rescheduleReminders(db, settings.reminders, { mode: settings.prayerMode, coords: settings.coords ?? undefined }, settings.seed, {
+      adhkar: settings.adhkarReminder,
+      due: settings.dueReminders,
+    });
+  }, [db, settings.reminders, settings.prayerMode, settings.coords, settings.seed, settings.adhkarReminder, settings.dueReminders]);
 
   useEffect(() => {
     if (db && settings.onboarded) void reschedule();

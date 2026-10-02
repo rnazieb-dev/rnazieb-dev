@@ -1,4 +1,4 @@
-import type { Mission, Quote } from './types';
+import type { Adhkar, Mission, Quote } from './types';
 
 const TONES = ['khauf', 'raja', 'amal'];
 const CATEGORIES = ['ibadah', 'keluarga', 'sedekah', 'ilmu', 'memaafkan', 'lingkungan', 'sosial', 'diri'];
@@ -55,6 +55,33 @@ export function validateMissions(missions: Mission[]): string[] {
     const hay = `${m.title} ${m.description}`.toLowerCase();
     for (const w of BANNED_WORDS) if (hay.includes(w)) errors.push(`${id}: mengandung kata terlarang "${w}"`);
     if (!m.dalil && /pahala|ganjaran|surga/.test(hay)) errors.push(`${id}: klaim pahala tanpa dalil`);
+  }
+  return errors;
+}
+
+const ADHKAR_GROUPS = ['pagi', 'petang', 'pagi_petang', 'tidur', 'harian', 'kematian'];
+
+export function validateAdhkar(items: Adhkar[]): string[] {
+  const errors: string[] = [];
+  const seen = new Set<string>();
+  for (const a of items) {
+    if (seen.has(a.id)) errors.push(`${a.id}: id ganda`);
+    seen.add(a.id);
+    if (!ADHKAR_GROUPS.includes(a.group)) errors.push(`${a.id}: grup tidak valid`);
+    if (!a.title.trim() || !a.meaning.trim()) errors.push(`${a.id}: judul/arti kosong`);
+    if (a.kind === 'quran') {
+      if (!a.arabic) errors.push(`${a.id}: ayat tanpa teks Arab`);
+      if (!a.source.startsWith('QS ')) errors.push(`${a.id}: sumber ayat harus "QS ..."`);
+    } else {
+      if (a.arabic) errors.push(`${a.id}: teks Arab doa hadis belum boleh diketik manual (butuh data terverifikasi)`);
+      if (!a.source.includes('HR.')) errors.push(`${a.id}: hadis tanpa sumber "HR."`);
+      if (a.grade !== 'sahih' && a.grade !== 'hasan') errors.push(`${a.id}: hadis hanya boleh sahih/hasan`);
+    }
+    if (a.count !== undefined) {
+      if (!Number.isInteger(a.count) || a.count < 1 || a.count > 1000) errors.push(`${a.id}: jumlah tidak valid`);
+      if (!a.countSource) errors.push(`${a.id}: jumlah bacaan wajib punya dalil (countSource)`);
+    }
+    if (a.note && /pahala|ganjaran|surga|diampuni/i.test(a.note)) errors.push(`${a.id}: catatan tidak boleh mengklaim keutamaan`);
   }
   return errors;
 }

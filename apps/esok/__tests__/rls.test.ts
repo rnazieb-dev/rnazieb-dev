@@ -101,6 +101,18 @@ describe('private_items (E2EE): hanya pemilik', () => {
   });
 });
 
+describe('private_items: jenis ledger', () => {
+  it("menerima 'ledger' (ciphertext), menolak jenis asing, tetap hanya milik sendiri", async () => {
+    const a = await newUser(db);
+    const b = await newUser(db);
+    const row = (kind: string) => JSON.stringify([{ id: `l-${kind}`, kind, ciphertext: 'CT', nonce: 'N', rev: 1, updated_at: new Date().toISOString(), deleted_at: null }]);
+    await asUser(db, a, (q) => q('select public.push_private_items($1::jsonb)', [row('ledger')]));
+    await expectDenied(asUser(db, a, (q) => q('select public.push_private_items($1::jsonb)', [row('bogus')])));
+    expect(await asUser(db, a, (q) => q(`select id from public.private_items where kind = 'ledger'`))).toHaveLength(1);
+    expect(await asUser(db, b, (q) => q(`select id from public.private_items where kind = 'ledger'`))).toHaveLength(0);
+  });
+});
+
 describe('deeds: tidak pernah menerima rahasia', () => {
   it("visibilitas 'secret' ditolak oleh CHECK", async () => {
     const a = await newUser(db);

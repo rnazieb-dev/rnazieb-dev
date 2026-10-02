@@ -68,6 +68,33 @@ export const MIGRATIONS: string[] = [
   -- Antrean "tandai selesai" misi bersama yang belum berhasil dikirim (dicoba ulang saat sync).
   CREATE TABLE pending_shared (shared_id TEXT PRIMARY KEY);
   `,
+  `
+  -- Catatan utang/piutang/amanah/wasiat memakai private_items (E2EE) dengan kind 'ledger'.
+  -- SQLite tak dapat mengubah CHECK → bangun ulang tabel. due_day/open bersifat lokal-saja
+  -- (untuk pengingat jatuh tempo tanpa membuka vault); tidak pernah diunggah.
+  CREATE TABLE private_items_new (
+    id TEXT PRIMARY KEY,
+    kind TEXT NOT NULL CHECK (kind IN ('deed','reflection','ledger')),
+    day TEXT,
+    points INTEGER NOT NULL DEFAULT 0,
+    category TEXT,
+    mission_id TEXT,
+    due_day TEXT,
+    open INTEGER,
+    ciphertext TEXT NOT NULL,
+    nonce TEXT NOT NULL,
+    rev INTEGER NOT NULL DEFAULT 1,
+    updated_at TEXT NOT NULL,
+    deleted_at TEXT,
+    dirty INTEGER NOT NULL DEFAULT 1
+  );
+  INSERT INTO private_items_new(id, kind, day, points, category, mission_id, ciphertext, nonce, rev, updated_at, deleted_at, dirty)
+    SELECT id, kind, day, points, category, mission_id, ciphertext, nonce, rev, updated_at, deleted_at, dirty FROM private_items;
+  DROP TABLE private_items;
+  ALTER TABLE private_items_new RENAME TO private_items;
+  CREATE INDEX private_items_day ON private_items(day);
+  CREATE INDEX private_items_due ON private_items(due_day) WHERE open = 1;
+  `,
 ];
 
 export async function migrate(db: Db): Promise<void> {

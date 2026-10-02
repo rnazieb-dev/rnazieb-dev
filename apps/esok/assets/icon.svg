@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="golda" gradientUnits="userSpaceOnUse" x1="0" y1="300" x2="0" y2="800">
+      <stop offset="0" stop-color="#F6E6B0"/><stop offset="1" stop-color="#D6A93F"/>
+    </linearGradient>
+    <linearGradient id="bga" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#16494A"/><stop offset="1" stop-color="#0F2A2A"/>
+    </linearGradient>
+    <radialGradient id="glowa" cx="512" cy="430" r="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3FA9A0" stop-opacity="0.60"/><stop offset="1" stop-color="#3FA9A0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+    <rect width="1024" height="1024" fill="url(#bga)"/><rect width="1024" height="1024" fill="url(#glowa)"/>
+    <g transform="translate(0,-40)">
+  <g fill="url(#golda)" stroke="none">
+    <path d="M512 640 C440 640 350 590 330 470 C430 480 500 540 512 640 Z"/>
+    <path d="M512 640 C584 640 674 590 694 470 C594 480 524 540 512 640 Z"/>
+    <path d="M512 560 C468 480 480 385 512 300 C544 385 556 480 512 560 Z"/>
+  </g>
+  <rect x="497" y="610" width="30" height="172" rx="15" fill="url(#golda)"/>
+  <path d="M310 812 Q512 735 714 812" stroke="#6FC3BA" stroke-width="24" stroke-linecap="round" fill="none"/></g></svg>

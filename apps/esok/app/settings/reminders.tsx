@@ -49,6 +49,8 @@ export default function RemindersSettings() {
       </Row>
       <Toggle label="Sertakan nada peringatan" value={r.allowKhauf} onValueChange={(v) => set({ allowKhauf: v })} hint="Nada peringatan tidak pernah berturut-turut dan selalu diimbangi harapan & ajakan beramal." />
 
+      <Toggle label="Pengingat dzikir pagi & petang" value={settings.adhkarReminder} onValueChange={(v) => updateSettings({ adhkarReminder: v })} hint="Dua pengingat per hari (30 menit setelah Subuh/Asar bila memakai waktu salat). Tanpa hitungan poin." />
+      <Toggle label="Pengingat jatuh tempo catatan" value={settings.dueReminders} onValueChange={(v) => updateSettings({ dueReminders: v })} hint="Teks generik tanpa nama atau nominal, agar aman di layar kunci." />
       <Toggle label="Ikuti waktu salat" value={settings.prayerMode === 'salat'} onValueChange={usePrayer} hint="Pengingat 20 menit setelah Subuh, 15 menit setelah Asar & Isya (perkiraan Kemenag; bukan acuan ibadah)." />
       {settings.prayerMode === 'tetap' ? (
         <Card>

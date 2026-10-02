@@ -65,8 +65,11 @@ export function buildSchedule(opts: {
   seed: string;
   /** Waktu per hari (mis. berbasis waktu salat). Bawaan: settings.times. */
   timesForDay?: (day: DayKey) => string[];
+  /** Batas jumlah kutipan terjadwal (anggaran notifikasi dibagi dengan dzikir & jatuh tempo). */
+  limit?: number;
 }): ScheduledReminder[] {
   const { now, today, settings, quotes, recentlySeen, seed } = opts;
+  const limit = opts.limit ?? MAX_SCHEDULED;
   if (!settings.enabled) return [];
   const usable = quotes.filter((q) => q.text.length <= MAX_BODY && (settings.allowKhauf || q.tone !== 'khauf'));
   if (usable.length === 0) return [];
@@ -105,7 +108,7 @@ export function buildSchedule(opts: {
       if (!q) continue;
       used.add(q.id);
       out.push({ at, quoteId: q.id });
-      if (out.length >= MAX_SCHEDULED) return out;
+      if (out.length >= limit) return out;
     }
   }
   return out;

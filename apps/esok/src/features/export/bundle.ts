@@ -1,5 +1,6 @@
 import type { Reflection } from '@/db/repos';
 import type { Db } from '@/db/types';
+import type { LedgerPayload } from '@/features/ledger/types';
 import { decryptItem } from '@/features/security/e2ee';
 
 export interface ExportBundle {
@@ -9,6 +10,7 @@ export interface ExportBundle {
   deeds: { id: string; day: string; title: string; note: string; category: string; visibility: string; missionId: string | null; points: number }[];
   secretDeeds: { id: string; day: string; title: string; note: string; category: string; missionId: string | null; points: number }[];
   reflections: ({ day: string } & Reflection)[];
+  ledger: ({ id: string } & LedgerPayload)[];
 }
 
 /** Ekspor SEMUA data milik pengguna. Item rahasia didekripsi lokal (butuh DEK); berkas ekspor TIDAK terenkripsi. */
@@ -23,14 +25,17 @@ export async function buildExport(db: Db, dek: Uint8Array | null): Promise<Expor
     deeds: pub.map((d) => ({ id: d.id, day: d.day, title: d.title, note: d.note, category: d.category, visibility: d.visibility, missionId: d.mission_id, points: d.points })),
     secretDeeds: [],
     reflections: [],
+    ledger: [],
   };
   if (dek) {
-    const priv = await db.all<{ id: string; kind: 'deed' | 'reflection'; ciphertext: string; nonce: string }>(
+    const priv = await db.all<{ id: string; kind: 'deed' | 'reflection' | 'ledger'; ciphertext: string; nonce: string }>(
       `SELECT id, kind, ciphertext, nonce FROM private_items WHERE deleted_at IS NULL ORDER BY id`,
     );
     for (const r of priv) {
       const p = decryptItem<Record<string, unknown>>(dek, r.id, r.kind, r);
-      if (r.kind === 'deed') {
+      if (r.kind === 'ledger') {
+        bundle.ledger.push({ id: r.id, ...(p as unknown as LedgerPayload) });
+      } else if (r.kind === 'deed') {
         bundle.secretDeeds.push({
           id: r.id, day: String(p.day), title: String(p.title), note: String(p.note ?? ''), category: String(p.category),
           missionId: (p.missionId as string | null) ?? null, points: Number(p.points ?? 0),

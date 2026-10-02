@@ -174,7 +174,7 @@ export async function listSecretDeeds(db: Db, dek: Uint8Array | null): Promise<D
 
 /** Isi kolom lokal (day/points/category/mission_id) untuk item hasil pull dari perangkat lain. */
 export async function hydratePrivate(db: Db, dek: Uint8Array): Promise<number> {
-  const rows = await db.all<PrivRow & { kind: 'deed' | 'reflection' }>(
+  const rows = await db.all<PrivRow & { kind: 'deed' | 'reflection' | 'ledger' }>(
     `SELECT id, kind, day, points, category, mission_id, ciphertext, nonce FROM private_items
      WHERE day IS NULL AND deleted_at IS NULL`,
   );
@@ -185,6 +185,13 @@ export async function hydratePrivate(db: Db, dek: Uint8Array): Promise<number> {
       await db.run('UPDATE private_items SET day = ?, points = ?, category = ?, mission_id = ? WHERE id = ?', [
         p.day, p.points, p.category, p.missionId, r.id,
       ]);
+    } else if (r.kind === 'ledger') {
+      const p = decryptItem<{ createdDay: DayKey; dueDay: DayKey | null; type: string; settled: boolean }>(dek, r.id, 'ledger', {
+        ciphertext: r.ciphertext,
+        nonce: r.nonce,
+      });
+      const open = p.type !== 'wasiat' && !p.settled ? 1 : 0;
+      await db.run('UPDATE private_items SET day = ?, due_day = ?, open = ? WHERE id = ?', [p.createdDay, p.dueDay, open, r.id]);
     } else {
       const p = decryptItem<{ day: DayKey }>(dek, r.id, 'reflection', { ciphertext: r.ciphertext, nonce: r.nonce });
       await db.run('UPDATE private_items SET day = ? WHERE id = ?', [p.day, r.id]);
