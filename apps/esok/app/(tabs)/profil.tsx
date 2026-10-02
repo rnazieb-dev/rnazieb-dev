@@ -77,7 +77,7 @@ export default function Profil() {
       <Text variant="label">{t('settings.language')}</Text>
       <Row>
         {(['system', ...Object.keys(LANGUAGES)] as LangSetting[]).map((l) => (
-          <Chip key={l} label={l === 'system' ? t('settings.system') : LANGUAGES[l as keyof typeof LANGUAGES].label} selected={settings.language === l} onPress={() => updateSettings({ language: l })} />
+          <Chip key={l} label={l === 'system' ? t('settings.system') : `${LANGUAGES[l as keyof typeof LANGUAGES].label}${(LANGUAGES[l as keyof typeof LANGUAGES] as { beta?: boolean }).beta ? ' (beta)' : ''}`} selected={settings.language === l} onPress={() => updateSettings({ language: l })} />
         ))}
       </Row>
       <Text variant="label">{t('money.currency')}</Text>

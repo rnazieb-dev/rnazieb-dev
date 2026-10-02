@@ -62,6 +62,8 @@ interface LangInfo {
   rtl: boolean;
   /** Tag BCP-47 untuk format tanggal. */
   locale: string;
+  /** Terjemahan belum ditinjau penutur asli dan keyakinannya rendah → ditandai "beta" di pemilih. */
+  beta?: boolean;
 }
 
 export const LANGUAGES = {
@@ -70,7 +72,7 @@ export const LANGUAGES = {
   ar: { label: 'العربية', dict: ar, rtl: true, locale: 'ar' },
   ur: { label: 'اردو', dict: ur, rtl: true, locale: 'ur' },
   fa: { label: 'فارسی', dict: fa, rtl: true, locale: 'fa' },
-  ps: { label: 'پښتو', dict: ps, rtl: true, locale: 'ps' },
+  ps: { label: 'پښتو', dict: ps, rtl: true, locale: 'ps', beta: true },
   bn: { label: 'বাংলা', dict: bn, rtl: false, locale: 'bn' },
   hi: { label: 'हिन्दी', dict: hi, rtl: false, locale: 'hi' },
   ms: { label: 'Bahasa Melayu', dict: ms, rtl: false, locale: 'ms' },
@@ -88,7 +90,7 @@ export const LANGUAGES = {
   sw: { label: 'Kiswahili', dict: sw, rtl: false, locale: 'sw' },
   ha: { label: 'Hausa', dict: ha, rtl: false, locale: 'ha' },
   so: { label: 'Soomaali', dict: so, rtl: false, locale: 'so' },
-  yo: { label: 'Yorùbá', dict: yo, rtl: false, locale: 'yo' },
+  yo: { label: 'Yorùbá', dict: yo, rtl: false, locale: 'yo', beta: true },
   zh: { label: '中文', dict: zh, rtl: false, locale: 'zh-CN' },
   tl: { label: 'Tagalog', dict: tl, rtl: false, locale: 'fil' },
   th: { label: 'ไทย', dict: th, rtl: false, locale: 'th' },
