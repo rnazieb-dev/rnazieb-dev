@@ -268,8 +268,6 @@ const uz: Dict = {
       hopeHadith: '“Sizlardan hech biringiz Alloh haqida yaxshi gumonda boʻlgan holdagina vafot etsin.” — Muslim № 2877',
       helpTitle: 'Yordam kerakmi?',
       helpBody: 'Agar oʻzingizni juda ezilgan his qilsangiz yoki hayotingizga nuqta qoʻyish haqida oʻylar boʻlsa, siz yolgʻiz emassiz. Yaqin insoningiz yoki mutaxassisga, shuningdek quyidagi xizmatlarga murojaat qiling:',
-      hotline: 'Sogʻliqni saqlash vazirligi liniyasi 119, qoʻshimcha 8',
-      emergency: 'Favqulodda xizmat 112',
     },
     adhkar: {
       title: 'Zikr va duo',

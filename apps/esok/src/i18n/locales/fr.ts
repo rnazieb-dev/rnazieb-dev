@@ -268,8 +268,6 @@ const fr: Dict = {
       hopeHadith: '« Que nul d’entre vous ne meure sans avoir une bonne opinion d’Allah. » — Muslim n° 2877',
       helpTitle: 'Besoin d’aide ?',
       helpBody: 'Si vous vous sentez dépassé ou avez des pensées suicidaires, vous n’êtes pas seul. Parlez-en à un proche ou à un professionnel, et contactez les services ci-dessous :',
-      hotline: 'Ligne du ministère de la Santé (Indonésie) 119 poste 8',
-      emergency: 'Urgences 112',
     },
     adhkar: {
       title: 'Dhikr & du‘â’',

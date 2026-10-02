@@ -1,6 +1,8 @@
 import { getLocales } from 'expo-localization';
 import { I18nManager } from 'react-native';
 import en, { type Dict } from './en';
+import enExtra from './extra/en';
+import idExtra from './extra/id';
 import id from './id';
 import ar from './locales/ar';
 import az from './locales/az';
@@ -89,14 +91,18 @@ export const resolveLang = (s: LangSetting | undefined): Lang => (!s || s === 's
 type Leaves<T, P extends string = ''> = {
   [K in keyof T & string]: T[K] extends string ? `${P}${K}` : T[K] extends readonly string[] ? `${P}${K}` : Leaves<T[K], `${P}${K}.`>;
 }[keyof T & string];
-export type TKey = Leaves<Dict>;
+type ExtraDict = typeof enExtra;
+export type TKey = Leaves<Dict> | Leaves<ExtraDict>;
+
+/** Teks tambahan per bahasa; yang belum ada jatuh ke bahasa Inggris. */
+export const EXTRAS: Partial<Record<Lang, unknown>> = { en: enExtra, id: idExtra };
 
 function lookup(dict: unknown, key: string): unknown {
   return key.split('.').reduce<unknown>((o, k) => (o && typeof o === 'object' ? (o as Record<string, unknown>)[k] : undefined), dict);
 }
 
 export function translate(lang: Lang, key: TKey, params?: Record<string, string | number>): string {
-  const raw = lookup(LANGUAGES[lang].dict, key) ?? lookup(en, key) ?? key;
+  const raw = lookup(LANGUAGES[lang].dict, key) ?? lookup(EXTRAS[lang], key) ?? lookup(en, key) ?? lookup(enExtra, key) ?? key;
   const s = Array.isArray(raw) ? raw.join(',') : String(raw);
   return params ? s.replace(/\{(\w+)\}/g, (_, k: string) => String(params[k] ?? `{${k}}`)) : s;
 }

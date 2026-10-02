@@ -268,8 +268,6 @@ const tl: Dict = {
       hopeHadith: '“Huwag mamatay ang sinuman sa inyo maliban na mabuti ang kanyang akala kay Allah.” — Muslim blg. 2877',
       helpTitle: 'Kailangan ng tulong?',
       helpBody: 'Kung pakiramdam mo ay nabibigatan ka o may iniisip kang wakasan ang iyong buhay, hindi ka nag-iisa. Lumapit sa isang malapit sa iyo o sa isang propesyonal, at sa mga serbisyo sa ibaba:',
-      hotline: 'Linya ng Ministry of Health (Indonesia) 119 ext. 8',
-      emergency: 'Emergency 112',
     },
     adhkar: {
       title: 'Dhikr at du‘a',

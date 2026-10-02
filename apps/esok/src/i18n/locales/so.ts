@@ -268,8 +268,6 @@ const so: Dict = {
       hopeHadith: '“Midkiin yuusan dhiman isagoo aan Allah u fikirin si wanaagsan.” — Muslim lr. 2877',
       helpTitle: 'Ma u baahan tahay caawimaad?',
       helpBody: 'Haddii aad dareemayso culays badan ama aad ka fikirayso inaad naftaada dilto, keligaa ma tihid. La xiriir qof kuu dhow ama xirfadle, iyo adeegyada hoose:',
-      hotline: 'Khadka Wasaaradda Caafimaadka 119 ext. 8',
-      emergency: 'Gurmad degdeg ah 112',
     },
     adhkar: {
       title: 'Dikri iyo duco',

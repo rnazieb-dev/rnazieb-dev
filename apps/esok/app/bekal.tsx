@@ -5,6 +5,8 @@ import { Button, Card, Row, Screen, SectionTitle, Text } from '@/components/ui';
 import { getSetting, setSetting } from '@/db/repos';
 import type en from '@/i18n/locales/en/missions';
 import { useT } from '@/i18n/useT';
+import { FIND_A_HELPLINE_URL, emergencyNumber, localCrisisLine } from '@/features/support/regions';
+import { deviceRegion } from '@/features/support/useRegion';
 import { useApp } from '@/state/app';
 
 interface Item {
@@ -28,6 +30,9 @@ export default function Bekal() {
   const { db, today } = useApp();
   const [checked, setChecked] = useState<string[]>([]);
   const { t } = useT();
+  const region = deviceRegion();
+  const emergency = emergencyNumber(region);
+  const crisis = localCrisisLine(region);
 
   useEffect(() => {
     void getSetting<{ day: string; checked: string[] }>(db, 'bekal', { day: '', checked: [] }).then((s) => setChecked(s.day === today ? s.checked : []));
@@ -68,8 +73,10 @@ export default function Bekal() {
       <Card>
         <Text variant="heading">{t('missions.provision.helpTitle')}</Text>
         <Text muted>{t('missions.provision.helpBody')}</Text>
-        <Button title={t('missions.provision.hotline')} variant="secondary" onPress={() => Linking.openURL('tel:119')} />
-        <Button title={t('missions.provision.emergency')} variant="secondary" onPress={() => Linking.openURL('tel:112')} />
+        <Text variant="small" muted>{t('help.note')}</Text>
+        {crisis ? <Button title={t('help.kemenkes', { number: crisis.number })} variant="secondary" onPress={() => Linking.openURL(`tel:${crisis.dial}`)} /> : null}
+        <Button title={t(emergency.known ? 'help.emergency' : 'help.emergencyUnsure', { number: emergency.number })} variant="secondary" onPress={() => Linking.openURL(`tel:${emergency.number}`)} />
+        <Button title={t('help.findHelp')} variant="ghost" onPress={() => Linking.openURL(FIND_A_HELPLINE_URL)} />
       </Card>
     </Screen>
   );

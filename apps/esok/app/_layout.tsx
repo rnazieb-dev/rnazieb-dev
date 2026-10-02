@@ -69,6 +69,8 @@ function Shell() {
         <Stack.Screen name="kiblat" options={{ title: t('qibla.title') }} />
         <Stack.Screen name="tasbih" options={{ title: t('tasbih.title') }} />
         <Stack.Screen name="kalender" options={{ title: t('calendar.title') }} />
+        <Stack.Screen name="support" options={{ title: t('support.title') }} />
+        <Stack.Screen name="legal/[doc]" options={{ title: t('legal.title') }} />
         <Stack.Screen name="dzikir" options={{ title: t('dhikr.title') }} />
         <Stack.Screen name="quran/index" options={{ title: t('quran.title') }} />
         <Stack.Screen name="quran/[surah]" options={{ title: t('quran.title') }} />

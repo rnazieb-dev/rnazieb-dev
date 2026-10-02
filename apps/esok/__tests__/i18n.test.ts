@@ -31,3 +31,15 @@ describe.each(Object.keys(LANGUAGES).filter((l) => l !== 'en'))('kamus %s', (cod
     for (const [k, v] of d) if (!Array.isArray(v)) expect(`${k}:${v.trim().length > 0}`).toBe(`${k}:true`);
   });
 });
+
+describe('teks tambahan (extra)', () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { EXTRAS } = require('@/i18n') as typeof import('@/i18n');
+  const base = leaves(EXTRAS.en);
+  it('en memiliki teks tambahan', () => expect(base.size).toBeGreaterThan(20));
+  it.each(Object.keys(EXTRAS).filter((l) => l !== 'en'))('%s memiliki kunci & placeholder yang sama dengan en', (code) => {
+    const d = leaves(EXTRAS[code as keyof typeof EXTRAS]);
+    expect([...d.keys()].sort()).toEqual([...base.keys()].sort());
+    for (const [k, v] of base) if (!Array.isArray(v)) expect(`${k}:${placeholders(d.get(k) as string)}`).toBe(`${k}:${placeholders(v)}`);
+  });
+});

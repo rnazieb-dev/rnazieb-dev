@@ -268,8 +268,6 @@ const az: Dict = {
       hopeHadith: '“Sizdən heç kim Allah haqqında yaxşı güman etmədən ölməsin.” — Müslim № 2877',
       helpTitle: 'Köməyə ehtiyacınız var?',
       helpBody: 'Özünüzü çox sıxılmış hiss edirsinizsə və ya həyatınıza son qoymaq barədə fikirləriniz varsa, siz tək deyilsiniz. Yaxın birinə və ya mütəxəssisə, həmçinin aşağıdakı xidmətlərə müraciət edin:',
-      hotline: 'Səhiyyə Nazirliyi xətti 119, əlavə 8',
-      emergency: 'Təcili yardım 112',
     },
     adhkar: {
       title: 'Zikr və dua',

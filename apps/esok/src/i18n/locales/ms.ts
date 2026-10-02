@@ -268,8 +268,6 @@ const ms: Dict = {
       hopeHadith: '“Janganlah seseorang daripada kamu mati melainkan dalam keadaan bersangka baik kepada Allah.” — Muslim no. 2877',
       helpTitle: 'Perlukan bantuan?',
       helpBody: 'Jika anda berasa terbeban atau terfikir untuk menamatkan nyawa, anda tidak bersendirian. Hubungi orang terdekat atau profesional, serta perkhidmatan di bawah:',
-      hotline: 'Talian Kementerian Kesihatan (Indonesia) 119 samb. 8',
-      emergency: 'Kecemasan 112',
     },
     adhkar: {
       title: 'Zikir & doa',

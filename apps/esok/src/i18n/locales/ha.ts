@@ -268,8 +268,6 @@ const ha: Dict = {
       hopeHadith: '“Kada ɗayanku ya mutu sai yana kyautata zato ga Allah.” — Muslim lamba 2877',
       helpTitle: 'Kana buƙatar taimako?',
       helpBody: 'Idan kana jin nauyi ya yi maka yawa ko kana tunanin kashe kanka, ba kai kaɗai ba ne. Tuntuɓi wani na kusa ko ƙwararre, da ayyukan da ke ƙasa:',
-      hotline: 'Layin Ma’aikatar Lafiya 119 ext. 8',
-      emergency: 'Gaggawa 112',
     },
     adhkar: {
       title: 'Zikiri da addu’a',

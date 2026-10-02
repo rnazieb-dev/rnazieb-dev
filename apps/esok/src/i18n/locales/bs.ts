@@ -268,8 +268,6 @@ const bs: Dict = {
       hopeHadith: '„Neka niko od vas ne umre, a da lijepo ne misli o Allahu.” — Muslim br. 2877',
       helpTitle: 'Trebaš pomoć?',
       helpBody: 'Ako se osjećaš preopterećeno ili imaš misli o oduzimanju sebi života, nisi sam/a. Obrati se nekome bliskom ili stručnjaku, te službama ispod:',
-      hotline: 'Linija Ministarstva zdravlja (Indonezija) 119 lokal 8',
-      emergency: 'Hitna pomoć 112',
     },
     adhkar: {
       title: 'Zikr i dova',

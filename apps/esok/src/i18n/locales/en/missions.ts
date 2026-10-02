@@ -116,8 +116,6 @@ const missions = {
     hopeHadith: '“Let none of you die except while thinking well of Allah.” — Muslim no. 2877',
     helpTitle: 'Need help?',
     helpBody: 'If you feel overwhelmed or have thoughts of ending your life, you are not alone. Reach out to someone close or a professional, and the services below:',
-    hotline: 'Ministry of Health line 119 ext. 8',
-    emergency: 'Emergency 112',
   },
   adhkar: {
     title: 'Dhikr & du‘a',

@@ -268,8 +268,6 @@ const nl: Dict = {
       hopeHadith: '“Laat niemand van jullie sterven anders dan terwijl hij goed over Allah denkt.” — Muslim nr. 2877',
       helpTitle: 'Hulp nodig?',
       helpBody: 'Als je je overweldigd voelt of gedachten hebt om een einde aan je leven te maken, ben je niet alleen. Neem contact op met iemand dichtbij of een professional, en met de onderstaande diensten:',
-      hotline: 'Lijn van het ministerie van Volksgezondheid (Indonesië) 119 toestel 8',
-      emergency: 'Noodnummer 112',
     },
     adhkar: {
       title: 'Dhikr & du‘a',

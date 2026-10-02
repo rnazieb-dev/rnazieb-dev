@@ -268,8 +268,6 @@ const tr: Dict = {
       hopeHadith: '“Sizden biri ancak Allah hakkında güzel zan beslediği hâlde ölsün.” — Müslim no. 2877',
       helpTitle: 'Yardıma mı ihtiyacınız var?',
       helpBody: 'Kendinizi çok bunalmış hissediyorsanız veya hayatınıza son verme düşünceleriniz varsa yalnız değilsiniz. Yakın birine veya bir uzmana ve aşağıdaki hizmetlere ulaşın:',
-      hotline: 'Sağlık Bakanlığı hattı 119 dahili 8',
-      emergency: 'Acil 112',
     },
     adhkar: {
       title: 'Zikir ve dua',

@@ -118,8 +118,6 @@ const missions: typeof en = {
     hopeHadith: '“Janganlah salah seorang di antara kalian meninggal kecuali dalam keadaan berbaik sangka kepada Allah.” — HR. Muslim no. 2877',
     helpTitle: 'Butuh bantuan?',
     helpBody: 'Jika Anda merasa sangat tertekan atau terlintas keinginan mengakhiri hidup, Anda tidak sendirian. Hubungi orang terdekat atau tenaga profesional, dan layanan berikut:',
-    hotline: 'Layanan Kemenkes 119 ext. 8',
-    emergency: 'Darurat 112',
   },
   adhkar: {
     title: 'Dzikir & doa',

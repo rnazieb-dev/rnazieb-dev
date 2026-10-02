@@ -268,8 +268,6 @@ const es: Dict = {
       hopeHadith: '«Que ninguno de vosotros muera sino pensando bien de Allah». — Muslim n.º 2877',
       helpTitle: '¿Necesitas ayuda?',
       helpBody: 'Si te sientes desbordado o tienes pensamientos de quitarte la vida, no estás solo. Habla con alguien cercano o con un profesional, y con los servicios de abajo:',
-      hotline: 'Línea del Ministerio de Salud (Indonesia) 119 ext. 8',
-      emergency: 'Emergencias 112',
     },
     adhkar: {
       title: 'Dhikr y du‘a',

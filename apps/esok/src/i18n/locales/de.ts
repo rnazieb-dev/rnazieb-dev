@@ -268,8 +268,6 @@ const de: Dict = {
       hopeHadith: '„Keiner von euch soll sterben, ohne gut von Allah zu denken.“ – Muslim Nr. 2877',
       helpTitle: 'Brauchst du Hilfe?',
       helpBody: 'Wenn du dich überfordert fühlst oder Gedanken hast, dein Leben zu beenden, bist du nicht allein. Wende dich an eine vertraute Person, an Fachleute und an die folgenden Dienste:',
-      hotline: 'Gesundheitsministerium (Indonesien) 119 Durchwahl 8',
-      emergency: 'Notruf 112',
     },
     adhkar: {
       title: 'Dhikr & Du‘a',

@@ -268,8 +268,6 @@ const sq: Dict = {
       hopeHadith: '“Askush prej jush të mos vdesë veçse duke menduar mirë për Allahun.” — Muslimi nr. 2877',
       helpTitle: 'Ke nevojë për ndihmë?',
       helpBody: 'Nëse ndihesh i mbingarkuar ose ke mendime për t’i dhënë fund jetës, nuk je vetëm. Drejtoju dikujt të afërt ose një profesionisti, si dhe shërbimeve më poshtë:',
-      hotline: 'Linja e Ministrisë së Shëndetësisë (Indonezi) 119 ext. 8',
-      emergency: 'Urgjenca 112',
     },
     adhkar: {
       title: 'Dhikër dhe lutje',

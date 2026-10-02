@@ -65,7 +65,9 @@
     "format": "prettier --write .",
     "test:rls": "NODE_OPTIONS=--experimental-vm-modules jest rls.test --testPathIgnorePatterns=/node_modules/ --testPathIgnorePatterns=/helpers/",
     "build:assets": "node scripts/build-assets.mjs",
-    "build:quran": "node scripts/build-quran.mjs"
+    "build:quran": "node scripts/build-quran.mjs",
+    "build:legal": "node scripts/build-legal.mjs",
+    "build:legal:strict": "node scripts/build-legal.mjs --strict"
   },
   "private": true,
   "jest": {

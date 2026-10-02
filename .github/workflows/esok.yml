@@ -1,9 +1,9 @@
 name: esok-ci
 on:
   push:
-    paths: ['apps/esok/**', '.github/workflows/esok.yml']
+    paths: ['apps/esok/**', 'docs/legal/**', 'site/**', '.github/workflows/esok.yml']
   pull_request:
-    paths: ['apps/esok/**', '.github/workflows/esok.yml']
+    paths: ['apps/esok/**', 'docs/legal/**', 'site/**', '.github/workflows/esok.yml']
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -19,6 +19,10 @@ jobs:
           cache-dependency-path: apps/esok/package-lock.json
       - run: npm ci
       - run: npm run validate:content
+      - name: Dokumen hukum & Al-Qur'an hasil bangun terbaru
+        run: |
+          npm run build:legal
+          git diff --exit-code -- src/content/legal.generated.json ../../site
       - run: npm run typecheck
       - run: npm run lint
       - run: npm test

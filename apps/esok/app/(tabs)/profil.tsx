@@ -6,6 +6,8 @@ import { FadeIn } from '@/components/motion';
 import { activityDays, uzurDays } from '@/db/repos';
 import { LANGUAGES, type LangSetting } from '@/i18n';
 import { useT } from '@/i18n/useT';
+import { COMMON_CURRENCIES } from '@/features/support/money';
+import { useCurrency } from '@/features/support/useRegion';
 import { loadProgress } from '@/features/gamification/progress';
 import { LEVELS } from '@/features/gamification/points';
 import { levelKey } from '@/lib/labels';
@@ -22,6 +24,7 @@ export default function Profil() {
   const { data: p } = useDbQuery((d) => loadProgress(d, today), [today], null);
   const days = useDbQuery(async (d) => ({ active: await activityDays(d, { includeSecret: true }), uzur: await uzurDays(d) }), [], { active: new Set<string>(), uzur: new Set<string>() });
   const { t } = useT();
+  const currency = useCurrency();
   const [name, setName] = useState(settings.displayName);
 
   const saveName = async () => {
@@ -77,6 +80,14 @@ export default function Profil() {
           <Chip key={l} label={l === 'system' ? t('settings.system') : LANGUAGES[l as keyof typeof LANGUAGES].label} selected={settings.language === l} onPress={() => updateSettings({ language: l })} />
         ))}
       </Row>
+      <Text variant="label">{t('money.currency')}</Text>
+      <Row>
+        <Chip label={t('money.currencyAuto', { code: currency.auto })} selected={settings.currency === 'auto'} onPress={() => updateSettings({ currency: 'auto' })} />
+        {COMMON_CURRENCIES.map((c) => (
+          <Chip key={c} label={c} selected={settings.currency === c} onPress={() => updateSettings({ currency: c })} />
+        ))}
+      </Row>
+      <Text variant="small" muted>{t('money.currencyHint')}</Text>
       <Button title={t('hub.items.groups')} variant="secondary" onPress={() => router.push('/(tabs)/grup')} />
       <Field label={t('prefs.profile.displayName')} value={name} onChangeText={setName} maxLength={40} onEndEditing={saveName} onBlur={saveName} />
       <Toggle
@@ -116,6 +127,9 @@ export default function Profil() {
       <Button title={t('prefs.profile.account')} variant="secondary" onPress={() => router.push('/auth')} />
       <Button title={t('prefs.profile.security')} variant="secondary" onPress={() => router.push('/settings/security')} />
       <Button title={t('prefs.profile.about')} variant="ghost" onPress={() => router.push('/settings/about')} />
+      <Button title={t('support.menu')} variant="secondary" onPress={() => router.push('/support')} />
+      <Button title={t('legal.privacy')} variant="ghost" onPress={() => router.push({ pathname: '/legal/[doc]', params: { doc: 'privacy' } })} />
+      <Button title={t('legal.terms')} variant="ghost" onPress={() => router.push({ pathname: '/legal/[doc]', params: { doc: 'terms' } })} />
     </Screen>
   );
 }

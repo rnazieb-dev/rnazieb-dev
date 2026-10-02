@@ -67,6 +67,10 @@ export default function Onboarding() {
           </Card>
           <Toggle label={t('prefs.onboarding.understand')} value={agree} onValueChange={setAgree} />
           <Row>
+            <Button title={t('legal.terms')} variant="ghost" onPress={() => router.push({ pathname: '/legal/[doc]', params: { doc: 'terms' } })} />
+            <Button title={t('legal.privacy')} variant="ghost" onPress={() => router.push({ pathname: '/legal/[doc]', params: { doc: 'privacy' } })} />
+          </Row>
+          <Row>
             <Button title={t('prefs.shared.back')} variant="ghost" onPress={() => setStep(0)} />
             <Button title={t('prefs.shared.continue')} onPress={() => setStep(2)} disabled={!agree} />
           </Row>

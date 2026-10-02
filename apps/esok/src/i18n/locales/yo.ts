@@ -268,8 +268,6 @@ const yo: Dict = {
       hopeHadith: '“Kí ẹnikẹ́ni nínú yín má ṣe kú àyàfi bí ó ti ń ro rere nípa Allah.” — Muslim no. 2877',
       helpTitle: 'Ṣé o nílò ìrànlọ́wọ́?',
       helpBody: 'Bí ọkàn rẹ bá ń wúwo jù tàbí o ń ronú láti pa ara rẹ, ìwọ nìkan kọ́ ló wà. Kàn sí ẹnìkan tó súnmọ́ ọ tàbí onímọ̀ṣẹ́, àti àwọn iṣẹ́ ìrànlọ́wọ́ ìsàlẹ̀ yìí:',
-      hotline: 'Ìlà Ilé-iṣẹ́ Ètò Ìlera 119 ext. 8',
-      emergency: 'Pàjáwìrì 112',
     },
     adhkar: {
       title: 'Sikiri àti àdúà',

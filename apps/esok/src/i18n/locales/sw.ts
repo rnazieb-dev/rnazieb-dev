@@ -268,8 +268,6 @@ const sw: Dict = {
       hopeHadith: '“Asife yeyote kati yenu isipokuwa akiwa anamdhania Allah vyema.” — Muslim na. 2877',
       helpTitle: 'Unahitaji msaada?',
       helpBody: 'Ikiwa unahisi kuzidiwa au una mawazo ya kujiua, hauko peke yako. Wasiliana na mtu wa karibu au mtaalamu, na huduma zilizo hapa chini:',
-      hotline: 'Simu ya Wizara ya Afya 119 ext. 8',
-      emergency: 'Dharura 112',
     },
     adhkar: {
       title: 'Dhikri na dua',
