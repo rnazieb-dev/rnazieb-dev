@@ -38,7 +38,7 @@ const ar: Dict = {
     },
     screen: {
       title: 'سجلّ الأعمال',
-      weekdays: ['أحد', 'إثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت'],
+      weekdays: ['أحد', 'اثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت'],
       prevDay: 'اليوم السابق',
       nextDay: 'اليوم التالي',
       addDeed: 'سجِّل عملًا',
@@ -208,7 +208,7 @@ const ar: Dict = {
       sosial: 'اجتماعي',
       diri: 'النفس',
     },
-    tones: { khauf: 'تذكرة', raja: 'رجاء', amal: 'دعوة إلى العمل' },
+    tones: { khauf: 'تذكير', raja: 'رجاء', amal: 'دعوة إلى العمل' },
     quote: {
       notFound: 'الاقتباس غير موجود',
       share: 'مشاركة',
@@ -331,7 +331,7 @@ const ar: Dict = {
     admin: 'مشرف',
     kinds: { keluarga: 'عائلية', sesama_jenis: 'من نفس الجنس', campur: 'مفتوحة' },
     nudges: {
-      ingat: 'هل فعلت اليوم عملًا صالحًا ولو صغيرًا؟ واصل، فنحن يذكّر بعضنا بعضًا.',
+      ingat: 'هل فعلت اليوم عملًا صالحًا ولو صغيرًا؟ واصل، فنحن نذكّر بعضنا بعضًا.',
       doa: 'يسّر الله أمورك اليوم. آمين.',
     },
     reactions: { barakallah: 'بارك الله فيك', aamiin: 'آمين' },
@@ -442,7 +442,7 @@ const ar: Dict = {
       joined: 'منضمّ',
       confirm: 'تأكيد',
       join: 'انضمام',
-      doAndMark: 'افعلها وضع علامة الإنجاز',
+      doAndMark: 'افعلها وسجّل إنجازها',
     },
   },
   prefs: {
@@ -504,7 +504,7 @@ const ar: Dict = {
       recoveryTitle: 'احفظ مفتاح الاستعادة',
       recoveryBody:
         'إن نسيت عبارة المرور، فهذا المفتاح هو الطريقة الوحيدة لاستعادة أعمالك السرّية من السحابة. لا يحتفظ NAFS به ولا يستطيع مساعدتك في استعادته.',
-      recoveryShareButton: 'انسخ/شارك إلى مكان آمن',
+      recoveryShareButton: 'انسخه أو شاركه في مكان آمن',
       recoveryShareMessage: 'مفتاح استعادة NAFS:\n{key}',
       recoverySaved: 'حفظته في مكان آمن',
       done: 'تمّ',
@@ -748,14 +748,14 @@ const ar: Dict = {
     round: 'الدورة {n}',
     total: 'مجموع اليوم: {n}',
     reset: 'تصفير العدّاد',
-    phrases: { subhanallah: 'Subḥānallāh', alhamdulillah: 'Al-ḥamdu lillāh', allahuakbar: 'Allāhu akbar', lailaha: 'Lā ilāha illallāh', istighfar: 'Astaghfirullāh', free: 'عدّ حرّ' },
+    phrases: { subhanallah: 'سبحان الله', alhamdulillah: 'الحمد لله', allahuakbar: 'الله أكبر', lailaha: 'لا إله إلا الله', istighfar: 'أستغفر الله', free: 'عدّ حرّ' },
     note: 'عدّ التسبيح بالأنامل سنّة أيضًا (أبو داود، الترمذي).',
   },
   calendar: {
     title: 'التقويم الهجري',
     note: 'تقدير حسابي (±1–2 يوم). اتّبع الإعلان الرسمي في بلدك لرمضان والعيد.',
-    weekdays: ['إثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت', 'أحد'],
-    legend: 'النقاط تشير إلى صيام التطوّع المستحب (الإثنين/الخميس، و13–15 من كل شهر هجري).',
+    weekdays: ['اثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت', 'أحد'],
+    legend: 'النقاط تشير إلى صيام التطوّع المستحب (الاثنين/الخميس، و13–15 من كل شهر هجري).',
     today: 'اليوم',
   },
   dhikr: { title: 'الأذكار', readings: '{n} أذكار' },

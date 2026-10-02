@@ -211,7 +211,7 @@ const tr: Dict = {
     },
     tones: { khauf: 'Uyarı', raja: 'Ümit', amal: 'Amele çağrı' },
     quote: {
-      notFound: 'Söz bulunamadı',
+      notFound: 'Alıntı bulunamadı',
       share: 'Paylaş',
       sentFrom: '(NAFS’tan gönderildi)',
       reflection: 'NAFS tefekkürü',
@@ -249,7 +249,7 @@ const tr: Dict = {
     provision: {
       title: 'Bugünün azığı',
       intro: 'Kimse ecelinin ne zaman geleceğini bilmez; o hâlde bugünü güzel kılın. Korkutmak için değil, kalbe huzur vermek için.',
-      makeMission: 'Görev yap',
+      makeMission: 'Göreve dönüştür',
       items: {
         shalat: { title: 'Namazı vaktinde kıl', hint: 'Önce farz namazları koruyun.' },
         istighfar: { title: 'İstiğfar ve tövbe', hint: 'Bugünün kusurları için bağışlanma dileyin.' },
