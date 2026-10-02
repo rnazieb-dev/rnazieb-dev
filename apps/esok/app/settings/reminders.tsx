@@ -1,5 +1,5 @@
 import * as Location from 'expo-location';
-import * as Notifications from 'expo-notifications';
+import { Notifications } from '@/lib/notifications';
 import { useEffect, useState } from 'react';
 import { Alert, Linking } from 'react-native';
 import { Button, Card, Chip, Field, Row, Screen, Text, Toggle } from '@/components/ui';

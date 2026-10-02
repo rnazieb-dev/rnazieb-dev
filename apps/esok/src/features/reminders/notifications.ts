@@ -1,4 +1,4 @@
-import * as Notifications from 'expo-notifications';
+import { Notifications } from '@/lib/notifications';
 import { Platform } from 'react-native';
 import { QUOTES } from '@/content';
 import { type Coordinates, computePrayerTimes, formatHour } from './prayerTimes';

@@ -1,6 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import Constants from 'expo-constants';
-import * as Notifications from 'expo-notifications';
+import { Notifications } from '@/lib/notifications';
 import { Platform } from 'react-native';
 import { requestNotificationPermission } from '@/features/reminders/notifications';
 

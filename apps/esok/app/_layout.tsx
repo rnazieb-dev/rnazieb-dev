@@ -1,6 +1,6 @@
 import { Amiri_400Regular } from '@expo-google-fonts/amiri/400Regular';
 import { useFonts } from 'expo-font';
-import * as Notifications from 'expo-notifications';
+import { Notifications } from '@/lib/notifications';
 import { enableAppSwitcherProtectionAsync } from 'expo-screen-capture';
 import { Stack, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
