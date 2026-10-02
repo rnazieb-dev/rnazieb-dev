@@ -244,7 +244,7 @@ const nl: Dict = {
       todayMissions: 'Missies van vandaag ({done}/{total})',
       seeAll: 'Alle missies bekijken',
       loadError: 'Laden mislukt. Tik om het opnieuw te proberen.',
-      footer: 'Niemand weet wanneer. Vul vandaag met je beste.',
+      footer: 'Niemand weet wanneer. Vul vandaag met het beste van jezelf.',
     },
     provision: {
       title: 'Proviand voor vandaag',
@@ -257,7 +257,7 @@ const nl: Dict = {
         ortu: { title: 'Contact met ouders / familie', hint: 'Banden onderhouden hoeft niet te wachten op vrije tijd.' },
         utang: { title: 'Een schuld aflossen of noteren', hint: 'De ziel van de gelovige blijft gebonden aan zijn schuld totdat die is afgelost (Tirmidhi nr. 1078).' },
         wasiat: { title: 'Een testament / notities over toevertrouwde zaken schrijven', hint: 'Een schriftelijk testament (Bukhari nr. 2738 & Muslim nr. 1627).' },
-        sedekah: { title: 'Geef liefdadigheid, hoe klein ook', hint: 'Bescherm jezelf tegen het Vuur, al is het met een halve dadel (Bukhari nr. 1417 & Muslim nr. 1016).' },
+        sedekah: { title: 'Geef iets aan het goede doel, hoe klein ook', hint: 'Bescherm jezelf tegen het Vuur, al is het met een halve dadel (Bukhari nr. 1417 & Muslim nr. 1016).' },
       },
       ledgerTitle: 'Schulden, toevertrouwde zaken & testament',
       ledgerBody: 'Noteer wat afgehandeld moet worden en je testament; versleuteld en privé.',
@@ -682,7 +682,7 @@ const nl: Dict = {
     },
   },
   tabs: { home: 'Start', journal: 'Dagboek', worship: 'Aanbidding', missions: 'Missies', profile: 'Profiel', groups: 'Groepen' },
-  common: { search: 'Zoeken', back: 'Terug', reset: 'Herstellen', done: 'Klaar', later: 'Later', enable: 'Aanzetten', open: 'Openen', approx: 'ca.' },
+  common: { search: 'Zoeken', back: 'Terug', reset: 'Resetten', done: 'Klaar', later: 'Later', enable: 'Aanzetten', open: 'Openen', approx: 'ca.' },
   hub: {
     title: 'Aanbidding',
     searchPlaceholder: 'Typ de naam van een functie',
@@ -748,7 +748,7 @@ const nl: Dict = {
     target: 'Doel',
     round: 'Ronde {n}',
     total: 'Totaal vandaag: {n}',
-    reset: 'Teller herstellen',
+    reset: 'Teller resetten',
     phrases: { subhanallah: 'Subḥānallāh', alhamdulillah: 'Al-ḥamdu lillāh', allahuakbar: 'Allāhu akbar', lailaha: 'Lā ilāha illallāh', istighfar: 'Astaghfirullāh', free: 'Vrij tellen' },
     note: 'Dhikr op de vingers tellen is ook soennah (Abu Dawud, Tirmidhi).',
   },
@@ -787,7 +787,7 @@ const nl: Dict = {
   },
   checkin: { title: 'Dagelijkse check-in', subtitle: 'Noteer elke dag één goede daad', day: 'Dag {n}', streak: 'Reeks van {n} dagen' },
   settings: { language: 'Taal', system: 'Apparaat volgen' },
-  home: { nextPrayer: 'Volgende gebed', setLocation: 'Stel je locatie in voor gebedstijden' },
+  home: { nextPrayer: 'Volgend gebed', setLocation: 'Stel je locatie in voor gebedstijden' },
 };
 
 export default nl;
