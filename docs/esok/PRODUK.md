@@ -1,6 +1,6 @@
-# Esok — Produk
+# NAFS — Produk
 
-**Esok** adalah aplikasi Android & iOS (Expo/React Native + TypeScript) pengingat kematian (dzikrul maut) dan jurnal/permainan kebaikan harian: *"hari ini seakan esok tiada"*.
+**NAFS** adalah aplikasi Android & iOS (Expo/React Native + TypeScript) pengingat kematian (dzikrul maut) dan jurnal/permainan kebaikan harian: *"hari ini seakan esok tiada"*.
 
 ## Fitur
 - **Pengingat**: notifikasi lokal terjadwal (jam tetap atau mengikuti waktu salat), kutipan ayat/hadis bersumber dengan nada `khauf/raja/amal` yang seimbang (nada peringatan tak pernah berturut-turut). Tanpa hitung mundur/prediksi ajal.

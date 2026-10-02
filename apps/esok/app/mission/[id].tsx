@@ -11,11 +11,10 @@ import { queuePendingShared, retryPendingShared } from '@/features/missions/pend
 import { inviteMessage } from '@/features/circles/moderation';
 import { useCircles } from '@/features/circles/useCircles';
 import { assignmentDay, completeMission, skipMission } from '@/features/missions/service';
-import { CATEGORY_LABEL } from '@/lib/labels';
+import { useT } from '@/i18n/useT';
+import { CATEGORY_KEY, gradeKey } from '@/lib/labels';
 import { getSupabase } from '@/lib/supabase';
 import { useApp, useDbQuery } from '@/state/app';
-
-const GRADE: Record<string, string> = { sahih: 'Shahih', hasan: 'Hasan', quran: "Al-Qur'an" };
 
 export default function MissionScreen() {
   const router = useRouter();
@@ -26,6 +25,8 @@ export default function MissionScreen() {
   const [note, setNote] = useState('');
   const [vis, setVis] = useState<VisibilityValue>(shared && circle ? { visibility: 'circle', circleId: circle } : { visibility: mission?.canBeSecret ? 'secret' : 'public', circleId: null });
   const [busy, setBusy] = useState(false);
+  const { t } = useT();
+  const gradeLabel = (g: string) => { const k = gradeKey(g); return k ? t(k) : g; };
 
   const state = useDbQuery(
     async (d) => {
@@ -37,7 +38,7 @@ export default function MissionScreen() {
     null as null | 'active' | 'done' | 'skipped',
   );
 
-  if (!mission) return <Screen><Empty title="Misi tidak ditemukan" /></Screen>;
+  if (!mission) return <Screen><Empty title={t('missions.detail.notFound')} /></Screen>;
   const done = state.data === 'done';
 
   const complete = async () => {
@@ -46,7 +47,7 @@ export default function MissionScreen() {
       let dek: Uint8Array | null = null;
       if (vis.visibility === 'secret') {
         dek = await unlockVault();
-        if (!dek) return Alert.alert('Terkunci', 'Amalan rahasia butuh verifikasi perangkat.');
+        if (!dek) return Alert.alert(t('missions.detail.lockedTitle'), t('missions.detail.lockedBody'));
       }
       await completeMission(db, { mission, day: today, visibility: vis.visibility, circleId: vis.circleId, sharedId: shared ?? null, note, dek });
       bump();
@@ -59,17 +60,17 @@ export default function MissionScreen() {
           if (error) throw new Error(error.message);
         });
         Alert.alert(
-          r.kept > 0 ? 'Tersimpan' : 'Alhamdulillah',
+          r.kept > 0 ? t('missions.detail.savedTitle') : t('missions.detail.alhamdulillah'),
           r.kept > 0
-            ? 'Misi tercatat di perangkat, tetapi tanda selesai belum terkirim. Akan dicoba lagi otomatis saat online.'
-            : 'Tandai selesai terkirim. Poin diberikan setelah teman sesama peserta mengonfirmasi.',
+            ? t('missions.detail.savedPending')
+            : t('missions.detail.savedSent'),
         );
       } else if (vis.visibility !== 'secret') {
         void syncNow();
       }
       router.back();
     } catch (e) {
-      Alert.alert('Tidak dapat menyelesaikan', e instanceof Error ? e.message : String(e));
+      Alert.alert(t('missions.detail.cannotComplete'), e instanceof Error ? e.message : String(e));
     } finally {
       setBusy(false);
     }
@@ -81,9 +82,9 @@ export default function MissionScreen() {
     setBusy(true);
     try {
       await startSharedMission(sb, circleId, mission.id, today);
-      Alert.alert('Misi bersama dibuat', 'Anggota lingkaran dapat bergabung dari halaman lingkaran.');
+      Alert.alert(t('missions.detail.sharedCreatedTitle'), t('missions.detail.sharedCreatedBody'));
     } catch (e) {
-      Alert.alert('Gagal', e instanceof Error ? e.message : String(e));
+      Alert.alert(t('missions.failed'), e instanceof Error ? e.message : String(e));
     } finally {
       setBusy(false);
     }
@@ -94,53 +95,53 @@ export default function MissionScreen() {
       <ScreenGuard active={vis.visibility === 'secret'} id="mission" />
       <Text variant="title">{mission.title}</Text>
       <Row>
-        <Pill label={CATEGORY_LABEL[mission.category]} tone="muted" />
-        <Pill label={`${mission.points} poin`} tone="accent" />
-        <Pill label={`Tingkat ${mission.difficulty}`} tone="muted" />
+        <Pill label={t(CATEGORY_KEY[mission.category])} tone="muted" />
+        <Pill label={t('missions.points', { n: mission.points })} tone="accent" />
+        <Pill label={t('missions.detail.difficulty', { n: mission.difficulty })} tone="muted" />
       </Row>
       <Text>{mission.description}</Text>
 
       <Card>
-        <Text variant="label">Dasar</Text>
+        <Text variant="label">{t('missions.detail.basis')}</Text>
         {mission.dalil ? (
           <>
             <Text>{mission.dalil.gist}</Text>
-            <Text variant="small" muted>{mission.dalil.source} · {GRADE[mission.dalil.grade]}</Text>
+            <Text variant="small" muted>{mission.dalil.source} · {gradeLabel(mission.dalil.grade)}</Text>
           </>
         ) : (
-          <Text muted>Kebaikan umum (mubah). Esok tidak mengklaim keutamaan atau pahala tertentu untuk misi ini.</Text>
+          <Text muted>{t('missions.detail.mubah')}</Text>
         )}
       </Card>
 
       {done ? (
-        <Card tone="accent"><Text variant="heading">Misi ini sudah selesai. Alhamdulillah.</Text></Card>
+        <Card tone="accent"><Text variant="heading">{t('missions.detail.alreadyDone')}</Text></Card>
       ) : (
         <>
-          <SectionTitle>Selesaikan</SectionTitle>
-          <Field label="Catatan (opsional)" value={note} onChangeText={setNote} multiline maxLength={500} />
+          <SectionTitle>{t('missions.detail.complete')}</SectionTitle>
+          <Field label={t('missions.detail.note')} value={note} onChangeText={setNote} multiline maxLength={500} />
           {shared && circle ? (
             <Card>
-              <Text variant="label">Dibagikan ke lingkaran</Text>
-              <Text muted>Misi bersama otomatis dibagikan ke lingkaran tempat misi ini dimulai (agar teman dapat mengonfirmasi).</Text>
+              <Text variant="label">{t('missions.detail.sharedTitle')}</Text>
+              <Text muted>{t('missions.detail.sharedBody')}</Text>
             </Card>
           ) : (
             <VisibilityPicker value={vis} onChange={setVis} allowSecret={mission.canBeSecret} />
           )}
-          <Button title="Tandai selesai" onPress={complete} loading={busy} disabled={vis.visibility === 'circle' && !vis.circleId} />
-          <Button title="Lewati hari ini" variant="ghost" onPress={async () => { await skipMission(db, mission, today); bump(); router.back(); }} />
+          <Button title={t('missions.detail.markDone')} onPress={complete} loading={busy} disabled={vis.visibility === 'circle' && !vis.circleId} />
+          <Button title={t('missions.detail.skipToday')} variant="ghost" onPress={async () => { await skipMission(db, mission, today); bump(); router.back(); }} />
         </>
       )}
 
       {mission.canBeShared ? (
         <>
-          <SectionTitle>Kerjakan bersama</SectionTitle>
-          <Text muted>Ajak {mission.minPeople ?? 2}+ orang. Poin diberikan setelah peserta lain mengonfirmasi (konfirmasi sejawat).</Text>
+          <SectionTitle>{t('missions.detail.together')}</SectionTitle>
+          <Text muted>{t('missions.detail.togetherBody', { n: mission.minPeople ?? 2 })}</Text>
           {enabled && session && circles.length > 0 ? (
-            circles.map((c) => <Button key={c.circle.id} title={`Mulai di “${c.circle.name}”`} variant="secondary" onPress={() => startTogether(c.circle.id)} loading={busy} />)
+            circles.map((c) => <Button key={c.circle.id} title={t('missions.detail.startIn', { name: c.circle.name })} variant="secondary" onPress={() => startTogether(c.circle.id)} loading={busy} />)
           ) : (
-            <Text variant="small" muted>Aktifkan akun & cloud dan gabung ke lingkaran untuk mengerjakan bersama.</Text>
+            <Text variant="small" muted>{t('missions.detail.togetherDisabled')}</Text>
           )}
-          <Button title="Bagikan ajakan" variant="ghost" onPress={() => Share.share({ message: inviteMessage({ missionTitle: mission.title }) })} />
+          <Button title={t('missions.detail.shareInvite')} variant="ghost" onPress={() => Share.share({ message: inviteMessage({ missionTitle: mission.title }) })} />
         </>
       ) : null}
     </Screen>

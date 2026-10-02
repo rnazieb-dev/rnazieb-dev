@@ -7,12 +7,14 @@ import { Button, Card, Field, Screen, Text, Toggle } from '@/components/ui';
 import { connectCloudVault, ensureLocalDek, wipeDek } from '@/features/security/vault';
 import { getSupabase } from '@/lib/supabase';
 import { useApp } from '@/state/app';
+import { useT } from '@/i18n/useT';
 
 /** Akun & cloud: opsional. Tanpa akun, semua fitur pribadi tetap berfungsi (offline). */
 export default function Auth() {
   const router = useRouter();
   const { session, settings, updateSettings, db, cloudConfigured, syncNow, sync, bump, lockVault, resetLocalData } = useApp();
   const sb = getSupabase();
+  const { t } = useT();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [mode, setMode] = useState<'masuk' | 'daftar'>('masuk');
@@ -24,11 +26,21 @@ export default function Auth() {
   const [saved, setSaved] = useState(false);
   const [busy, setBusy] = useState(false);
 
+  if (!settings.onboarded) {
+    return (
+      <Screen>
+        <Text variant="title">{t('prefs.auth.introTitle')}</Text>
+        <Text muted>{t('prefs.auth.introBody')}</Text>
+        <Button title={t('prefs.auth.introStart')} onPress={() => router.push('/onboarding')} />
+      </Screen>
+    );
+  }
+
   if (settings.isMinor) {
     return (
       <Screen>
-        <Text variant="title">Tidak tersedia</Text>
-        <Text muted>Akun & cloud tersedia untuk pengguna 13 tahun ke atas.</Text>
+        <Text variant="title">{t('prefs.auth.unavailableTitle')}</Text>
+        <Text muted>{t('prefs.auth.unavailableBody')}</Text>
       </Screen>
     );
   }
@@ -36,8 +48,8 @@ export default function Auth() {
   if (!cloudConfigured || !sb) {
     return (
       <Screen>
-        <Text variant="title">Cloud belum dikonfigurasi</Text>
-        <Text muted>Aplikasi tetap berfungsi penuh secara lokal. Pemilik aplikasi perlu mengisi EXPO_PUBLIC_SUPABASE_URL dan EXPO_PUBLIC_SUPABASE_ANON_KEY (lihat docs/esok/DEPLOY.md).</Text>
+        <Text variant="title">{t('prefs.auth.notConfiguredTitle')}</Text>
+        <Text muted>{t('prefs.auth.notConfiguredBody')}</Text>
       </Screen>
     );
   }
@@ -47,7 +59,7 @@ export default function Auth() {
     try {
       await fn();
     } catch (e) {
-      Alert.alert('Gagal', e instanceof Error ? e.message : String(e));
+      Alert.alert(t('prefs.shared.failed'), e instanceof Error ? e.message : String(e));
     } finally {
       setBusy(false);
     }
@@ -57,7 +69,7 @@ export default function Auth() {
     run(async () => {
       const r = mode === 'masuk' ? await sb.auth.signInWithPassword({ email: email.trim(), password }) : await sb.auth.signUp({ email: email.trim(), password });
       if (r.error) throw new Error(r.error.message);
-      if (mode === 'daftar' && !r.data.session) Alert.alert('Periksa email', 'Konfirmasi email Anda, lalu masuk.');
+      if (mode === 'daftar' && !r.data.session) Alert.alert(t('prefs.auth.checkEmailTitle'), t('prefs.auth.checkEmailBody'));
     });
 
   const connect = () =>
@@ -77,11 +89,11 @@ export default function Auth() {
   const switchAccount = () => run(resetLocalData);
 
   const signOut = () =>
-    Alert.alert('Keluar', 'Hapus juga data lokal di perangkat ini? Disarankan bila perangkat dipakai bergantian.', [
-      { text: 'Batal', style: 'cancel' },
-      { text: 'Keluar saja', onPress: () => void sb.auth.signOut() },
+    Alert.alert(t('prefs.shared.signOut'), t('prefs.auth.signOutBody'), [
+      { text: t('prefs.shared.cancel'), style: 'cancel' },
+      { text: t('prefs.auth.signOutOnly'), onPress: () => void sb.auth.signOut() },
       {
-        text: 'Keluar & hapus data lokal',
+        text: t('prefs.auth.signOutWipe'),
         style: 'destructive',
         onPress: () => run(async () => {
           await sb.auth.signOut();
@@ -106,12 +118,12 @@ export default function Auth() {
   if (shownKey) {
     return (
       <Screen>
-        <Text variant="title">Simpan kunci pemulihan</Text>
-        <Text>Jika Anda lupa passphrase, kunci ini satu-satunya cara memulihkan amalan rahasia di cloud. Esok tidak menyimpannya dan tidak dapat membantu memulihkannya.</Text>
+        <Text variant="title">{t('prefs.auth.recoveryTitle')}</Text>
+        <Text>{t('prefs.auth.recoveryBody')}</Text>
         <Card tone="accent"><Text selectable style={{ fontFamily: 'monospace', fontSize: 16 }}>{shownKey}</Text></Card>
-        <Button title="Salin/bagikan ke tempat aman" variant="secondary" onPress={() => Share.share({ message: `Kunci pemulihan Esok:\n${shownKey}` })} />
-        <Toggle label="Saya sudah menyimpannya di tempat yang aman" value={saved} onValueChange={setSaved} />
-        <Button title="Selesai" onPress={finishAfterKey} disabled={!saved} loading={busy} />
+        <Button title={t('prefs.auth.recoveryShareButton')} variant="secondary" onPress={() => Share.share({ message: t('prefs.auth.recoveryShareMessage', { key: shownKey }) })} />
+        <Toggle label={t('prefs.auth.recoverySaved')} value={saved} onValueChange={setSaved} />
+        <Button title={t('prefs.auth.done')} onPress={finishAfterKey} disabled={!saved} loading={busy} />
       </Screen>
     );
   }
@@ -119,13 +131,13 @@ export default function Auth() {
   if (!session) {
     return (
       <Screen>
-        <Text variant="title">{mode === 'masuk' ? 'Masuk' : 'Daftar'}</Text>
-        <Text muted>Akun dipakai untuk lingkaran, tantangan, dan cadangan lintas perangkat.</Text>
-        <Field label="Email" value={email} onChangeText={setEmail} autoCapitalize="none" keyboardType="email-address" autoComplete="email" />
-        <Field label="Kata sandi" value={password} onChangeText={setPassword} secureTextEntry autoComplete={mode === 'masuk' ? 'current-password' : 'new-password'} hint={mode === 'daftar' ? 'Minimal 8 karakter.' : undefined} />
-        <Button title={mode === 'masuk' ? 'Masuk' : 'Daftar'} onPress={submitAuth} loading={busy} disabled={!email || password.length < 8} />
-        <Button title={mode === 'masuk' ? 'Belum punya akun? Daftar' : 'Sudah punya akun? Masuk'} variant="ghost" onPress={() => setMode(mode === 'masuk' ? 'daftar' : 'masuk')} />
-        <Text variant="small" muted>Masuk dengan Google/Apple menyusul setelah kredensial OAuth dikonfigurasi pemilik aplikasi.</Text>
+        <Text variant="title">{mode === 'masuk' ? t('prefs.auth.signIn') : t('prefs.auth.signUp')}</Text>
+        <Text muted>{t('prefs.auth.accountPurpose')}</Text>
+        <Field label={t('prefs.auth.email')} value={email} onChangeText={setEmail} autoCapitalize="none" keyboardType="email-address" autoComplete="email" />
+        <Field label={t('prefs.auth.password')} value={password} onChangeText={setPassword} secureTextEntry autoComplete={mode === 'masuk' ? 'current-password' : 'new-password'} hint={mode === 'daftar' ? t('prefs.auth.passwordHint') : undefined} />
+        <Button title={mode === 'masuk' ? t('prefs.auth.signIn') : t('prefs.auth.signUp')} onPress={submitAuth} loading={busy} disabled={!email || password.length < 8} />
+        <Button title={mode === 'masuk' ? t('prefs.auth.toSignUp') : t('prefs.auth.toSignIn')} variant="ghost" onPress={() => setMode(mode === 'masuk' ? 'daftar' : 'masuk')} />
+        <Text variant="small" muted>{t('prefs.auth.oauthNote')}</Text>
       </Screen>
     );
   }
@@ -133,12 +145,12 @@ export default function Auth() {
   if (bindingState(settings.boundUserId, session.user.id) === 'other') {
     return (
       <Screen>
-        <Text variant="title">Akun berbeda</Text>
+        <Text variant="title">{t('prefs.shared.differentAccount')}</Text>
         <Card tone="accent">
-          <Text>Data lokal di perangkat ini milik akun lain. Agar data tidak tercampur atau terbaca akun ini, hapus data lokal terlebih dahulu (data di cloud akun lama tetap aman).</Text>
+          <Text>{t('prefs.auth.mismatchBody')}</Text>
         </Card>
-        <Button title="Hapus data lokal & lanjut" variant="danger" onPress={switchAccount} loading={busy} />
-        <Button title="Batal & keluar" variant="ghost" onPress={() => sb.auth.signOut()} />
+        <Button title={t('prefs.shared.wipeLocalContinue')} variant="danger" onPress={switchAccount} loading={busy} />
+        <Button title={t('prefs.auth.cancelSignOut')} variant="ghost" onPress={() => sb.auth.signOut()} />
       </Screen>
     );
   }
@@ -146,36 +158,47 @@ export default function Auth() {
   if (!settings.cloudEnabled) {
     return (
       <Screen>
-        <Text variant="title">Aktifkan cloud</Text>
+        <Text variant="title">{t('prefs.auth.enableTitle')}</Text>
         <Card>
-          <Text>• Amal yang Anda bagikan (Lingkaran/Publik) disimpan di server agar teman dapat melihatnya.</Text>
-          <Text>• Amalan rahasia & refleksi hanya diunggah sebagai ciphertext terenkripsi; server tidak dapat membacanya.</Text>
-          <Text>• Anda dapat menghapus akun dan seluruh data kapan saja di Pengaturan.</Text>
+          <Text>{t('prefs.auth.enable1')}</Text>
+          <Text>{t('prefs.auth.enable2')}</Text>
+          <Text>{t('prefs.auth.enable3')}</Text>
         </Card>
-        <Toggle label="Saya setuju data dikirim ke cloud seperti di atas" value={consent} onValueChange={setConsent} />
-        <Text variant="label">Amankan cadangan rahasia</Text>
+        <Toggle label={t('prefs.auth.consent')} value={consent} onValueChange={setConsent} />
+        <Text variant="label">{t('prefs.auth.secureBackup')}</Text>
         {useRecovery ? (
-          <Field label="Kunci pemulihan" value={recovery} onChangeText={setRecovery} autoCapitalize="characters" autoCorrect={false} />
+          <Field label={t('prefs.auth.recoveryKey')} value={recovery} onChangeText={setRecovery} autoCapitalize="characters" autoCorrect={false} />
         ) : (
-          <Field label="Passphrase" value={passphrase} onChangeText={setPassphrase} secureTextEntry hint="Min. 8 karakter. Perangkat baru memerlukan passphrase ini. Jika sudah pernah membuat di perangkat lain, masukkan yang sama." />
+          <Field label={t('prefs.auth.passphrase')} value={passphrase} onChangeText={setPassphrase} secureTextEntry hint={t('prefs.auth.passphraseHint')} />
         )}
-        <Button title="Aktifkan" onPress={connect} loading={busy} disabled={!consent || (useRecovery ? recovery.length < 10 : passphrase.length < 8)} />
-        <Button title={useRecovery ? 'Pakai passphrase' : 'Lupa passphrase? Pakai kunci pemulihan'} variant="ghost" onPress={() => setUseRecovery(!useRecovery)} />
-        <Button title="Keluar" variant="ghost" onPress={signOut} />
+        <Button title={t('prefs.auth.enable')} onPress={connect} loading={busy} disabled={!consent || (useRecovery ? recovery.length < 10 : passphrase.length < 8)} />
+        <Button title={useRecovery ? t('prefs.auth.usePassphrase') : t('prefs.auth.useRecovery')} variant="ghost" onPress={() => setUseRecovery(!useRecovery)} />
+        <Button title={t('prefs.shared.signOut')} variant="ghost" onPress={signOut} />
       </Screen>
     );
   }
 
   return (
     <Screen>
-      <Text variant="title">Cloud aktif</Text>
+      <Text variant="title">{t('prefs.auth.activeTitle')}</Text>
       <Text muted>{session.user.email}</Text>
       <Card>
-        <Text>Status sinkron: {sync.state === 'ok' ? `terakhir ${sync.at?.slice(11, 16) ?? ''} UTC` : sync.state === 'error' ? `gagal — ${sync.message}` : sync.state === 'syncing' ? 'menyinkronkan…' : 'siap'}</Text>
-        <Button title="Sinkronkan sekarang" variant="secondary" onPress={syncNow} />
+        <Text>
+          {t('prefs.auth.syncStatus', {
+            status:
+              sync.state === 'ok'
+                ? t('prefs.auth.syncLast', { time: sync.at?.slice(11, 16) ?? '' })
+                : sync.state === 'error'
+                  ? t('prefs.auth.syncFailed', { msg: String(sync.message) })
+                  : sync.state === 'syncing'
+                    ? t('prefs.auth.syncing')
+                    : t('prefs.auth.syncReady'),
+          })}
+        </Text>
+        <Button title={t('prefs.auth.syncNow')} variant="secondary" onPress={syncNow} />
       </Card>
-      <Button title="Matikan cloud (data lokal tetap)" variant="secondary" onPress={async () => { await updateSettings({ cloudEnabled: false }); bump(); }} />
-      <Button title="Keluar" variant="ghost" onPress={signOut} />
+      <Button title={t('prefs.auth.disableCloud')} variant="secondary" onPress={async () => { await updateSettings({ cloudEnabled: false }); bump(); }} />
+      <Button title={t('prefs.shared.signOut')} variant="ghost" onPress={signOut} />
     </Screen>
   );
 }

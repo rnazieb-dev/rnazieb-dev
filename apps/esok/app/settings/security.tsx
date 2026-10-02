@@ -13,10 +13,12 @@ import { authAvailability, authenticate, wipeDek } from '@/features/security/vau
 import { fetchEnvelope, putEnvelope } from '@/features/sync/supabaseRemote';
 import { getSupabase } from '@/lib/supabase';
 import { useApp } from '@/state/app';
+import { useT } from '@/i18n/useT';
 
 export default function SecuritySettings() {
   const router = useRouter();
   const { db, settings, updateSettings, unlockVault, session, bump, lockVault } = useApp();
+  const { t } = useT();
   const [hasPin, setHasPin] = useState(false);
   const [pin1, setPin1] = useState('');
   const [pin2, setPin2] = useState('');
@@ -35,7 +37,7 @@ export default function SecuritySettings() {
     try {
       await fn();
     } catch (e) {
-      Alert.alert('Gagal', e instanceof Error ? e.message : String(e));
+      Alert.alert(t('prefs.shared.failed'), e instanceof Error ? e.message : String(e));
     } finally {
       setBusy(false);
     }
@@ -43,39 +45,39 @@ export default function SecuritySettings() {
 
   return (
     <Screen>
-      {!secured ? <Card tone="accent"><Text>Perangkat ini belum memiliki kunci layar. Amalan rahasia tetap terenkripsi, tetapi sebaiknya aktifkan kunci layar/biometrik.</Text></Card> : null}
+      {!secured ? <Card tone="accent"><Text>{t('prefs.security.noScreenLock')}</Text></Card> : null}
 
-      <SectionTitle>Kunci aplikasi</SectionTitle>
+      <SectionTitle>{t('prefs.security.appLockTitle')}</SectionTitle>
       <Toggle
-        label="Kunci aplikasi"
-        hint="Minta biometrik/kode sandi perangkat (atau PIN) saat aplikasi dibuka kembali."
+        label={t('prefs.security.appLock')}
+        hint={t('prefs.security.appLockHint')}
         value={settings.appLock}
         onValueChange={(v) => run(async () => {
           if (v && !canEnableAppLock({ secured, hasPin })) {
-            return Alert.alert('Atur PIN dulu', 'Perangkat ini belum punya kunci layar. Atur PIN cadangan agar Anda tidak terkunci dari aplikasi.');
+            return Alert.alert(t('prefs.security.setPinFirstTitle'), t('prefs.security.setPinFirstBody'));
           }
-          if (v && secured && !(await authenticate('Aktifkan kunci aplikasi'))) return;
+          if (v && secured && !(await authenticate(t('prefs.security.enableLockPrompt')))) return;
           await updateSettings({ appLock: v });
         })}
       />
       <Card>
-        <Text variant="label">PIN cadangan 6 digit {hasPin ? '(aktif)' : ''}</Text>
-        <Field label="PIN baru" value={pin1} onChangeText={(v) => setPin1(v.replace(/\D/g, '').slice(0, 6))} keyboardType="number-pad" secureTextEntry maxLength={6} />
-        <Field label="Ulangi PIN" value={pin2} onChangeText={(v) => setPin2(v.replace(/\D/g, '').slice(0, 6))} keyboardType="number-pad" secureTextEntry maxLength={6} />
+        <Text variant="label">{t('prefs.security.pinTitle')} {hasPin ? t('prefs.security.pinActive') : ''}</Text>
+        <Field label={t('prefs.security.newPin')} value={pin1} onChangeText={(v) => setPin1(v.replace(/\D/g, '').slice(0, 6))} keyboardType="number-pad" secureTextEntry maxLength={6} />
+        <Field label={t('prefs.security.repeatPin')} value={pin2} onChangeText={(v) => setPin2(v.replace(/\D/g, '').slice(0, 6))} keyboardType="number-pad" secureTextEntry maxLength={6} />
         <Button
-          title={hasPin ? 'Ganti PIN' : 'Atur PIN'}
+          title={hasPin ? t('prefs.security.changePin') : t('prefs.security.setPin')}
           variant="secondary"
           disabled={pin1.length !== 6 || pin1 !== pin2}
           loading={busy}
           onPress={() => run(async () => {
             await SecureStore.setItemAsync(PIN_KEY, JSON.stringify(await createPinRecord(pin1)));
             setHasPin(true); setPin1(''); setPin2('');
-            Alert.alert('PIN tersimpan');
+            Alert.alert(t('prefs.security.pinSaved'));
           })}
         />
         {hasPin ? (
           <Button
-            title="Hapus PIN"
+            title={t('prefs.security.removePin')}
             variant="ghost"
             onPress={() => run(async () => {
               await SecureStore.deleteItemAsync(PIN_KEY);
@@ -85,16 +87,16 @@ export default function SecuritySettings() {
             })}
           />
         ) : null}
-        <Text variant="small" muted>PIN tidak dapat dipulihkan. Setelah beberapa kali salah, ada jeda bertahap.</Text>
+        <Text variant="small" muted>{t('prefs.security.pinNote')}</Text>
       </Card>
 
       {session && settings.cloudEnabled ? (
         <>
-          <SectionTitle>Passphrase cadangan cloud</SectionTitle>
-          <Field label="Passphrase saat ini" value={oldPass} onChangeText={setOldPass} secureTextEntry />
-          <Field label="Passphrase baru" value={newPass} onChangeText={setNewPass} secureTextEntry hint="Kunci pemulihan lama tetap berlaku." />
+          <SectionTitle>{t('prefs.security.passphraseTitle')}</SectionTitle>
+          <Field label={t('prefs.security.currentPassphrase')} value={oldPass} onChangeText={setOldPass} secureTextEntry />
+          <Field label={t('prefs.security.newPassphrase')} value={newPass} onChangeText={setNewPass} secureTextEntry hint={t('prefs.security.newPassphraseHint')} />
           <Button
-            title="Ganti passphrase"
+            title={t('prefs.security.changePassphrase')}
             variant="secondary"
             disabled={oldPass.length < 8 || newPass.length < 8}
             loading={busy}
@@ -103,47 +105,47 @@ export default function SecuritySettings() {
               const dek = await unlockVault();
               if (!sb || !dek) return;
               const env = await fetchEnvelope(sb, session.user.id);
-              if (!env) throw new Error('Envelope tidak ditemukan.');
+              if (!env) throw new Error(t('prefs.security.envelopeMissing'));
               await unlockWithPassphrase(env, oldPass);
               await putEnvelope(sb, session.user.id, await rewrapPassphrase(env, dek, newPass));
               setOldPass(''); setNewPass('');
-              Alert.alert('Passphrase diganti');
+              Alert.alert(t('prefs.security.passphraseChanged'));
             })}
           />
         </>
       ) : null}
 
-      <SectionTitle>Data Anda</SectionTitle>
+      <SectionTitle>{t('prefs.security.dataTitle')}</SectionTitle>
       <Button
-        title="Ekspor data (JSON)"
+        title={t('prefs.security.export')}
         variant="secondary"
         onPress={() => run(async () => {
           const dek = await unlockVault();
-          if (!dek) return Alert.alert('Ekspor tanpa amalan rahasia', 'Verifikasi dibatalkan; hanya amal yang dibagikan yang diekspor.', [{ text: 'Batal', style: 'cancel' }, { text: 'Lanjut', onPress: () => void shareExport(db, null) }]);
-          Alert.alert('Perhatian', 'Berkas ekspor tidak terenkripsi dan memuat amalan rahasia Anda. Simpan di tempat aman.', [{ text: 'Batal', style: 'cancel' }, { text: 'Ekspor', onPress: () => void shareExport(db, dek) }]);
+          if (!dek) return Alert.alert(t('prefs.security.exportNoSecretTitle'), t('prefs.security.exportNoSecretBody'), [{ text: t('prefs.shared.cancel'), style: 'cancel' }, { text: t('prefs.security.continue'), onPress: () => void shareExport(db, null) }]);
+          Alert.alert(t('prefs.security.attention'), t('prefs.security.exportWarning'), [{ text: t('prefs.shared.cancel'), style: 'cancel' }, { text: t('prefs.security.exportAction'), onPress: () => void shareExport(db, dek) }]);
         })}
       />
       <Button
-        title="Hapus semua data di perangkat ini"
+        title={t('prefs.security.wipeLocal')}
         variant="danger"
-        onPress={() => Alert.alert('Hapus data lokal?', 'Seluruh catatan, refleksi, dan pengaturan di perangkat ini akan dihapus. Data di cloud (jika ada) tidak terhapus.', [
-          { text: 'Batal', style: 'cancel' },
-          { text: 'Hapus', style: 'destructive', onPress: () => run(async () => { await wipeLocal(db); await wipeDek(); lockVault(); await SecureStore.deleteItemAsync(PIN_KEY); await updateSettings({ onboarded: false, appLock: false, cloudEnabled: false, boundUserId: null }); bump(); router.replace('/onboarding'); }) },
+        onPress={() => Alert.alert(t('prefs.security.wipeLocalTitle'), t('prefs.security.wipeLocalBody'), [
+          { text: t('prefs.shared.cancel'), style: 'cancel' },
+          { text: t('prefs.security.delete'), style: 'destructive', onPress: () => run(async () => { await wipeLocal(db); await wipeDek(); lockVault(); await SecureStore.deleteItemAsync(PIN_KEY); await updateSettings({ onboarded: false, appLock: false, cloudEnabled: false, boundUserId: null }); bump(); router.replace('/(tabs)'); }) },
         ])}
       />
       {session ? (
         <Button
-          title="Hapus akun & seluruh data cloud"
+          title={t('prefs.security.deleteAccount')}
           variant="danger"
-          onPress={() => Alert.alert('Hapus akun?', 'Akun dan SELURUH data cloud (amal dibagikan, amalan rahasia terenkripsi, keanggotaan lingkaran) dihapus permanen.', [
-            { text: 'Batal', style: 'cancel' },
-            { text: 'Hapus akun', style: 'destructive', onPress: () => run(async () => {
+          onPress={() => Alert.alert(t('prefs.security.deleteAccountTitle'), t('prefs.security.deleteAccountBody'), [
+            { text: t('prefs.shared.cancel'), style: 'cancel' },
+            { text: t('prefs.security.deleteAccountAction'), style: 'destructive', onPress: () => run(async () => {
               const sb = getSupabase();
               if (!sb) return;
               await deleteMyAccount(sb);
               await sb.auth.signOut();
               await updateSettings({ cloudEnabled: false });
-              Alert.alert('Akun dihapus', 'Data lokal di perangkat ini masih ada; hapus terpisah bila diinginkan.');
+              Alert.alert(t('prefs.security.accountDeletedTitle'), t('prefs.security.accountDeletedBody'));
             }) },
           ])}
         />

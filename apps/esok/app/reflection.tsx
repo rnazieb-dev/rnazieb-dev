@@ -4,11 +4,13 @@ import { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { Button, Card, Field, Screen, Text } from '@/components/ui';
 import { EMPTY_REFLECTION, type Reflection, getReflection, saveReflection } from '@/db/repos';
+import { useT } from '@/i18n/useT';
 import { useApp } from '@/state/app';
 
 export default function ReflectionScreen() {
   usePreventScreenCapture('reflection');
   const router = useRouter();
+  const { t } = useT();
   const { mode } = useLocalSearchParams<{ mode?: 'niat' | 'muhasabah' }>();
   const { db, today, dek, unlockVault, bump } = useApp();
   const [r, setR] = useState<Reflection>({ ...EMPTY_REFLECTION });
@@ -36,7 +38,7 @@ export default function ReflectionScreen() {
     setBusy(true);
     try {
       const key = dek ?? (await unlockVault());
-      if (!key) return Alert.alert('Terkunci', 'Refleksi bersifat pribadi dan butuh verifikasi perangkat.');
+      if (!key) return Alert.alert(t('journal.common.locked'), t('journal.reflection.lockedBody'));
       await saveReflection(db, key, today, r);
       bump();
       router.back();
@@ -48,8 +50,8 @@ export default function ReflectionScreen() {
   if (!ready) {
     return (
       <Screen>
-        <Text muted>Refleksi bersifat pribadi & terenkripsi.</Text>
-        <Button title="Buka dengan biometrik/kode sandi" onPress={async () => { const k = await unlockVault(); if (k) { setR(await getReflection(db, k, today)); setReady(true); } }} />
+        <Text muted>{t('journal.reflection.privateNote')}</Text>
+        <Button title={t('journal.common.unlockBiometric')} onPress={async () => { const k = await unlockVault(); if (k) { setR(await getReflection(db, k, today)); setReady(true); } }} />
       </Screen>
     );
   }
@@ -58,24 +60,24 @@ export default function ReflectionScreen() {
     <Screen>
       {mode !== 'muhasabah' ? (
         <>
-          <Text variant="title">Niat pagi</Text>
+          <Text variant="title">{t('journal.reflection.niyyahTitle')}</Text>
           <Card>
-            <Text muted>“Sesungguhnya setiap amal tergantung niatnya.” — HR. Bukhari no. 1 & Muslim no. 1907</Text>
+            <Text muted>{t('journal.reflection.niyyahQuote')}</Text>
           </Card>
-          <Field label="Hari ini, kebaikan apa yang ingin kulakukan karena Allah?" value={r.niat} onChangeText={(v) => setR({ ...r, niat: v })} multiline maxLength={800} />
+          <Field label={t('journal.reflection.niyyahLabel')} value={r.niat} onChangeText={(v) => setR({ ...r, niat: v })} multiline maxLength={800} />
         </>
       ) : (
         <>
-          <Text variant="title">Muhasabah malam</Text>
+          <Text variant="title">{t('journal.reflection.muhasabahTitle')}</Text>
           <Card>
-            <Text muted>“…hendaklah setiap orang memperhatikan apa yang telah diperbuatnya untuk hari esok.” — QS Al-Hasyr 59:18</Text>
+            <Text muted>{t('journal.reflection.muhasabahQuote')}</Text>
           </Card>
-          <Field label="Yang patut disyukuri hari ini" value={r.syukur} onChangeText={(v) => setR({ ...r, syukur: v })} multiline maxLength={800} />
-          <Field label="Yang disesali / perlu diperbaiki" value={r.penyesalan} onChangeText={(v) => setR({ ...r, penyesalan: v })} multiline maxLength={800} hint="Mohon ampun kepada Allah; Dia Maha Pengampun." />
-          <Field label="Tekad untuk esok (jika Allah menghendaki)" value={r.tekad} onChangeText={(v) => setR({ ...r, tekad: v })} multiline maxLength={800} />
+          <Field label={t('journal.reflection.gratitudeLabel')} value={r.syukur} onChangeText={(v) => setR({ ...r, syukur: v })} multiline maxLength={800} />
+          <Field label={t('journal.reflection.regretLabel')} value={r.penyesalan} onChangeText={(v) => setR({ ...r, penyesalan: v })} multiline maxLength={800} hint={t('journal.reflection.regretHint')} />
+          <Field label={t('journal.reflection.resolveLabel')} value={r.tekad} onChangeText={(v) => setR({ ...r, tekad: v })} multiline maxLength={800} />
         </>
       )}
-      <Button title="Simpan" onPress={save} loading={busy} />
+      <Button title={t('journal.common.save')} onPress={save} loading={busy} />
     </Screen>
   );
 }

@@ -3,36 +3,35 @@ import { Alert } from 'react-native';
 import { Button, Card, Empty, Screen, Text } from '@/components/ui';
 import { DeedItem } from '@/components/DeedItem';
 import { deleteDeed, listSecretDeeds } from '@/db/repos';
+import { useT } from '@/i18n/useT';
 import { formatDayLong } from '@/lib/dates';
 import { useApp, useDbQuery } from '@/state/app';
 
 export default function Vault() {
   usePreventScreenCapture('vault');
   const { db, dek, unlockVault, lockVault, bump } = useApp();
+  const { t } = useT();
   const q = useDbQuery((d) => listSecretDeeds(d, dek), [dek], []);
   const remove = (id: string) =>
-    Alert.alert('Hapus amalan rahasia?', 'Ini tidak dapat dibatalkan.', [
-      { text: 'Batal', style: 'cancel' },
-      { text: 'Hapus', style: 'destructive', onPress: async () => { await deleteDeed(db, id); bump(); } },
+    Alert.alert(t('journal.vault.deleteTitle'), t('journal.vault.deleteBody'), [
+      { text: t('journal.common.cancel'), style: 'cancel' },
+      { text: t('journal.common.delete'), style: 'destructive', onPress: async () => { await deleteDeed(db, id); bump(); } },
     ]);
 
   let lastDay = '';
   return (
     <Screen>
-      <Text variant="title">Amalan rahasia</Text>
-      <Text muted>
-        Hanya Anda yang dapat membaca. Terenkripsi di perangkat; tidak pernah masuk feed, peringkat, kartu ajakan, atau notifikasi siapa pun.
-        Poinnya hanya menambah skor pribadi Anda.
-      </Text>
+      <Text variant="title">{t('journal.vault.title')}</Text>
+      <Text muted>{t('journal.vault.intro')}</Text>
       {!dek ? (
         <Card tone="secret">
-          <Text>🔒 {q.data.length} amalan tersembunyi. Buka dengan biometrik/kode sandi perangkat untuk membaca isinya.</Text>
-          <Button title="Buka" onPress={() => unlockVault()} />
+          <Text>{t('journal.vault.lockedCount', { n: q.data.length })}</Text>
+          <Button title={t('journal.common.open')} onPress={() => unlockVault()} />
         </Card>
       ) : (
-        <Button title="Kunci sekarang" variant="secondary" onPress={lockVault} />
+        <Button title={t('journal.vault.lockNow')} variant="secondary" onPress={lockVault} />
       )}
-      {dek && q.data.length === 0 ? <Empty title="Belum ada amalan rahasia" body="Pilih “Rahasia” saat mencatat amal." /> : null}
+      {dek && q.data.length === 0 ? <Empty title={t('journal.vault.emptyTitle')} body={t('journal.vault.emptyBody')} /> : null}
       {dek
         ? q.data.map((d) => {
             const header = d.day !== lastDay ? (lastDay = d.day) : null;

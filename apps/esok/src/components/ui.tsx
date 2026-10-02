@@ -66,19 +66,30 @@ export function Screen({ children, scroll = true, padded = true }: { children: R
   );
 }
 
-export function Card({ children, style, tone }: { children: ReactNode; style?: ViewStyle; tone?: 'secret' | 'accent' }) {
+export function Card({
+  children,
+  style,
+  tone,
+  onPress,
+  ...rest
+}: { children: ReactNode; style?: ViewStyle; tone?: 'secret' | 'accent' } & Omit<PressableProps, 'children' | 'style'>) {
   const t = useTheme();
   const border = tone === 'secret' ? t.secret : tone === 'accent' ? t.accent : t.border;
-  return (
-    <View
-      style={[
-        { backgroundColor: t.surface, borderRadius: radius.lg, borderWidth: tone ? 1.5 : StyleSheet.hairlineWidth, borderColor: border, padding: space.lg, gap: space.sm },
-        style,
-      ]}
-    >
-      {children}
-    </View>
-  );
+  const base: ViewStyle = { backgroundColor: t.surface, borderRadius: radius.lg, borderWidth: tone ? 1.5 : StyleSheet.hairlineWidth, borderColor: border, padding: space.lg, gap: space.sm };
+  // Bisa ditekan bila diberi onPress (mis. dibungkus <Link asChild>); selain itu View biasa.
+  if (onPress) {
+    return (
+      <Pressable
+        accessibilityRole="button"
+        {...rest}
+        onPress={onPress}
+        style={({ pressed }) => [base, style, pressed ? { opacity: 0.85, transform: [{ scale: 0.99 }] } : null]}
+      >
+        {children}
+      </Pressable>
+    );
+  }
+  return <View style={[base, style]}>{children}</View>;
 }
 
 export function Button({

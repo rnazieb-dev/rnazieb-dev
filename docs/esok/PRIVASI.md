@@ -1,4 +1,4 @@
-# Esok — Privasi (draf kebijakan & model ancaman)
+# NAFS — Privasi (draf kebijakan & model ancaman)
 
 > Draf untuk ditinjau konsultan hukum (UU PDP No. 27/2022) sebelum rilis publik.
 

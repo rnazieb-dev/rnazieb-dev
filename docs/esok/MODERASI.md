@@ -1,4 +1,4 @@
-# Esok — Moderasi konten pengguna
+# NAFS — Moderasi konten pengguna
 
 Konten pengguna (feed, komentar, nama) hanya ada di dalam lingkaran tertutup.
 

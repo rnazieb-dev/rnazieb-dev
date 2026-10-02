@@ -39,7 +39,20 @@ export const NAMA_BULAN = [
   'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
 ];
 
+let dateLocale = 'id';
+/** Diatur oleh lapisan i18n agar tanggal mengikuti bahasa antarmuka. */
+export function setDateLocale(locale: string): void {
+  dateLocale = locale;
+}
+
 export function formatDayLong(k: DayKey): string {
   const d = fromDayKey(k);
+  if (dateLocale !== 'id') {
+    try {
+      return d.toLocaleDateString(dateLocale, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    } catch {
+      // Intl tak tersedia → jatuh ke format Indonesia
+    }
+  }
   return `${NAMA_HARI[d.getDay()]}, ${d.getDate()} ${NAMA_BULAN[d.getMonth()]} ${d.getFullYear()}`;
 }

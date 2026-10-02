@@ -1,4 +1,4 @@
-# Esok — Penyiapan, uji, dan rilis
+# NAFS — Penyiapan, uji, dan rilis
 
 ## 1. Lokal
 ```bash

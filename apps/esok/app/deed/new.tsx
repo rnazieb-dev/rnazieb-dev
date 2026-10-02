@@ -9,12 +9,14 @@ import { addDeed } from '@/db/repos';
 import { checkText } from '@/features/circles/moderation';
 import { createPost } from '@/features/circles/api';
 import { CUSTOM_DEED_POINTS } from '@/features/gamification/points';
-import { CATEGORIES, CATEGORY_LABEL } from '@/lib/labels';
+import { useT } from '@/i18n/useT';
+import { CATEGORIES } from '@/lib/labels';
 import { getSupabase } from '@/lib/supabase';
 import { useApp } from '@/state/app';
 
 export default function NewDeed() {
   const router = useRouter();
+  const { t } = useT();
   const params = useLocalSearchParams<{ day?: string }>();
   const { db, today, unlockVault, bump, syncNow, session } = useApp();
   const day = params.day ?? today;
@@ -27,17 +29,17 @@ export default function NewDeed() {
 
   const save = async () => {
     const c = checkText(title, 120);
-    if (!c.ok) return Alert.alert('Judul', c.reason);
+    if (!c.ok) return Alert.alert(t('journal.deed.titleCheck'), c.reason);
     if (vis.visibility !== 'secret') {
       const n = checkText(`${title} ${note}`, 700);
-      if (!n.ok) return Alert.alert('Teks', n.reason);
+      if (!n.ok) return Alert.alert(t('journal.deed.textCheck'), n.reason);
     }
     setBusy(true);
     try {
       let dek: Uint8Array | null = null;
       if (vis.visibility === 'secret') {
         dek = await unlockVault();
-        if (!dek) return Alert.alert('Terkunci', 'Amalan rahasia butuh verifikasi perangkat.');
+        if (!dek) return Alert.alert(t('journal.common.locked'), t('journal.deed.secretNeedsAuth'));
       }
       const id = await addDeed(db, dek, {
         day,
@@ -58,7 +60,7 @@ export default function NewDeed() {
       }
       router.back();
     } catch (e) {
-      Alert.alert('Gagal menyimpan', e instanceof Error ? e.message : String(e));
+      Alert.alert(t('journal.common.saveFailed'), e instanceof Error ? e.message : String(e));
     } finally {
       setBusy(false);
     }
@@ -67,17 +69,17 @@ export default function NewDeed() {
   return (
     <Screen>
       <ScreenGuard active={vis.visibility === 'secret'} id="deed-new" />
-      <Field label="Apa kebaikan yang Anda lakukan?" value={title} onChangeText={setTitle} placeholder="mis. Menelepon ibu" maxLength={120} />
-      <Field label="Catatan (opsional)" value={note} onChangeText={setNote} multiline maxLength={500} hint={vis.visibility === 'secret' ? undefined : 'Jangan menyebut identitas orang yang dibantu; jaga martabat mereka.'} />
-      <Text variant="label">Kategori</Text>
+      <Field label={t('journal.deed.whatLabel')} value={title} onChangeText={setTitle} placeholder={t('journal.deed.whatPlaceholder')} maxLength={120} />
+      <Field label={t('journal.deed.noteLabel')} value={note} onChangeText={setNote} multiline maxLength={500} hint={vis.visibility === 'secret' ? undefined : t('journal.deed.noteHint')} />
+      <Text variant="label">{t('journal.deed.category')}</Text>
       <Row>
         {CATEGORIES.map((c) => (
-          <Chip key={c} label={CATEGORY_LABEL[c]} selected={category === c} onPress={() => setCategory(c)} />
+          <Chip key={c} label={t(`journal.categories.${c}`)} selected={category === c} onPress={() => setCategory(c)} />
         ))}
       </Row>
       <VisibilityPicker value={vis} onChange={setVis} />
-      {vis.visibility === 'circle' ? <Toggle label="Posting ke feed lingkaran" value={post} onValueChange={setPost} /> : null}
-      <Button title="Simpan" onPress={save} loading={busy} disabled={!title.trim() || (vis.visibility === 'circle' && !vis.circleId)} />
+      {vis.visibility === 'circle' ? <Toggle label={t('journal.deed.postToFeed')} value={post} onValueChange={setPost} /> : null}
+      <Button title={t('journal.common.save')} onPress={save} loading={busy} disabled={!title.trim() || (vis.visibility === 'circle' && !vis.circleId)} />
     </Screen>
   );
 }

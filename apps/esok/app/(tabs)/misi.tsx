@@ -4,10 +4,12 @@ import { missionRows } from '@/db/repos';
 import { loadProgress } from '@/features/gamification/progress';
 import { assignmentDay, ensureAssignments } from '@/features/missions/service';
 import { weekStart } from '@/lib/dates';
+import { useT } from '@/i18n/useT';
 import { useApp, useDbQuery } from '@/state/app';
 
 export default function Misi() {
   const { today, settings, bump } = useApp();
+  const { t: tr } = useT();
   const q = useDbQuery(
     async (d) => {
       const level = (await loadProgress(d, today)).personal.level.level;
@@ -19,37 +21,37 @@ export default function Misi() {
     [today, settings.seed],
     null,
   );
-  if (!q.data) return <Screen><Text muted>{q.error ?? 'Memuat…'}</Text>{q.error ? <Button title="Coba lagi" onPress={bump} /> : null}</Screen>;
+  if (!q.data) return <Screen><Text muted>{q.error ?? tr('missions.loading')}</Text>{q.error ? <Button title={tr('missions.retry')} onPress={bump} /> : null}</Screen>;
   const { t, done } = q.data;
   const isDone = (m: { id: string; cadence: 'daily' | 'weekly' | 'seasonal' | 'side' }) =>
     done.has(`${m.id}|${assignmentDay(m as never, today)}`);
   return (
     <Screen>
-      <Text variant="title">Misi</Text>
-      <Text muted>Misi kecil, sedikit tapi rutin. Poin hanyalah penanda konsistensi, bukan nilai pahala. Tidak ada undian atau hadiah acak.</Text>
+      <Text variant="title">{tr('missions.list.title')}</Text>
+      <Text muted>{tr('missions.list.intro')}</Text>
 
-      <SectionTitle>Harian</SectionTitle>
+      <SectionTitle>{tr('missions.list.daily')}</SectionTitle>
       {t.daily.map((m) => <MissionCard key={m.id} mission={m} done={isDone(m)} />)}
 
-      <SectionTitle>Pekan ini</SectionTitle>
+      <SectionTitle>{tr('missions.list.weekly')}</SectionTitle>
       {t.weekly.map((m) => <MissionCard key={m.id} mission={m} done={isDone(m)} />)}
 
       {t.seasonal.length > 0 ? (
         <>
-          <SectionTitle>Hari/musim istimewa</SectionTitle>
-          <Text variant="small" muted>Penanggalan Hijriah di sini perkiraan; ikuti penetapan resmi setempat.</Text>
+          <SectionTitle>{tr('missions.list.seasonal')}</SectionTitle>
+          <Text variant="small" muted>{tr('missions.list.seasonalNote')}</Text>
           {t.seasonal.map((m) => <MissionCard key={m.id} mission={m} done={isDone(m)} />)}
         </>
       ) : null}
 
-      <SectionTitle>Side quest</SectionTitle>
+      <SectionTitle>{tr('missions.list.side')}</SectionTitle>
       {t.side ? (
         <Card tone="accent">
-          <Text variant="label">Kejutan hari ini</Text>
+          <Text variant="label">{tr('missions.list.sideToday')}</Text>
           <MissionCard mission={t.side} done={isDone(t.side)} />
         </Card>
       ) : (
-        <Empty title="Belum ada side quest hari ini" body="Kejutan kecil muncul di sebagian hari." />
+        <Empty title={tr('missions.list.sideEmptyTitle')} body={tr('missions.list.sideEmptyBody')} />
       )}
     </Screen>
   );

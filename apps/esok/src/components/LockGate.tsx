@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import { type PinRecord, backoffSeconds, lockUsable, verifyPin } from '@/features/security/lock';
 import { authenticate, authAvailability } from '@/features/security/vault';
 import { useApp } from '@/state/app';
+import { useT } from '@/i18n/useT';
 import { Button, Field, Text } from './ui';
 import { space, useTheme } from '@/lib/theme';
 
@@ -28,6 +29,7 @@ async function readFails(): Promise<FailState> {
 export function LockGate({ children }: { children: ReactNode }) {
   const { appLocked, setAppLocked, settings, updateSettings } = useApp();
   const t = useTheme();
+  const { t: tr } = useT();
   const [pin, setPin] = useState('');
   const [msg, setMsg] = useState('');
   const [hasPin, setHasPin] = useState<boolean | null>(null);
@@ -51,8 +53,8 @@ export function LockGate({ children }: { children: ReactNode }) {
   const tryBiometric = useCallback(async () => {
     const { secured } = await authAvailability();
     if (!secured) return;
-    if (await authenticate('Buka Esok')) setAppLocked(false);
-  }, [setAppLocked]);
+    if (await authenticate(tr('prefs.lock.unlockPrompt'))) setAppLocked(false);
+  }, [setAppLocked, tr]);
 
   useEffect(() => {
     if (appLocked && settings.appLock) void tryBiometric();
@@ -63,7 +65,7 @@ export function LockGate({ children }: { children: ReactNode }) {
     try {
       const fails = await readFails();
       const wait = Math.ceil((fails.until - Date.now()) / 1000);
-      if (wait > 0) return setMsg(`Terlalu banyak percobaan. Coba lagi ${wait} detik lagi.`);
+      if (wait > 0) return setMsg(tr('prefs.lock.tooMany', { s: wait }));
       const raw = await SecureStore.getItemAsync(PIN_KEY);
       if (!raw) return setAppLocked(false);
       if (await verifyPin(pin, JSON.parse(raw) as PinRecord)) {
@@ -74,7 +76,7 @@ export function LockGate({ children }: { children: ReactNode }) {
       } else {
         const count = fails.count + 1;
         await SecureStore.setItemAsync(FAIL_KEY, JSON.stringify({ count, until: Date.now() + backoffSeconds(count) * 1000 }));
-        setMsg('PIN salah.');
+        setMsg(tr('prefs.lock.wrongPin'));
         setPin('');
       }
     } finally {
@@ -85,13 +87,13 @@ export function LockGate({ children }: { children: ReactNode }) {
   if (!appLocked || !settings.appLock) return <>{children}</>;
   return (
     <View style={{ flex: 1, backgroundColor: t.bg, justifyContent: 'center', padding: space.xl, gap: space.lg }}>
-      <Text variant="title">Esok terkunci</Text>
-      <Text muted>Buka dengan biometrik/kode sandi perangkat{hasPin ? ' atau PIN' : ''}.</Text>
-      <Button title="Buka dengan biometrik" onPress={tryBiometric} />
+      <Text variant="title">{tr('prefs.lock.title')}</Text>
+      <Text muted>{hasPin ? tr('prefs.lock.hintPin') : tr('prefs.lock.hint')}</Text>
+      <Button title={tr('prefs.lock.biometric')} onPress={tryBiometric} />
       {hasPin ? (
         <>
-          <Field label="PIN 6 digit" value={pin} onChangeText={(v) => setPin(v.replace(/\D/g, '').slice(0, 6))} keyboardType="number-pad" secureTextEntry maxLength={6} />
-          <Button title="Buka dengan PIN" variant="secondary" onPress={submit} loading={busy} disabled={pin.length !== 6} />
+          <Field label={tr('prefs.lock.pinLabel')} value={pin} onChangeText={(v) => setPin(v.replace(/\D/g, '').slice(0, 6))} keyboardType="number-pad" secureTextEntry maxLength={6} />
+          <Button title={tr('prefs.lock.pin')} variant="secondary" onPress={submit} loading={busy} disabled={pin.length !== 6} />
         </>
       ) : null}
       {msg ? <Text color={t.danger}>{msg}</Text> : null}

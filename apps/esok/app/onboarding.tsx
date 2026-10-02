@@ -7,12 +7,14 @@ import { requestNotificationPermission } from '@/features/reminders/notification
 import type { Intensity } from '@/features/reminders/schedule';
 import { sanitizeDisplayName } from '@/features/circles/moderation';
 import { useApp } from '@/state/app';
+import { useT } from '@/i18n/useT';
 
 const STEPS = 4;
 
 export default function Onboarding() {
   const router = useRouter();
   const { settings, updateSettings } = useApp();
+  const { t } = useT();
   const [step, setStep] = useState(0);
   const [agree, setAgree] = useState(false);
   const [adult, setAdult] = useState(false);
@@ -33,7 +35,8 @@ export default function Onboarding() {
         isMinor: !adult,
         reminders: { ...settings.reminders, enabled: remind, intensity, allowKhauf },
       });
-      router.replace('/(tabs)');
+      if (router.canGoBack()) router.back();
+      else router.replace('/(tabs)');
     } finally {
       setBusy(false);
     }
@@ -41,64 +44,64 @@ export default function Onboarding() {
 
   return (
     <Screen>
-      <Text variant="small" muted>Langkah {step + 1} dari {STEPS}</Text>
+      <Row style={{ justifyContent: 'space-between' }}>
+        <Text variant="small" muted>{t('prefs.onboarding.step', { n: step + 1, total: STEPS })}</Text>
+        <Button title={t('prefs.onboarding.later')} variant="ghost" onPress={() => (router.canGoBack() ? router.back() : router.replace('/(tabs)'))} />
+      </Row>
       {step === 0 ? (
         <>
-          <Text variant="title">Hari ini seakan esok tiada</Text>
-          <Text>
-            Esok membantu Anda mengingat kematian dengan tenang, lalu mengisi hari ini dengan kebaikan: mencatat amal, menjalankan misi kecil,
-            dan saling mengajak keluarga serta sahabat untuk berlomba dalam kebaikan.
-          </Text>
+          <Text variant="title">{t('prefs.onboarding.introTitle')}</Text>
+          <Text>{t('prefs.onboarding.introBody')}</Text>
           <QuoteCard quote={intro} />
-          <Button title="Lanjut" onPress={() => setStep(1)} />
+          <Button title={t('prefs.shared.continue')} onPress={() => setStep(1)} />
         </>
       ) : null}
       {step === 1 ? (
         <>
-          <Text variant="title">Beberapa adab</Text>
+          <Text variant="title">{t('prefs.onboarding.adabTitle')}</Text>
           <Card>
-            <Text>• Niat karena Allah. Poin dan lencana hanya penanda konsistensi, <Text style={{ fontWeight: '700' }}>bukan nilai pahala</Text>; pahala hanya di sisi Allah.</Text>
-            <Text>• Amalan <Text style={{ fontWeight: '700' }}>rahasia</Text> adalah bawaan: terenkripsi, tidak masuk feed atau peringkat, dan tak pernah tampil ke siapa pun.</Text>
-            <Text>• Kita mengingat kematian agar beramal, bukan mengharapkannya. Rahmat Allah luas; jangan putus asa.</Text>
-            <Text>• Esok bukan pengganti ilmu. Untuk urusan hukum agama, rujuklah ulama/ustadz terpercaya.</Text>
+            <Text>{t('prefs.onboarding.adab1Before')}<Text style={{ fontWeight: '700' }}>{t('prefs.onboarding.adab1Bold')}</Text>{t('prefs.onboarding.adab1After')}</Text>
+            <Text>{t('prefs.onboarding.adab2Before')}<Text style={{ fontWeight: '700' }}>{t('prefs.onboarding.adab2Bold')}</Text>{t('prefs.onboarding.adab2After')}</Text>
+            <Text>{t('prefs.onboarding.adab3')}</Text>
+            <Text>{t('prefs.onboarding.adab4')}</Text>
           </Card>
-          <Toggle label="Saya memahami hal di atas" value={agree} onValueChange={setAgree} />
+          <Toggle label={t('prefs.onboarding.understand')} value={agree} onValueChange={setAgree} />
           <Row>
-            <Button title="Kembali" variant="ghost" onPress={() => setStep(0)} />
-            <Button title="Lanjut" onPress={() => setStep(2)} disabled={!agree} />
+            <Button title={t('prefs.shared.back')} variant="ghost" onPress={() => setStep(0)} />
+            <Button title={t('prefs.shared.continue')} onPress={() => setStep(2)} disabled={!agree} />
           </Row>
         </>
       ) : null}
       {step === 2 ? (
         <>
-          <Text variant="title">Tentang Anda</Text>
-          <Field label="Nama tampilan (untuk lingkaran)" value={name} onChangeText={setName} placeholder="Hamba Allah" maxLength={40} hint="Boleh nama panggilan atau samaran. Anda bisa mengubahnya kapan saja." />
-          <Toggle label="Saya berusia 13 tahun ke atas" value={adult} onValueChange={setAdult} hint="Anak di bawah 13 tahun dapat memakai fitur pribadi dengan pendampingan orang tua, tanpa lingkaran." />
+          <Text variant="title">{t('prefs.onboarding.aboutTitle')}</Text>
+          <Field label={t('prefs.onboarding.nameLabel')} value={name} onChangeText={setName} placeholder={t('prefs.onboarding.namePlaceholder')} maxLength={40} hint={t('prefs.onboarding.nameHint')} />
+          <Toggle label={t('prefs.onboarding.adult')} value={adult} onValueChange={setAdult} hint={t('prefs.onboarding.adultHint')} />
           <Row>
-            <Button title="Kembali" variant="ghost" onPress={() => setStep(1)} />
-            <Button title="Lanjut" onPress={() => setStep(3)} />
+            <Button title={t('prefs.shared.back')} variant="ghost" onPress={() => setStep(1)} />
+            <Button title={t('prefs.shared.continue')} onPress={() => setStep(3)} />
           </Row>
-          {!adult ? <Text variant="small" muted>Tanpa konfirmasi usia 13+, fitur lingkaran & cloud dinonaktifkan. Jurnal, misi, dan pengingat tetap dapat dipakai.</Text> : null}
+          {!adult ? <Text variant="small" muted>{t('prefs.onboarding.minorNote')}</Text> : null}
         </>
       ) : null}
       {step === 3 ? (
         <>
-          <Text variant="title">Pengingat</Text>
-          <Toggle label="Aktifkan pengingat harian" value={remind} onValueChange={setRemind} hint="Notifikasi lokal; tidak butuh internet." />
+          <Text variant="title">{t('prefs.onboarding.remindersTitle')}</Text>
+          <Toggle label={t('prefs.onboarding.enableDaily')} value={remind} onValueChange={setRemind} hint={t('prefs.shared.localNotifHint')} />
           {remind ? (
             <>
-              <Text variant="label">Seberapa sering?</Text>
+              <Text variant="label">{t('prefs.shared.howOften')}</Text>
               <Row>
                 {(['ringan', 'sedang', 'sering'] as Intensity[]).map((i) => (
-                  <Chip key={i} label={i === 'ringan' ? '1×/hari' : i === 'sedang' ? '2×/hari' : '3×/hari'} selected={intensity === i} onPress={() => setIntensity(i)} />
+                  <Chip key={i} label={t('prefs.shared.perDay', { n: i === 'ringan' ? 1 : i === 'sedang' ? 2 : 3 })} selected={intensity === i} onPress={() => setIntensity(i)} />
                 ))}
               </Row>
-              <Toggle label="Sertakan pengingat bernada peringatan" value={allowKhauf} onValueChange={setAllowKhauf} hint="Dimatikan = hanya harapan & ajakan beramal. Nada peringatan tidak pernah berturut-turut." />
+              <Toggle label={t('prefs.onboarding.includeKhauf')} value={allowKhauf} onValueChange={setAllowKhauf} hint={t('prefs.onboarding.includeKhaufHint')} />
             </>
           ) : null}
           <Row>
-            <Button title="Kembali" variant="ghost" onPress={() => setStep(2)} />
-            <Button title="Mulai" onPress={finish} loading={busy} />
+            <Button title={t('prefs.shared.back')} variant="ghost" onPress={() => setStep(2)} />
+            <Button title={t('prefs.onboarding.start')} onPress={finish} loading={busy} />
           </Row>
         </>
       ) : null}
