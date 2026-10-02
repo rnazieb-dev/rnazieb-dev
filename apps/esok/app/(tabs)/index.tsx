@@ -72,6 +72,7 @@ export default function Beranda() {
       </FadeIn>
       <FadeIn index={3}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 4 }}>
+          <IconTile size={56} label={t('hub.items.quran')} icon={{ glyph: 'quran' }} gradient="amber" onPress={() => router.push('/quran')} />
           <IconTile size={56} label={t('hub.items.qibla')} icon={{ glyph: 'kabah' }} gradient="night" onPress={() => router.push('/kiblat')} />
           <IconTile size={56} label={t('hub.items.tasbih')} icon={{ glyph: 'tasbih' }} gradient="teal" onPress={() => router.push('/tasbih')} />
           <IconTile size={56} label={t('hub.items.dhikrAll')} icon={{ glyph: 'quran' }} gradient="pink" onPress={() => router.push('/dzikir')} />

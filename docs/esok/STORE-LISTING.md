@@ -13,4 +13,4 @@ Deskripsi singkat (≤80): Ingat mati, isi hari ini dengan kebaikan: jurnal amal
 
 Identitas teknis yang **tidak** ikut berganti (aman dibiarkan sebelum rilis pertama):
 - `expo.slug = hari-ini` dan `extra.eas.projectId` — terikat proyek EAS "Hari Ini".
-- `android.package` / `ios.bundleIdentifier` = `dev.rnazieb.esok` — **permanen setelah rilis pertama di toko**; bila ingin `…nafs`, ubah sebelum unggah pertama.
+- `android.package` / `ios.bundleIdentifier` = `nazib.nafs` — **permanen setelah rilis pertama di toko**.

@@ -9,14 +9,14 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "dev.rnazieb.esok",
+      "bundleIdentifier": "nazib.nafs",
       "infoPlist": {
         "NSFaceIDUsageDescription": "Esok memakai Face ID untuk membuka amalan rahasia Anda.",
         "NSLocationWhenInUseUsageDescription": "Lokasi dipakai hanya untuk menghitung waktu salat bagi pengingat. Tidak dikirim ke server."
       }
     },
     "android": {
-      "package": "dev.rnazieb.esok",
+      "package": "nazib.nafs",
       "adaptiveIcon": {
         "backgroundColor": "#0F2A2A",
         "foregroundImage": "./assets/android-icon-foreground.png",

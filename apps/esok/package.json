@@ -64,7 +64,8 @@
     "validate:content": "tsx scripts/validate-content.ts",
     "format": "prettier --write .",
     "test:rls": "NODE_OPTIONS=--experimental-vm-modules jest rls.test --testPathIgnorePatterns=/node_modules/ --testPathIgnorePatterns=/helpers/",
-    "build:assets": "node scripts/build-assets.mjs"
+    "build:assets": "node scripts/build-assets.mjs",
+    "build:quran": "node scripts/build-quran.mjs"
   },
   "private": true,
   "jest": {

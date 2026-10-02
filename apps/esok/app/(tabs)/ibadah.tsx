@@ -27,13 +27,17 @@ const SECTIONS: { title: TKey; items: Feature[] }[] = [
     ],
   },
   {
+    title: 'hub.sections.quran',
+    items: [{ key: 'hub.items.quran', icon: { glyph: 'quran' }, gradient: 'amber', href: '/quran' }],
+  },
+  {
     title: 'hub.sections.dhikr',
     items: [
       { key: 'hub.items.dhikrMorning', icon: { glyph: 'tunas' }, gradient: 'sky', href: { pathname: '/adhkar', params: { tab: 'pagi' } } },
       { key: 'hub.items.dhikrEvening', icon: { glyph: 'bulan' }, gradient: 'amber', href: { pathname: '/adhkar', params: { tab: 'petang' } } },
       { key: 'hub.items.dhikrSleep', icon: { glyph: 'muhasabah' }, gradient: 'indigo', href: { pathname: '/adhkar', params: { tab: 'tidur' } } },
       { key: 'hub.items.duaDaily', icon: { glyph: 'doa' }, gradient: 'emerald', href: { pathname: '/adhkar', params: { tab: 'harian' } } },
-      { key: 'hub.items.dhikrAll', icon: { glyph: 'quran' }, gradient: 'pink', href: '/dzikir' },
+      { key: 'hub.items.dhikrAll', icon: { glyph: 'tasbih' }, gradient: 'pink', href: '/dzikir' },
     ],
   },
   {
