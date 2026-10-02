@@ -3,10 +3,16 @@ import { I18nManager } from 'react-native';
 import en, { type Dict } from './en';
 import id from './id';
 import ar from './locales/ar';
+import az from './locales/az';
 import bs from './locales/bs';
+import de from './locales/de';
+import fr from './locales/fr';
+import ha from './locales/ha';
 import ms from './locales/ms';
+import sq from './locales/sq';
 import sw from './locales/sw';
 import tr from './locales/tr';
+import ur from './locales/ur';
 import zh from './locales/zh';
 
 interface LangInfo {
@@ -22,10 +28,16 @@ export const LANGUAGES = {
   en: { label: 'English', dict: en, rtl: false, locale: 'en' },
   id: { label: 'Bahasa Indonesia', dict: id, rtl: false, locale: 'id' },
   ar: { label: 'العربية', dict: ar, rtl: true, locale: 'ar' },
+  ur: { label: 'اردو', dict: ur, rtl: true, locale: 'ur' },
   ms: { label: 'Bahasa Melayu', dict: ms, rtl: false, locale: 'ms' },
   tr: { label: 'Türkçe', dict: tr, rtl: false, locale: 'tr' },
-  sw: { label: 'Kiswahili', dict: sw, rtl: false, locale: 'sw' },
+  az: { label: 'Azərbaycan', dict: az, rtl: false, locale: 'az' },
+  fr: { label: 'Français', dict: fr, rtl: false, locale: 'fr' },
+  de: { label: 'Deutsch', dict: de, rtl: false, locale: 'de' },
+  sq: { label: 'Shqip', dict: sq, rtl: false, locale: 'sq' },
   bs: { label: 'Bosanski', dict: bs, rtl: false, locale: 'bs' },
+  sw: { label: 'Kiswahili', dict: sw, rtl: false, locale: 'sw' },
+  ha: { label: 'Hausa', dict: ha, rtl: false, locale: 'ha' },
   zh: { label: '中文', dict: zh, rtl: false, locale: 'zh-CN' },
 } as const satisfies Record<string, LangInfo>;
 
