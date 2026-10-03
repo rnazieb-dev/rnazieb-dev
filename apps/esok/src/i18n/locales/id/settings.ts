@@ -1,6 +1,7 @@
+import type { Loose } from '../../en';
 import type en from '../en/settings';
 
-const settings: typeof en = {
+const settings: Loose<typeof en> = {
   shared: {
     failed: 'Gagal',
     cancel: 'Batal',

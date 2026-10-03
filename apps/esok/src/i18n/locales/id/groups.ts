@@ -1,6 +1,7 @@
+import type { Loose } from '../../en';
 import type en from '../en/groups';
 
-const groups: typeof en = {
+const groups: Loose<typeof en> = {
   title: 'Grup',
   failed: 'Gagal',
   sent: 'Terkirim',

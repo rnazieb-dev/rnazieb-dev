@@ -1,4 +1,5 @@
 /** English (source of truth for keys). Other languages must provide the same shape. */
+import type { PluralForms } from './plural';
 import groups from './locales/en/groups';
 import journal from './locales/en/journal';
 import missions from './locales/en/missions';
@@ -87,7 +88,7 @@ const en = {
     legend: 'Dots mark recommended voluntary fasts (Mon/Thu, 13–15 of each Hijri month).',
     today: 'Today',
   },
-  dhikr: { title: 'Dhikr', readings: '{n} readings' },
+  dhikr: { title: 'Dhikr', readings: { one: '{n} reading', other: '{n} readings' } },
   quran: {
     title: 'Qur’an',
     search: 'Search surah by name or number',
@@ -99,7 +100,7 @@ const en = {
     juz: 'Juz',
     bookmarks: 'Bookmarks',
     noBookmarks: 'No bookmarks yet. Long-press a verse to save it.',
-    verses: '{n} verses',
+    verses: { one: '{n} verse', other: '{n} verses' },
     meccan: 'Meccan',
     medinan: 'Medinan',
     translit: 'Transliteration',
@@ -119,4 +120,8 @@ const en = {
 };
 
 export default en;
-export type Dict = typeof en;
+
+/** Bentuk yang boleh dipakai bahasa lain: string biasa, atau objek bentuk jamak untuk kunci apa pun. */
+export type Loose<T> = T extends string ? string | PluralForms : T extends readonly string[] ? T : T extends { other: string } ? string | PluralForms : { [K in keyof T]: Loose<T[K]> };
+export type Dict = Loose<typeof en>;
+export type EnDict = typeof en;
