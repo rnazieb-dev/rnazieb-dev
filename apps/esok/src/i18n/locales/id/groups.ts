@@ -1,6 +1,7 @@
+import type { Loose } from '../../en';
 import type en from '../en/groups';
 
-const groups: typeof en = {
+const groups: Loose<typeof en> = {
   title: 'Grup',
   failed: 'Gagal',
   sent: 'Terkirim',
@@ -11,7 +12,7 @@ const groups: typeof en = {
   report: 'Laporkan',
   block: 'Blokir',
   admin: 'Admin',
-  kinds: { keluarga: 'Keluarga', sesama_jenis: 'Sesama jenis', campur: 'Terbuka' },
+  kinds: { keluarga: 'Keluarga', sesama_jenis: 'Khusus pria atau wanita', campur: 'Terbuka' },
   nudges: {
     ingat: 'Sudahkah hari ini ada satu kebaikan kecil? Semangat, kita saling mengingatkan.',
     doa: 'Semoga Allah mudahkan urusanmu hari ini. Aamiin.',
@@ -51,7 +52,7 @@ const groups: typeof en = {
     name: 'Nama grup',
     namePlaceholder: 'mis. Keluarga Besar Bani Fulan',
     kind: 'Jenis',
-    hints: { keluarga: 'Untuk keluarga inti/besar.', sesama_jenis: 'Anggota sesama jenis agar nyaman.', campur: 'Sahabat, kantor, komunitas.' },
+    hints: { keluarga: 'Untuk keluarga inti/besar.', sesama_jenis: 'Grup khusus pria atau khusus wanita agar nyaman.', campur: 'Sahabat, kantor, komunitas.' },
     approvalNote: 'Anggota baru selalu perlu persetujuan Anda.',
   },
   challenge: {

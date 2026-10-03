@@ -1,6 +1,7 @@
+import type { Loose } from '../../en';
 import type en from '../en/missions';
 
-const missions: typeof en = {
+const missions: Loose<typeof en> = {
   loading: 'Memuat…',
   retry: 'Coba lagi',
   failed: 'Gagal',

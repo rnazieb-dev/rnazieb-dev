@@ -330,7 +330,7 @@ const tr: Dict = {
     report: 'Bildir',
     block: 'Engelle',
     admin: 'Yönetici',
-    kinds: { keluarga: 'Aile', sesama_jenis: 'Aynı cinsiyet', campur: 'Açık' },
+    kinds: { keluarga: 'Aile', sesama_jenis: 'Yalnızca erkekler veya yalnızca kadınlar', campur: 'Açık' },
     nudges: {
       ingat: 'Bugün küçük bir iyilik yaptınız mı? Devam edin, birbirimize hatırlatıyoruz.',
       doa: 'Allah bugün işlerinizi kolaylaştırsın. Âmin.',
@@ -370,7 +370,7 @@ const tr: Dict = {
       name: 'Grup adı',
       namePlaceholder: 'ör. Falanoğulları Ailesi',
       kind: 'Tür',
-      hints: { keluarga: 'Çekirdek veya geniş aile için.', sesama_jenis: 'Rahatlık için aynı cinsiyetten üyeler.', campur: 'Arkadaşlar, iş yeri, topluluk.' },
+      hints: { keluarga: 'Çekirdek veya geniş aile için.', sesama_jenis: 'Rahatlık için yalnızca erkeklerden veya yalnızca kadınlardan oluşan grup.', campur: 'Arkadaşlar, iş yeri, topluluk.' },
       approvalNote: 'Yeni üyeler her zaman sizin onayınızı gerektirir.',
     },
     challenge: {

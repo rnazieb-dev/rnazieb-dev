@@ -1,6 +1,7 @@
+import type { Loose } from '../../en';
 import type en from '../en/journal';
 
-const journal: typeof en = {
+const journal: Loose<typeof en> = {
   categories: {
     ibadah: 'Ibadah',
     keluarga: 'Keluarga',

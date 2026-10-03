@@ -330,7 +330,7 @@ const ms: Dict = {
     report: 'Laporkan',
     block: 'Sekat',
     admin: 'Pentadbir',
-    kinds: { keluarga: 'Keluarga', sesama_jenis: 'Sama jantina', campur: 'Terbuka' },
+    kinds: { keluarga: 'Keluarga', sesama_jenis: 'Lelaki sahaja atau wanita sahaja', campur: 'Terbuka' },
     nudges: {
       ingat: 'Sudahkah anda melakukan satu kebaikan kecil hari ini? Teruskan, kita saling mengingatkan.',
       doa: 'Semoga Allah memudahkan urusan anda hari ini. Amin.',
@@ -370,7 +370,7 @@ const ms: Dict = {
       name: 'Nama kumpulan',
       namePlaceholder: 'cth. Keluarga Bani Fulan',
       kind: 'Jenis',
-      hints: { keluarga: 'Untuk keluarga terdekat atau keluarga besar.', sesama_jenis: 'Ahli sama jantina untuk keselesaan.', campur: 'Rakan, pejabat, komuniti.' },
+      hints: { keluarga: 'Untuk keluarga terdekat atau keluarga besar.', sesama_jenis: 'Kumpulan lelaki sahaja atau wanita sahaja untuk keselesaan.', campur: 'Rakan, pejabat, komuniti.' },
       approvalNote: 'Ahli baharu sentiasa memerlukan kelulusan anda.',
     },
     challenge: {

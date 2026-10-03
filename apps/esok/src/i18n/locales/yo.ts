@@ -330,7 +330,7 @@ const yo: Dict = {
     report: 'Fi ẹ̀sùn kàn',
     block: 'Dí i lọ́nà',
     admin: 'Alákòóso',
-    kinds: { keluarga: 'Ẹbí', sesama_jenis: 'Akọ tàbí abo kan náà', campur: 'Ṣíṣí' },
+    kinds: { keluarga: 'Ẹbí', sesama_jenis: 'Ọkùnrin nìkan tàbí obìnrin nìkan', campur: 'Ṣíṣí' },
     nudges: {
       ingat: 'Ṣé o ti ṣe iṣẹ́ rere kékeré kan lónìí? Máa bá a lọ, à ń rán ara wa létí.',
       doa: 'Kí Allah ṣe ọ̀rọ̀ rẹ ní ìrọ̀rùn lónìí. Àmín.',
@@ -370,7 +370,7 @@ const yo: Dict = {
       name: 'Orúkọ ẹgbẹ́',
       namePlaceholder: 'àpẹẹrẹ: Ẹbí Bani Fulan',
       kind: 'Irú',
-      hints: { keluarga: 'Fún ẹbí tímọ́tímọ́ tàbí ẹbí ńlá.', sesama_jenis: 'Ọmọ ẹgbẹ́ ti akọ tàbí abo kan náà fún ìrọ̀rùn.', campur: 'Ọ̀rẹ́, ọ́fíìsì, àwùjọ.' },
+      hints: { keluarga: 'Fún ẹbí tímọ́tímọ́ tàbí ẹbí ńlá.', sesama_jenis: 'Ẹgbẹ́ ọkùnrin nìkan tàbí obìnrin nìkan, fún ìtùnú.', campur: 'Ọ̀rẹ́, ọ́fíìsì, àwùjọ.' },
       approvalNote: 'Àwọn ọmọ ẹgbẹ́ tuntun máa ń nílò ìfọwọ́sí rẹ nígbà gbogbo.',
     },
     challenge: {

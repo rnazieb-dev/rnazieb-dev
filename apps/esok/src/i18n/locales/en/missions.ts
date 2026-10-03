@@ -80,7 +80,7 @@ const missions = {
     openNotes: 'Open notes',
     today: 'Today',
     levelPill: 'Level {n} · {name}',
-    consistencyPoints: '{n} consistency points',
+    consistencyPoints: { one: '{n} consistency point', other: '{n} consistency points' },
     streak: ' · {n}-day streak',
     secretCount: '🔒 Hidden deeds: {n}',
     noneToday: 'Nothing recorded yet today. Even one small good deed matters.',

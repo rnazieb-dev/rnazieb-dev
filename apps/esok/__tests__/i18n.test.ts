@@ -5,9 +5,14 @@ jest.mock('expo-localization', () => ({ getLocales: () => [] }));
 jest.mock('react-native', () => ({ I18nManager: { isRTL: false } }));
 
 type Tree = { [k: string]: unknown };
+const isPlural = (o: unknown): boolean => !!o && typeof o === 'object' && !Array.isArray(o) && typeof (o as { other?: unknown }).other === 'string';
+const CATS = ['zero', 'one', 'two', 'few', 'many', 'other'];
+/** Semua bentuk teks dari sebuah daun (string atau objek jamak). */
+const forms = (v: unknown): string[] => (isPlural(v) ? Object.values(v as Record<string, string>) : [v as string]);
+const refPh = (v: unknown): string => placeholders(isPlural(v) ? (v as { other: string }).other : (v as string));
 function leaves(o: unknown, prefix = ''): Map<string, string | string[]> {
   const out = new Map<string, string | string[]>();
-  if (typeof o === 'string' || Array.isArray(o)) out.set(prefix, o as string);
+  if (typeof o === 'string' || Array.isArray(o) || isPlural(o)) out.set(prefix, o as string);
   else if (o && typeof o === 'object') for (const [k, v] of Object.entries(o as Tree)) for (const [kk, vv] of leaves(v, prefix ? `${prefix}.${k}` : k)) out.set(kk, vv);
   return out;
 }
@@ -24,11 +29,17 @@ describe.each(Object.keys(LANGUAGES).filter((l) => l !== 'en'))('kamus %s', (cod
     for (const [k, v] of en) {
       const x = d.get(k)!;
       if (Array.isArray(v)) expect((x as string[]).length).toBe(v.length);
-      else expect(`${k}:${placeholders(x as string)}`).toBe(`${k}:${placeholders(v)}`);
+      else {
+        // 'other' (atau string biasa) harus memuat placeholder persis; bentuk lain boleh menghilangkan {n} (mis. "satu poin").
+        const other = isPlural(x) ? (x as unknown as { other: string }).other : (x as string);
+        expect(`${k}:${placeholders(other)}`).toBe(`${k}:${refPh(v)}`);
+        for (const f of forms(x)) for (const ph of placeholders(f).split(',').filter(Boolean)) expect(`${k}:${refPh(v).split(',').includes(ph)}`).toBe(`${k}:true`);
+        if (isPlural(x)) for (const c of Object.keys(x as object)) expect(CATS).toContain(c);
+      }
     }
   });
   it('tidak ada teks kosong', () => {
-    for (const [k, v] of d) if (!Array.isArray(v)) expect(`${k}:${v.trim().length > 0}`).toBe(`${k}:true`);
+    for (const [k, v] of d) if (!Array.isArray(v)) for (const f of forms(v)) expect(`${k}:${f.trim().length > 0}`).toBe(`${k}:true`);
   });
 });
 

@@ -21,7 +21,7 @@ jobs:
       - run: npm run validate:content
       - name: Dokumen hukum & Al-Qur'an hasil bangun terbaru
         run: |
-          npm run build:legal
+          npm run build:legal:strict
           git diff --exit-code -- src/content/legal.generated.json ../../site
       - run: npm run typecheck
       - run: npm run lint

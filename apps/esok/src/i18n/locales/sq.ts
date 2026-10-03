@@ -330,7 +330,7 @@ const sq: Dict = {
     report: 'Raporto',
     block: 'Blloko',
     admin: 'Admin',
-    kinds: { keluarga: 'Familje', sesama_jenis: 'Gjini e njëjtë', campur: 'I hapur' },
+    kinds: { keluarga: 'Familje', sesama_jenis: 'Vetëm burra ose vetëm gra', campur: 'I hapur' },
     nudges: {
       ingat: 'A bëre sot një vepër të mirë të vogël? Vazhdo, ia kujtojmë njëri-tjetrit.',
       doa: 'Allahu ta lehtësoftë punën sot. Amin.',
@@ -370,7 +370,7 @@ const sq: Dict = {
       name: 'Emri i grupit',
       namePlaceholder: 'p.sh. Familja e filanit',
       kind: 'Lloji',
-      hints: { keluarga: 'Për familjen e ngushtë ose të gjerë.', sesama_jenis: 'Anëtarë të së njëjtës gjini, për rehati.', campur: 'Miq, zyrë, komunitet.' },
+      hints: { keluarga: 'Për familjen e ngushtë ose të gjerë.', sesama_jenis: 'Një grup vetëm për burra ose vetëm për gra, për rehati.', campur: 'Miq, zyrë, komunitet.' },
       approvalNote: 'Anëtarët e rinj gjithmonë kanë nevojë për miratimin tënd.',
     },
     challenge: {

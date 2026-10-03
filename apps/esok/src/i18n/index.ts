@@ -1,6 +1,7 @@
 import { getLocales } from 'expo-localization';
 import { I18nManager } from 'react-native';
-import en, { type Dict } from './en';
+import en, { type Dict, type EnDict } from './en';
+import { type PluralForms, isPluralForms, pickPlural } from './plural';
 import enExtra from './extra/en';
 import idExtra from './extra/id';
 import arExtra from './extra/ar';
@@ -116,10 +117,10 @@ export function systemLang(): Lang {
 export const resolveLang = (s: LangSetting | undefined): Lang => (!s || s === 'system' ? systemLang() : s);
 
 type Leaves<T, P extends string = ''> = {
-  [K in keyof T & string]: T[K] extends string ? `${P}${K}` : T[K] extends readonly string[] ? `${P}${K}` : Leaves<T[K], `${P}${K}.`>;
+  [K in keyof T & string]: T[K] extends string ? `${P}${K}` : T[K] extends readonly string[] ? `${P}${K}` : T[K] extends { other: string } ? `${P}${K}` : Leaves<T[K], `${P}${K}.`>;
 }[keyof T & string];
 type ExtraDict = typeof enExtra;
-export type TKey = Leaves<Dict> | Leaves<ExtraDict>;
+export type TKey = Leaves<EnDict> | Leaves<ExtraDict>;
 
 /** Teks tambahan per bahasa; yang belum ada jatuh ke bahasa Inggris. */
 export const EXTRAS: Partial<Record<Lang, unknown>> = { en: enExtra, id: idExtra, ar: arExtra, az: azExtra, bn: bnExtra, bs: bsExtra, de: deExtra, es: esExtra, fa: faExtra, fr: frExtra, ha: haExtra, hi: hiExtra, kk: kkExtra, ms: msExtra, nl: nlExtra, ps: psExtra, ru: ruExtra, so: soExtra, sq: sqExtra, sw: swExtra, th: thExtra, tl: tlExtra, tr: trExtra, ur: urExtra, uz: uzExtra, yo: yoExtra, zh: zhExtra };
@@ -129,8 +130,10 @@ function lookup(dict: unknown, key: string): unknown {
 }
 
 export function translate(lang: Lang, key: TKey, params?: Record<string, string | number>): string {
-  const raw = lookup(LANGUAGES[lang].dict, key) ?? lookup(EXTRAS[lang], key) ?? lookup(en, key) ?? lookup(enExtra, key) ?? key;
-  const s = Array.isArray(raw) ? raw.join(',') : String(raw);
+  const own = lookup(LANGUAGES[lang].dict, key) ?? lookup(EXTRAS[lang], key);
+  const raw = own ?? lookup(en, key) ?? lookup(enExtra, key) ?? key;
+  // Teks dari bahasa Inggris (cadangan) memakai aturan jamak Inggris.
+  const s = isPluralForms(raw) ? pickPlural(raw as PluralForms, own === undefined ? 'en' : lang, Number(params?.n ?? 0)) : Array.isArray(raw) ? raw.join(',') : String(raw);
   return params ? s.replace(/\{(\w+)\}/g, (_, k: string) => String(params[k] ?? `{${k}}`)) : s;
 }
 

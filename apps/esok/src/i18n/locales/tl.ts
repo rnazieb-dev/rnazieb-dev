@@ -330,7 +330,7 @@ const tl: Dict = {
     report: 'I-report',
     block: 'I-block',
     admin: 'Admin',
-    kinds: { keluarga: 'Pamilya', sesama_jenis: 'Parehong kasarian', campur: 'Bukas' },
+    kinds: { keluarga: 'Pamilya', sesama_jenis: 'Lalaki lang o babae lang', campur: 'Bukas' },
     nudges: {
       ingat: 'Nakagawa ka na ba ng isang maliit na kabutihan ngayon? Ituloy mo, nagpapaalalahanan tayo.',
       doa: 'Nawa’y gawing madali ni Allah ang iyong mga gawain ngayon. Ameen.',
@@ -370,7 +370,7 @@ const tl: Dict = {
       name: 'Pangalan ng grupo',
       namePlaceholder: 'hal. Pamilya Bani Fulan',
       kind: 'Uri',
-      hints: { keluarga: 'Para sa malapit o malawak na pamilya.', sesama_jenis: 'Mga miyembrong parehong kasarian para maging komportable.', campur: 'Mga kaibigan, opisina, komunidad.' },
+      hints: { keluarga: 'Para sa malapit o malawak na pamilya.', sesama_jenis: 'Grupo para sa lalaki lang o babae lang, para sa ginhawa.', campur: 'Mga kaibigan, opisina, komunidad.' },
       approvalNote: 'Laging kailangan ng iyong pag-apruba ang mga bagong miyembro.',
     },
     challenge: {

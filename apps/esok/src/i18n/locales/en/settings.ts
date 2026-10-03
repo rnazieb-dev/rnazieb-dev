@@ -197,7 +197,7 @@ const settings = {
   },
   profile: {
     level: 'Level {level} · {name}',
-    points: '{n} points',
+    points: { one: '{n} point', other: '{n} points' },
     pointsNote: 'Points mark consistency, not the worth of your reward. The reward rests with Allah alone.',
     streak: '{n}-day streak · {total} entries in total',
     privateScore: 'This personal score includes your secret deeds and is visible only to you. Others only see {n} points from the deeds you share.',
