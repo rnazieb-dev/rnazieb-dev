@@ -14,7 +14,7 @@ Bahasa berkeyakinan rendah ditandai "(beta)" di pemilih bahasa. Jangan mengiklan
 
 ## Temuan lintas bahasa (perlu keputusan/rekayasa)
 1. **Bentuk jamak setelah angka** ("{n} hari", "{n} actions"): salah untuk sebagian bilangan di Arab, Rusia, Slavia, dan lainnya. Butuh sistem jamak (CLDR/ICU) di kode atau kata tanpa angka.
-2. **Jenis grup "sesama jenis"** terbaca ambigu (bisa berarti "sesama jenis kelamin" dalam arti romantis) di banyak bahasa. Usul: ganti sumber (en/id) menjadi **"hanya pria / hanya wanita"**, lalu terjemahkan ulang. Di ur/fa/ps sudah diganti.
+2. ~~Jenis grup "sesama jenis"~~ **Selesai:** semua bahasa kini "hanya pria atau hanya wanita" (en/id diganti di sumber; 22 bahasa lain diterjemahkan ulang oleh model — tetap perlu dicek penutur asli).
 3. **"Tantangan/challenge"**: di tr ("meydan okuma"), uz ("musobaqa") bermakna perlawanan/perlombaan, tidak sesuai semangat kolektif non-kompetitif.
 4. **Muhasabah** dirender dekat dengan kata "akuntansi" di tr, az, sq. Pertimbangkan kata refleksi diri atau pinjaman Arab.
 5. **Nomor hotline/mata uang** kini per negara (lihat PR), tetapi daftar nomor harus diverifikasi sebelum rilis.

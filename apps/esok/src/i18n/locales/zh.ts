@@ -330,7 +330,7 @@ const zh: Dict = {
     report: '举报',
     block: '屏蔽',
     admin: '管理员',
-    kinds: { keluarga: '家庭', sesama_jenis: '同性别', campur: '开放' },
+    kinds: { keluarga: '家庭', sesama_jenis: '仅限男性或仅限女性', campur: '开放' },
     nudges: {
       ingat: '今天做了一件小小的善事吗？继续加油，我们互相提醒。',
       doa: '愿安拉使您今天诸事顺遂。阿米乃。',
@@ -370,7 +370,7 @@ const zh: Dict = {
       name: '小组名称',
       namePlaceholder: '例如：某某家族',
       kind: '类型',
-      hints: { keluarga: '适用于直系或大家庭。', sesama_jenis: '同性别成员，更加自在。', campur: '朋友、同事、社群。' },
+      hints: { keluarga: '适用于直系或大家庭。', sesama_jenis: '为方便起见，仅限男性或仅限女性的小组。', campur: '朋友、同事、社群。' },
       approvalNote: '新成员始终需要您的批准。',
     },
     challenge: {

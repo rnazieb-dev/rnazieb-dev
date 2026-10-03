@@ -330,7 +330,7 @@ const ha: Dict = {
     report: 'Kai rahoto',
     block: 'Toshe',
     admin: 'Mai gudanarwa',
-    kinds: { keluarga: 'Iyali', sesama_jenis: 'Jinsi ɗaya', campur: 'Buɗaɗɗe' },
+    kinds: { keluarga: 'Iyali', sesama_jenis: 'Maza kawai ko mata kawai', campur: 'Buɗaɗɗe' },
     nudges: {
       ingat: 'Ka yi ɗan ƙaramin alheri ɗaya yau? Ci gaba, muna tunatar da juna.',
       doa: 'Allah Ya sauƙaƙa maka al’amuranka yau. Amin.',
@@ -370,7 +370,7 @@ const ha: Dict = {
       name: 'Sunan rukuni',
       namePlaceholder: 'misali: Iyalin Bani Fulan',
       kind: 'Iri',
-      hints: { keluarga: 'Domin iyali na kusa ko dangi.', sesama_jenis: 'Membobi masu jinsi ɗaya don jin daɗi.', campur: 'Abokai, ofis, al’umma.' },
+      hints: { keluarga: 'Domin iyali na kusa ko dangi.', sesama_jenis: 'Rukunin maza kawai ko mata kawai domin jin daɗi.', campur: 'Abokai, ofis, al’umma.' },
       approvalNote: 'Sababbin membobi koyaushe suna buƙatar amincewarka.',
     },
     challenge: {

@@ -330,7 +330,7 @@ const sw: Dict = {
     report: 'Ripoti',
     block: 'Zuia',
     admin: 'Msimamizi',
-    kinds: { keluarga: 'Familia', sesama_jenis: 'Jinsia moja', campur: 'Wazi' },
+    kinds: { keluarga: 'Familia', sesama_jenis: 'Wanaume pekee au wanawake pekee', campur: 'Wazi' },
     nudges: {
       ingat: 'Je, umefanya wema mdogo mmoja leo? Endelea, tunakumbushana.',
       doa: 'Allah akurahisishie mambo yako leo. Amin.',
@@ -370,7 +370,7 @@ const sw: Dict = {
       name: 'Jina la kikundi',
       namePlaceholder: 'mf. Familia ya Bani Fulan',
       kind: 'Aina',
-      hints: { keluarga: 'Kwa familia ya karibu au ukoo.', sesama_jenis: 'Wanachama wa jinsia moja kwa faraja.', campur: 'Marafiki, ofisi, jamii.' },
+      hints: { keluarga: 'Kwa familia ya karibu au ukoo.', sesama_jenis: 'Kundi la wanaume pekee au wanawake pekee kwa faraja.', campur: 'Marafiki, ofisi, jamii.' },
       approvalNote: 'Wanachama wapya daima wanahitaji idhini yako.',
     },
     challenge: {

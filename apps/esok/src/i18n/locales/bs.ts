@@ -330,7 +330,7 @@ const bs: Dict = {
     report: 'Prijavi',
     block: 'Blokiraj',
     admin: 'Admin',
-    kinds: { keluarga: 'Porodica', sesama_jenis: 'Isti spol', campur: 'Otvorena' },
+    kinds: { keluarga: 'Porodica', sesama_jenis: 'Samo muškarci ili samo žene', campur: 'Otvorena' },
     nudges: {
       ingat: 'Je li danas učinjeno bar jedno malo dobro djelo? Nastavi, podsjećamo jedni druge.',
       doa: 'Neka ti Allah olakša današnje poslove. Amin.',
@@ -370,7 +370,7 @@ const bs: Dict = {
       name: 'Naziv grupe',
       namePlaceholder: 'npr. Porodica Fulanović',
       kind: 'Vrsta',
-      hints: { keluarga: 'Za užu ili širu porodicu.', sesama_jenis: 'Članovi istog spola, radi ugodnosti.', campur: 'Prijatelji, posao, zajednica.' },
+      hints: { keluarga: 'Za užu ili širu porodicu.', sesama_jenis: 'Grupa samo za muškarce ili samo za žene, radi ugode.', campur: 'Prijatelji, posao, zajednica.' },
       approvalNote: 'Novi članovi uvijek trebaju tvoje odobrenje.',
     },
     challenge: {

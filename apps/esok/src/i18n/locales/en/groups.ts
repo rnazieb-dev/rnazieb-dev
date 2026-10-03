@@ -9,7 +9,7 @@ const groups = {
   report: 'Report',
   block: 'Block',
   admin: 'Admin',
-  kinds: { keluarga: 'Family', sesama_jenis: 'Same gender', campur: 'Open' },
+  kinds: { keluarga: 'Family', sesama_jenis: 'Men only or women only', campur: 'Open' },
   nudges: {
     ingat: 'Have you done one small good deed today? Keep going, we remind each other.',
     doa: 'May Allah make your affairs easy today. Ameen.',
@@ -49,7 +49,7 @@ const groups = {
     name: 'Group name',
     namePlaceholder: 'e.g. The Bani Fulan Family',
     kind: 'Type',
-    hints: { keluarga: 'For immediate or extended family.', sesama_jenis: 'Same-gender members for comfort.', campur: 'Friends, office, community.' },
+    hints: { keluarga: 'For immediate or extended family.', sesama_jenis: 'A men-only or women-only group, for comfort.', campur: 'Friends, office, community.' },
     approvalNote: 'New members always need your approval.',
   },
   challenge: {

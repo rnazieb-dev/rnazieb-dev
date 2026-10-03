@@ -330,7 +330,7 @@ const uz: Dict = {
     report: 'Shikoyat qilish',
     block: 'Bloklash',
     admin: 'Admin',
-    kinds: { keluarga: 'Oila', sesama_jenis: 'Bir jinsli', campur: 'Ochiq' },
+    kinds: { keluarga: 'Oila', sesama_jenis: 'Faqat erkaklar yoki faqat ayollar', campur: 'Ochiq' },
     nudges: {
       ingat: 'Bugun kichik bir yaxshilik qildingizmi? Davom eting, bir-birimizga eslatib turamiz.',
       doa: 'Alloh bugun ishlaringizni oson qilsin. Omin.',
@@ -370,7 +370,7 @@ const uz: Dict = {
       name: 'Guruh nomi',
       namePlaceholder: 'masalan, Falonchilar oilasi',
       kind: 'Turi',
-      hints: { keluarga: 'Yaqin yoki keng oila uchun.', sesama_jenis: 'Qulaylik uchun bir jinsli aʼzolar.', campur: 'Doʻstlar, ishxona, jamoa.' },
+      hints: { keluarga: 'Yaqin yoki keng oila uchun.', sesama_jenis: 'Qulaylik uchun faqat erkaklar yoki faqat ayollar guruhi.', campur: 'Doʻstlar, ishxona, jamoa.' },
       approvalNote: 'Yangi aʼzolar har doim sizning tasdigʻingizni talab qiladi.',
     },
     challenge: {

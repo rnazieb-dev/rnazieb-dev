@@ -330,7 +330,7 @@ const de: Dict = {
     report: 'Melden',
     block: 'Blockieren',
     admin: 'Admin',
-    kinds: { keluarga: 'Familie', sesama_jenis: 'Gleiches Geschlecht', campur: 'Offen' },
+    kinds: { keluarga: 'Familie', sesama_jenis: 'Nur Männer oder nur Frauen', campur: 'Offen' },
     nudges: {
       ingat: 'Hast du heute schon eine kleine gute Tat getan? Mach weiter, wir erinnern einander.',
       doa: 'Möge Allah dir deine Angelegenheiten heute erleichtern. Amin.',
@@ -370,7 +370,7 @@ const de: Dict = {
       name: 'Gruppenname',
       namePlaceholder: 'z. B. Familie Bani Fulan',
       kind: 'Art',
-      hints: { keluarga: 'Für die engere oder erweiterte Familie.', sesama_jenis: 'Mitglieder gleichen Geschlechts, damit sich alle wohlfühlen.', campur: 'Freunde, Büro, Gemeinschaft.' },
+      hints: { keluarga: 'Für die engere oder erweiterte Familie.', sesama_jenis: 'Eine reine Männer- oder Frauengruppe für mehr Wohlbefinden.', campur: 'Freunde, Büro, Gemeinschaft.' },
       approvalNote: 'Neue Mitglieder brauchen immer deine Freigabe.',
     },
     challenge: {

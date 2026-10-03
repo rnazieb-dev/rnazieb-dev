@@ -330,7 +330,7 @@ const so: Dict = {
     report: 'Soo sheeg',
     block: 'Xannib',
     admin: 'Maamule',
-    kinds: { keluarga: 'Qoys', sesama_jenis: 'Isku jinsi', campur: 'Furan' },
+    kinds: { keluarga: 'Qoys', sesama_jenis: 'Ragga oo kaliya ama dumarka oo kaliya', campur: 'Furan' },
     nudges: {
       ingat: 'Ma samaysay maanta hal wanaag oo yar? Sii wad, waan is xusuusinaynaa.',
       doa: 'Allah ha kuu fududeeyo arrimahaaga maanta. Aamiin.',
@@ -370,7 +370,7 @@ const so: Dict = {
       name: 'Magaca kooxda',
       namePlaceholder: 'tusaale: Qoyska Bani Fulaan',
       kind: 'Nooca',
-      hints: { keluarga: 'Qoyska dhow ama qaraabada.', sesama_jenis: 'Xubno isku jinsi ah si loo dareemo raaxo.', campur: 'Saaxiibo, xafiis, bulsho.' },
+      hints: { keluarga: 'Qoyska dhow ama qaraabada.', sesama_jenis: 'Koox rag keliya ama dumar keliya, si loo helo raaxo.', campur: 'Saaxiibo, xafiis, bulsho.' },
       approvalNote: 'Xubnaha cusub mar walba waxay u baahan yihiin oggolaanshahaaga.',
     },
     challenge: {

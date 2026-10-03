@@ -330,7 +330,7 @@ const az: Dict = {
     report: 'Şikayət et',
     block: 'Blokla',
     admin: 'Admin',
-    kinds: { keluarga: 'Ailə', sesama_jenis: 'Eyni cins', campur: 'Açıq' },
+    kinds: { keluarga: 'Ailə', sesama_jenis: 'Yalnız kişilər və ya yalnız qadınlar', campur: 'Açıq' },
     nudges: {
       ingat: 'Bu gün kiçik bir yaxşılıq etdinizmi? Davam edin, bir-birimizə xatırladırıq.',
       doa: 'Allah bu gün işlərinizi asanlaşdırsın. Amin.',
@@ -370,7 +370,7 @@ const az: Dict = {
       name: 'Qrupun adı',
       namePlaceholder: 'məs. Filankəslər ailəsi',
       kind: 'Növ',
-      hints: { keluarga: 'Yaxın və ya geniş ailə üçün.', sesama_jenis: 'Rahatlıq üçün eyni cinsdən üzvlər.', campur: 'Dostlar, iş yeri, icma.' },
+      hints: { keluarga: 'Yaxın və ya geniş ailə üçün.', sesama_jenis: 'Rahatlıq üçün yalnız kişilər və ya yalnız qadınlar qrupu.', campur: 'Dostlar, iş yeri, icma.' },
       approvalNote: 'Yeni üzvlər həmişə sizin təsdiqinizi tələb edir.',
     },
     challenge: {

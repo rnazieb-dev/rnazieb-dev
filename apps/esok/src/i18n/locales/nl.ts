@@ -330,7 +330,7 @@ const nl: Dict = {
     report: 'Melden',
     block: 'Blokkeren',
     admin: 'Beheerder',
-    kinds: { keluarga: 'Familie', sesama_jenis: 'Zelfde geslacht', campur: 'Open' },
+    kinds: { keluarga: 'Familie', sesama_jenis: 'Alleen mannen of alleen vrouwen', campur: 'Open' },
     nudges: {
       ingat: 'Heb je vandaag al één kleine goede daad gedaan? Ga door, we herinneren elkaar.',
       doa: 'Moge Allah je zaken vandaag gemakkelijk maken. Amien.',
@@ -370,7 +370,7 @@ const nl: Dict = {
       name: 'Groepsnaam',
       namePlaceholder: 'bijv. Familie Bani Fulan',
       kind: 'Soort',
-      hints: { keluarga: 'Voor het directe gezin of de ruimere familie.', sesama_jenis: 'Leden van hetzelfde geslacht, voor meer gemak.', campur: 'Vrienden, kantoor, gemeenschap.' },
+      hints: { keluarga: 'Voor het directe gezin of de ruimere familie.', sesama_jenis: 'Een groep alleen voor mannen of alleen voor vrouwen, voor het comfort.', campur: 'Vrienden, kantoor, gemeenschap.' },
       approvalNote: 'Nieuwe leden hebben altijd jouw goedkeuring nodig.',
     },
     challenge: {
